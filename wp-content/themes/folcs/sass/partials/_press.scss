@@ -1,0 +1,13 @@
+.press-logo {
+	height:20px;
+	margin-bottom:10px;
+
+	img {
+		width:auto;
+		height:100%;
+	}
+
+@include responsive-max(screen-small) {
+	margin-bottom:10px;
+}
+}

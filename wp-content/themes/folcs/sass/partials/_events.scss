@@ -1,0 +1,69 @@
+
+
+.event-tickets {
+
+	a.block-link {
+		margin-bottom:20px;
+	}
+}
+
+
+.event-social {
+
+	span {
+		position: relative;
+		display:inline-block;
+		margin-right:12px;
+		margin-left:12px;
+	}
+
+	.event-social-share {
+		display:none;
+		position: absolute;
+		z-index: 9;
+		top:25px;
+		left:50%;
+		margin-right:0;
+		margin-left:0;
+		background-color:$color-light;
+
+		@include transform(translateX(-50%));
+
+		a {
+			display:inline-block;
+			margin-bottom: 7px;
+			color:#808080;
+			font-size:11px;
+			// white-space:nowrap;
+			// vertical-align:middle;
+
+			// svg {
+			// 	width:auto;
+			// 	height:12px;
+			// 	margin-right: 2px;
+			// 	vertical-align:middle;
+			// }
+		}
+	}
+}
+
+.events-bio {
+
+}
+
+.events-bio-portrait-col {
+	width:200px;
+	float:left;
+
+@include responsive-max(screen-small) {
+	width:75px;
+}
+}
+
+.events-bio-text-col {
+	margin-left:200px;
+
+@include responsive-max(screen-small) {
+	margin-left:0px;
+}
+}

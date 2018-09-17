@@ -1,0 +1,29 @@
+.donate-item {
+	margin-bottom:50px;
+	padding-bottom:50px;
+	border-bottom:1px solid #e5e5e5;
+
+	&:last-child {
+		margin-bottom:0;
+		padding-bottom:0;
+		border:none;
+	}
+
+	.block-link {
+		float:right;
+	}
+
+@include responsive-max(screen-small) {
+	
+	.block-link {
+		float:none;
+	}
+	
+	.donate-details {
+		margin-bottom:40px;
+	}
+	.donate-link {
+		text-align:center;
+	}
+}
+}

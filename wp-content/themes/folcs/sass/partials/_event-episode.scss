@@ -1,0 +1,153 @@
+.event-episodes {
+	padding-bottom:65px;
+
+@include responsive-max(screen-medium) {
+	padding-bottom:32px;
+}
+}
+
+
+.event-episode {
+
+@include responsive-max(screen-medium) {
+
+	.section-margin-first {
+		padding-top:65px;
+	}
+	.section-margin-last {
+		padding-bottom:65px;
+	}
+	.sequence-margin-first {
+		padding-top:32px;
+	}
+	.sequence-margin-last {
+		padding-bottom:32px;
+	}
+}
+@include responsive-max(screen-small) {
+
+}
+}
+
+.event-episodes .event-episode-item:first-child {
+	padding-top:0;
+}
+
+.event-episodes .event-episode-item:last-child {
+	padding-bottom:65px;
+}
+
+.event-episode-text + .event-episode-quote {
+	padding-top:0;
+}
+
+
+.event-episode-feature-item, .event-episode-past-item {
+	position: relative;
+	@include background('');
+
+	&:after {
+		content:'';
+		display:block;
+		position: absolute;
+		z-index:0;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		background-color:$color-dark;
+		opacity:0.5;
+	}
+}
+
+.event-episode-feature-details {
+	position: relative;
+	z-index: 1;
+	padding-top:230px;
+	padding-bottom:230px;
+
+	h1 {
+		margin-top:5px;
+		margin-bottom:15px;
+	}
+
+@include responsive-max(screen-medium) {
+	padding-top:180px;
+	padding-bottom:180px;
+}
+@include responsive-max(screen-small) {
+	padding-top:130px;
+	padding-right:20px;
+	padding-bottom:130px;
+	padding-left:30px;
+}
+}
+
+.event-episode-gallery-item {
+	
+	img {
+		display:block;
+		width:100%;
+		height:auto;
+	}
+}
+
+.event-episode-gallery-count {
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+.event-episode-past-item {
+
+}
+
+.event-episode-past-details {
+	position: relative;
+	z-index: 1;
+
+	padding-top:140px;
+	padding-bottom:140px;
+
+	.type-feature {
+		margin-bottom:25px;
+	}
+}
+
+.events-bio:last-child {
+	padding-bottom:0;
+}
+
+.events-winners:last-child {
+	padding-bottom:0;
+}
+
+.events-winners-item-col {
+	width:275px;
+	float: left;
+
+@include responsive-max(screen-small) {
+	width:175px;
+}
+}
+
+.events-winners-item {
+	padding-bottom:142.647058823529%;
+	@include background('');
+}
+
+.events-winners-text-col {
+	margin-left:300px;
+
+@include responsive-max(screen-small) {
+	margin-left:200px;
+}
+}
+
+
+
+
+
+
+
+
+

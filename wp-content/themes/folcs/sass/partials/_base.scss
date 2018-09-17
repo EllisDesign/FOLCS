@@ -1,0 +1,40 @@
+html {
+	position: relative;
+
+	@include box-sizing;
+	-webkit-text-size-adjust: 100%;
+
+	&.no-scroll {
+		overflow:hidden;
+		height:100%;
+
+		body {
+			overflow:hidden;
+			height:100%;
+		}
+
+		.nav-over nav {
+			overflow-x:visible;
+		}
+	}
+}
+
+body {
+	position: relative;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	
+ 	-webkit-tap-highlight-color: rgba(0,0,0,0);
+ 	-webkit-tap-highlight-color: transparent;
+	
+ 	background-color:$color-light;
+
+ 	&.no-scroll {
+ 		overflow:hidden;
+ 		height:100%;
+ 	}
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}

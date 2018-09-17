@@ -1,0 +1,205 @@
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+@mixin prefix($prop,$args) {
+  -webkit-#{$prop}: $args;
+  -moz-#{$prop}: $args;
+  -ms-#{$prop}: $args;
+  -o-#{$prop}: $args;
+  #{$prop}: $args;
+}
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@function prefix($property, $prefixes: (webkit moz o ms)) {
+    $vendor-prefixed-properties: transform background-clip background-size;
+    $result: ();
+    @each $prefix in $prefixes {
+       @if index($vendor-prefixed-properties, $property) {
+         $property: -#{$prefix}-#{$property}
+       }
+       $result: append($result, $property);
+    }
+    @return $result;
+}
+
+@function trans-prefix($transition, $prefix: moz) {
+    $prefixed: ();
+    @each $trans in $transition {
+        $prop-name: nth($trans, 1);
+        $vendor-prop-name: prefix($prop-name, $prefix);
+        $prop-vals: nth($trans, 2);
+        $prefixed: append($prefixed, ($vendor-prop-name $prop-vals), comma);
+    }
+    
+    @return $prefixed;
+}
+
+
+@mixin prefixed-transition($values...) { 
+    $transitions: ();
+    @each $declaration in $values {
+        $prop: nth($declaration, 1);
+        $prop-opts: ();
+        $length: length($declaration);
+        @for $i from 2 through $length {
+            $prop-opts: append($prop-opts, nth($declaration, $i));   
+        }
+        $trans: ($prop, $prop-opts);
+        $transitions: append($transitions, $trans, comma);
+    }
+      
+    -webkit-transition: trans-prefix($transitions, webkit);
+    -moz-transition: trans-prefix($transitions, moz);
+    -ms-transition: trans-prefix($transitions, ms);
+    -o-transition: trans-prefix($transitions, o);
+    transition: $values;
+}
+
+
+@mixin transform($args) {
+  transform: $args;
+  -webkit-transform: $args;
+  -moz-transform: $args;
+  -o-transform: $args;
+  -ms-transform: $args;
+}
+
+@mixin animation($args) {
+  -webkit-animation: $args;
+  -moz-animation: $args;
+  -o-animation: $args;
+  animation: $args;
+}
+
+@mixin background($url,$horz:center,$vert:center,$size:cover) {
+  background-image: url($url);
+  background-repeat: no-repeat;
+  background-position: $horz $vert;
+  background-size: $size;
+}
+@mixin backgrounds($url,$hires:2048,$file:jpg,$horz:center,$vert:center,$size:cover) {
+  background-image: url(#{$url}-#{$hires}.#{$file});
+  background-repeat: no-repeat;
+  background-position: $horz $vert;
+  background-size: $size;
+
+  @media only screen and (max-width: $screen-major) { 
+    background-image: url(#{$url}-1200.#{$file});
+  }
+}
+
+@mixin font-size($sizeValue: 1) {
+  font-size: ($sizeValue * 16) * 1px;
+  font-size: $sizeValue * 1rem;
+}
+
+@mixin responsive-font($responsive, $min: false, $max: false, $fallback: false) {
+  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+  $dimension: if(unit($responsive) == 'vh', 'height', 'width');
+  
+  @if $fallback {
+    font-size: $fallback;
+  }
+  
+  font-size: $responsive;
+  
+  @if $min {
+    $min-breakpoint: round($min / $responsive-unitless * 100);
+    
+    @media (max-#{$dimension}: #{$min-breakpoint}) {
+      font-size: $min;
+    }
+  }
+  
+  @if $max {
+    $max-breakpoint: round($max / $responsive-unitless * 100);
+    
+    @media (min-#{$dimension}: #{$max-breakpoint}) {
+      font-size: $max;
+    }
+  }
+}
+
+@mixin responsive-max($screen) {
+  @if $screen == screen-wide {
+    @media only screen and (max-width: $screen-wide) { @content; }
+  }
+  @else if $screen == screen-standard {
+    @media only screen and (max-width: $screen-standard) { @content; }
+  }
+  @else if $screen == screen-regular {
+    @media only screen and (max-width: $screen-regular) { @content; }
+  }
+  @else if $screen == screen-subreg {
+    @media only screen and (max-width: $screen-subreg) { @content; }
+  }
+  @else if $screen == screen-supmed {
+    @media only screen and (max-width: $screen-supmed) { @content; }
+  }
+  @else if $screen == screen-medium {
+    @media only screen and (max-width: $screen-medium) { @content; }
+  }
+  @else if $screen == screen-submed {
+    @media only screen and (max-width: $screen-submed) { @content; }
+  }
+  @else if $screen == screen-supsm {
+    @media only screen and (max-width: $screen-supsm) { @content; }
+  }
+  @else if $screen == screen-small {
+    @media only screen and (max-width: $screen-small) { @content; }
+  }
+  @else if $screen == screen-subsm {
+    @media only screen and (max-width: $screen-subsm) { @content; }
+  }
+  @else {
+    @media only screen and (max-width: $screen) { @content; }
+  }
+}
+@mixin responsive-min($screen) {
+  @if $screen == screen-major {
+    @media only screen and (min-width: $screen-major+1) { @content; }
+  }
+  @else if $screen == screen-wide {
+    @media only screen and (min-width: $screen-wide) { @content; }
+  }
+  @else if $screen == screen-standard {
+    @media only screen and (min-width: $screen-standard) { @content; }
+  }
+  @else if $screen == screen-regular {
+    @media only screen and (min-width: $screen-regular) { @content; }
+  }
+  @else if $screen == screen-subreg {
+    @media only screen and (min-width: $screen-subreg) { @content; }
+  }
+  @else if $screen == screen-supmed {
+    @media only screen and (min-width: $screen-supmed) { @content; }
+  }
+  @else if $screen == screen-medium {
+    @media only screen and (min-width: $screen-medium+1) { @content; }
+  }
+  @else if $screen == screen-submed {
+    @media only screen and (min-width: $screen-submed) { @content; }
+  }
+  @else if $screen == screen-supsm {
+    @media only screen and (min-width: $screen-supsm) { @content; }
+  }
+  @else if $screen == screen-small {
+    @media only screen and (min-width: $screen-small+1) { @content; }
+  }
+  @else if $screen == screen-subsm {
+    @media only screen and (min-width: $screen-subsm) { @content; }
+  }
+  @else {
+    @media only screen and (min-width: $screen) { @content; }
+  }
+}

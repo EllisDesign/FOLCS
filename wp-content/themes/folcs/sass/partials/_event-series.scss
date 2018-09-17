@@ -1,0 +1,31 @@
+.event-series-item {
+	// padding-bottom:50.847457627119%;
+
+	img {
+		display:block;
+		width:100%;
+		height:auto;
+	}
+}
+
+.event-series-details {
+	position: relative;
+	z-index: 1;
+	margin-top:-90px;
+	padding-top:45px;
+	padding-right:100px;
+	// padding-bottom:60px;
+	padding-left:100px;
+	background-color:$color-light;
+
+@include responsive-max(screen-medium) {
+	margin-top:-45px;
+	padding-top:25px;
+}
+@include responsive-max(screen-small) {
+	margin-top:-25px;
+	padding-top:25px;
+	padding-right:0;
+	padding-left:0;
+}
+}

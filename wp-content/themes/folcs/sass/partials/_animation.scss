@@ -1,0 +1,147 @@
+.no-mobile {
+	position:absolute;
+	top:0;
+	left:0;
+	width:0;
+	height:0;
+	
+@include responsive-max(screen-small) {
+	display:none;
+}
+}
+
+.is-scroll {
+
+	.is-parallax {
+		-moz-backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-webkit-transform-style: preserve-3d;
+		transform-style: preserve-3d;
+		will-change: transform;
+
+		@include transform(translate3d(0,0,0));
+	}
+
+	.translateUpPortrait, .translateUpLandscape {
+		-moz-backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-webkit-transform-style: preserve-3d;
+		transform-style: preserve-3d;
+		will-change: transform;
+
+		@include transform(translate3d(0,0,0));
+
+	@include responsive-min(screen-small) {
+		margin-top:50px;
+	}
+	}
+
+	.translateUpHero {
+		-moz-backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-webkit-transform-style: preserve-3d;
+		transform-style: preserve-3d;
+		will-change: transform;
+
+		@include transform(translate3d(0,0,0));
+
+	@include responsive-min(screen-small) {
+		margin-top:25px;
+	}
+	@include responsive-min(screen-medium) {
+		margin-top:50px;
+	}
+	}
+
+	.translateDown {
+		-moz-backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-webkit-transform-style: preserve-3d;
+		transform-style: preserve-3d;
+		will-change: transform;
+
+		@include transform(translate3d(0,0,0));
+
+	@include responsive-min(screen-small) {
+		margin-top:-50px;
+	}
+	}
+
+}
+
+.page-home .hero-video {
+	font-size:10px;
+}
+
+.scrolldown {
+    position: absolute;
+    bottom: 2em;
+    left: calc(50% - 1em);
+    width: 2em;
+    height: 3.5em;
+    z-index: 10;
+    pointer-events: none
+}
+
+@include responsive-max(screen-regular) {
+    .scrolldown {
+        display:none
+    }
+}
+
+.scrolldown .scrolldown__graphic {
+    width: 2em;
+    height: 3.5em;
+    border-radius: 10em;
+    border: .15em solid $color-light;
+    animation: scrolldownFadeIn 1s 1s ease both
+}
+
+.scrolldown .scrolldown__graphic:before {
+    content: "";
+    width: 0;
+    height: 0;
+    display: block;
+    border: .15em solid $color-light;
+    border-radius: 10em;
+    position: absolute;
+    left: calc(50% - .15em);
+    top: .875em;
+    animation: scrolldown 2s ease both infinite
+}
+
+@keyframes scrolldown {
+    0% {
+        transform: translateZ(0);
+        opacity: 0
+    }
+
+    20% {
+        transform: translateZ(0);
+        opacity: 1
+    }
+
+    80% {
+        transform: translate3d(0,300%,0);
+        opacity: 1
+    }
+
+    to {
+        transform: translate3d(0,300%,0);
+        opacity: 0
+    }
+}
+
+@keyframes scrolldownFadeIn {
+    0% {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}

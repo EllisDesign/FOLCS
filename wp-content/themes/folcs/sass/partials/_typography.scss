@@ -1,0 +1,269 @@
+.type-link, .type-placeholder, .navigation.pagination {
+	color:$color-dark;
+
+	font: {
+		weight:$font-semi;
+		size:$font-small;
+		family:$font-secondary;
+	}
+	
+	line-height:$leading-same;
+	letter-spacing:$tracking-50;
+	text-transform:uppercase;
+}
+
+.navigation.pagination {
+	text-align:right;
+}
+
+a.type-link {
+	// text-decoration:underline;
+}
+
+.navigation.pagination a.page-numbers {
+	display:inline-block;
+	padding:20px 10px;
+	border:2px solid transparent;
+	text-align:center;
+	text-decoration:none;
+}
+
+.navigation.pagination span.page-numbers {
+	display:inline-block;
+	padding:20px 10px;
+	border:2px solid transparent;
+	text-align:center;
+	text-decoration:none;
+
+	&.current {
+		opacity: 0.3;
+	}
+}
+
+a.block-link, .navigation.pagination a.prev, .navigation.pagination a.next {
+	display:inline-block;
+	padding:20px 30px;
+	border:2px solid $color-dark;
+	text-align:center;
+	text-decoration:none;
+
+	&.multi-line {
+		line-height:$leading-145;
+	}
+}
+
+.type-content a.block-link {
+	text-decoration:none;
+}
+
+.no-touchevents {
+
+.block-link, .navigation.pagination a.prev, .navigation.pagination a.next {
+	position: relative;
+	z-index: 0;
+
+	@include transition(color .3s ease-out);
+
+	&:before {
+		content: '';
+		position: absolute;
+		z-index: -1;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: $color-dark;
+		
+		-webkit-transform-origin: 50% 0;
+		transform-origin: 50% 0;
+
+		@include transform(scaleY(0));
+		
+		@include transition(all .3s ease-out);
+	}
+
+	&:not(.is-disabled):hover {
+		color:$color-light;
+
+		&:before {
+			@include transform(scaleY(1));
+		}
+	}
+}
+
+.event-episode-past .block-link {
+
+	&:before {
+		background: $color-light;
+	}
+
+	&:hover {
+		color:$color-dark;
+	}
+}
+}
+
+@include responsive-max(screen-small) {
+	
+	.block-link {
+		width:100%;
+	}
+}
+
+.past-events-search-filters ul li {
+	background-color:$color-light;
+	color:$color-dark;
+
+	font: {
+		weight:$font-light;
+		size:$font-body;
+		family:$font-secondary;
+	}
+
+	line-height:$leading-same;
+
+	@include transition(all .2s linear);
+
+	&:hover {
+		background-color:$color-background-light;
+	}
+}
+
+.type-feature {
+	color:$color-dark;
+	
+	font: {
+		weight:$font-light;
+		size:$font-feature;
+		family:$font-brand;
+	}
+
+	line-height:$leading-12;
+
+@include responsive-max(screen-medium) {
+
+	font-size:$font-details;
+}
+@include responsive-max(screen-small) {
+
+}	
+}
+
+
+.type-category {
+	color:$color-brand;
+
+	font: {
+		weight:$font-semi;
+		size:$font-subsm;
+		family:$font-secondary;
+	}
+	
+	line-height:$leading-same;
+	letter-spacing:$tracking-100;
+	text-transform:uppercase;
+}
+
+.category-margin-20 .type-category {
+	margin-bottom:20px;
+}
+.category-margin-10 .type-category {
+	margin-bottom:10px;
+}
+.category-margin-5 .type-category {
+	margin-bottom:10px;
+}
+
+@include responsive-max(screen-small) {
+.events-bio .category-margin-20 .type-category {
+	margin-bottom:5px;
+}
+}
+
+.type-section {
+	color:$color-dark;
+
+	font: {
+		weight:$font-regular;
+		size:$font-small;
+		family:$font-secondary;
+	}
+	
+	line-height:$leading-same;
+	letter-spacing:$tracking-100;
+	text-transform:uppercase;
+}
+
+.type-section .nav-return {
+
+@include responsive-max(screen-small) {
+	font-size:$font-subsm;
+}
+}
+
+.type-qualifier {
+	color:$color-dark;
+
+	font: {
+		weight:$font-light;
+		size:$font-qualifier;
+		family:$font-secondary;
+	}
+	
+	line-height:$leading-same;
+}
+
+
+.type-details {
+	color:$color-dark;
+
+	font: {
+		weight:$font-medium;
+		size:$font-details;
+		family:$font-secondary;
+	}
+	
+	line-height:$leading-same;
+
+	span {
+		padding-right:12px;
+		padding-left:12px;
+	}
+
+@include responsive-max(screen-small) {
+	font-size:$font-small;
+
+	span:last-child {
+		display:block;
+	}
+}
+}
+
+
+
+
+
+i, em {
+	font-style:italic;
+}
+
+b, strong {
+	font-weight:$font-semi;
+}
+
+
+.color-brand {
+	color:$color-brand;
+}
+.color-light, .color-light * {
+	color:$color-light;
+}
+.color-light a.block-link {
+	border-color:#ffffff;
+}
+.type-center {
+	text-align:center;
+}
+.type-light {
+	font-weight:$font-light;
+}
