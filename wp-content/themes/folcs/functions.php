@@ -83,6 +83,7 @@ if ( ! function_exists( 'folcs_setup' ) ) :
 		add_editor_style();
 
 		add_image_size( 'thumbnail_cropped', 640, 745, true );
+		// add_image_size( 'portrait_cropped', 980, 1470, true );
 		add_image_size( 'high', 2048, 5120, false );
 	}
 endif;
