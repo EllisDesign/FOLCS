@@ -30,7 +30,7 @@ $(document).ready(function(){
     if(filter === 'featured'){
       window.location.href = '/past-events/';
     }else{
-      $('#q_series').val(filter);
+      $('#qseries').val(filter);
       $('#searchform').submit();
     }
 
