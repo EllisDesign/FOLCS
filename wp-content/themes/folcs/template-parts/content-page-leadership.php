@@ -37,7 +37,7 @@
 
 				<div class="col-lg-3 col-md-6 col-sm-12 event-card">
 					<div class="event-items">
-						<div class="event-item js-bio-portrait" data-portrait="<?php echo $leader['sizes'][$size]; ?>" style="background-image: url('<?php echo $leader['sizes'][$size]; ?>')"></div>
+						<div class="event-item js-bio-portrait" data-portrait="<?php echo $leader['sizes']['medium']; ?>" style="background-image: url('<?php echo $leader['sizes']['thumbnail_cropped']; ?>')"></div>
 						<div class="event-details js-bio-details" data-name="<?php the_field('leadership_name'); ?>" data-title="<?php the_field('leadership_title'); ?>">
 							<p><b><?php the_field('leadership_name'); ?></b></p>
 							<p><?php the_field('leadership_title'); ?></p>
