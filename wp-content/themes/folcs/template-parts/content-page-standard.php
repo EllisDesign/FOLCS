@@ -17,7 +17,7 @@
 <section class="hero-intro">
 	<?php
 		$image = get_field('hero_item');
-		$size = 'full';
+		$size = 'large';
 
 		if($image) {
 			echo wp_get_attachment_image( $image, $size );

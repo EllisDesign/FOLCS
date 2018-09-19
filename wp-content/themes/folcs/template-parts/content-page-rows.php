@@ -21,7 +21,7 @@
 
 <?php
 	if($image):
-	$size = 'full';
+	$size = 'large';
 ?>
 
 <section class="hero-intro">

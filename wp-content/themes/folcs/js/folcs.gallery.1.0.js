@@ -25,6 +25,13 @@ $('.js-multi-gallery').slick({
   slidesToScroll: 1,
   responsive: [
     {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1
+      }
+    },
+    {
       breakpoint: 640,
       settings: {
         slidesToShow: 1,

@@ -32,7 +32,7 @@
 	    while ( have_rows('event_series_items') ) : the_row(); 
 
 	    	$image = get_sub_field('event_series_item');
-	    	$size = 'full';
+	    	$size = 'large';
     	?>
 
 			<section class="event-series-items sequence-margin-last">

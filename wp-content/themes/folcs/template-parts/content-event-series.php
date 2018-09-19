@@ -51,7 +51,7 @@
 		
 		<div class="col-lg-4 col-sm-12 event-card">
 			<div class="event-items">
-				<div class="related-item" style="background-image: url('<?php esc_url(the_post_thumbnail_url('full')); ?>')"></div>
+				<div class="related-item" style="background-image: url('<?php esc_url(the_post_thumbnail_url('thumbnail')); ?>')"></div>
 				<h2><?php the_title(); ?></h2>
 				<a href="<?php the_permalink(); ?>"></a>
 			</div>
