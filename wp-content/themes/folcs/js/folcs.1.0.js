@@ -17,12 +17,12 @@ $(document).ready(function(){
 	$('.js-signup').on('click', function(e){
 		e.preventDefault();
 		$('.js-footer-subscribe').fadeIn(400);
-		$('html').addClass('no-scroll');
+		$('body').addClass('no-scroll');
 	});
 
 	$('.js-subscribe-close').on('click', function(){
 		$('.js-footer-subscribe').fadeOut(400);
-		$('html').removeClass('no-scroll');
+		$('body').removeClass('no-scroll');
 	});
 
 	$('.js-share').on('click', function(e){
