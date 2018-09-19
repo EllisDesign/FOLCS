@@ -15,10 +15,10 @@ nav {
 	}
 
 @include responsive-max(screen-small) {
-	height:50px;
+	height:70px;//50
 
 	&.has-type {
-		height:70px;
+		height:70px;//70
 	}
 }
 }
@@ -53,10 +53,10 @@ nav {
 	}
 
 @include responsive-max(screen-small) {
-	height:50px;
+	height:70px;//50
 
 	.has-type & {
-		height:70px;
+		height:70px;//70
 	}
 }
 }
@@ -106,14 +106,14 @@ nav {
 	
 	top:8px;
 	left:8px;
-	width:115px;
-	height:40px;
+	width:172px;
+	height:60px;//40
 
 	.page-home & {
 		top:8px;
 		left:8px;
-		width:115px;
-		height:40px;
+		width:172px;
+		height:60px;//40
 	}
 }
 }
