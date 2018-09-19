@@ -120,12 +120,13 @@ nav {
 
 .nav-type-section {
 	position: absolute;
-	top:40px;
-	left:150px;
-	right:150px;
+	top:27px;
+	left:250px;
+	right:250px;
 	text-align:center;
 
 @include responsive-max(screen-small) {
+	display:none;
 	
 	top:12px;
 	left:50px;
