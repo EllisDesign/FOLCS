@@ -15,5 +15,6 @@
 
 <?php wp_footer(); ?>
 
+<?php include("inc/tracking.php"); ?>
 </body>
 </html>
