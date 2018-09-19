@@ -33,11 +33,12 @@
 		padding:0;
 	}
 	.col-lg-6 {
-		padding:20px;
+		// padding:20px;
 	}
 }
 @include responsive-max(screen-small) {
 	padding-top:60px;
+	padding-bottom: 30px;
 
 	.col-lg-6 {
 		padding:0;
@@ -47,7 +48,7 @@
 
 
 .leadership-bio-portrait {
-@include responsive-max(screen-small) {
+@include responsive-max(screen-medium) {
 	display:none;	
 }
 }

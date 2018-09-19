@@ -113,10 +113,10 @@
 			<div class="table-cell">
 				<div class="column-limit">
 					<div class="row">
-						<div class="col-lg-6 col-sm-12 leadership-bio-portrait">
+						<div class="col-lg-6 col-md-12 leadership-bio-portrait">
 							<div class="leadership-bio-portrait-item" style="background-image:url()"></div>
 						</div>
-						<div class="col-lg-6 col-sm-12">
+						<div class="col-lg-6 col-md-12">
 							<h2></h2>
 							<p></p>
 							<div class="leadership-bio-details">
