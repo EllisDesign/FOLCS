@@ -1,3 +1,7 @@
+Redirect 301 /what-makes-equity-residences-unique /investment
+
+
+
 RedirectMatch 301 ^/team/(.*) /leadership
 RedirectMatch 301 ^/press/(.*) /in-the-press
 

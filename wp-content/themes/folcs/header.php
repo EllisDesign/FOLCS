@@ -30,4 +30,5 @@
 	<meta name="theme-color" content="#ffffff">
 	
 	<?php wp_head(); ?>
+	<?php include("inc/tracking.php"); ?>
 </head>
