@@ -69,7 +69,7 @@ get_header();
 			<div class="col-lg-4 col-md-6 col-sm-12 event-card">
 				<div class="event-items">
 					<a href="<?php the_permalink(); ?>" class="h2-has-hover"></a>
-					<div class="event-item" style="background-image: url('<?php esc_url(the_post_thumbnail_url('full')); ?>')"></div>
+					<div class="event-item" style="background-image: url('<?php esc_url(the_post_thumbnail_url('thumbnail_cropped')); ?>')"></div>
 					<div class="event-details">
 						<div class="type-category"><?php $term_list = wp_get_post_terms($post->ID, 'past-taxonomy', array( 'fields' => 'names' ));if ($term_list) { echo $term_list[0];} ?></div>
 						<h2><span><?php echo $title; ?></span></h2>
