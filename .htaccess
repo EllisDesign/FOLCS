@@ -1,4 +1,4 @@
-Redirect 301 /what-makes-equity-residences-unique /investment
+#Redirect 301 /what-makes-equity-residences-unique /investment
 
 
 
@@ -11,6 +11,13 @@ RedirectMatch 301 ^/addtocalendar/(.*) /feed/calendar/
 #RewriteEngine On
 #RewriteRule ^/addtocalendar/([0-9]+)$ /feed/calendar/?id=$1
 #RewriteRule ^/addtocalendar/?id=(.*)$ /feed/calendar/?id=$1
+
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^staging\.(.+)$ [NC]
+RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+</IfModule>
 
 
 # BEGIN WordPress
