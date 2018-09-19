@@ -250,7 +250,8 @@ footer {
 	left:0;
 	width:100%;
 	height:100%;
-	padding:50px;
+	padding-top:50px;
+	padding-bottom: 50px;
 	background-color:$color-light;
 	overflow-y:auto;
 
@@ -265,6 +266,11 @@ footer {
 	
 	.footer-cta {
 		color:$color-dark;
+	}
+
+	iframe {
+		width:100%;
+		max-width:450px;
 	}
 
 @include responsive-max(screen-small) {
