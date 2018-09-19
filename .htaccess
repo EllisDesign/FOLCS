@@ -1,5 +1,5 @@
-#Redirect 301 /what-makes-equity-residences-unique /investment
-
+Redirect 301 /film_festival/film-series/ /event-series/film-series/
+Redirect 301 /film_festival/2015-film-festival/ /event-series/film-series/
 
 
 RedirectMatch 301 ^/team/(.*) /leadership
