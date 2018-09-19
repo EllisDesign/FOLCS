@@ -521,5 +521,12 @@ section {
 	width:33.333333%;
 }
 
+@include responsive-max(screen-small) {
+	
+	.blk-sm-6 {
+		width:50%;
+	}
+}
+
 
 

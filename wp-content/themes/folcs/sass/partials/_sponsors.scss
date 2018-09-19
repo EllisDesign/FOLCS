@@ -14,4 +14,10 @@
 		width:100%;
 		height:auto;
 	}
+
+@include responsive-max(screen-small) {
+	
+	padding-right:15px;
+	padding-left:15px;
+}
 }

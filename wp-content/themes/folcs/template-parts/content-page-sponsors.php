@@ -35,7 +35,7 @@
 
 				    	$image = get_sub_field('sponsors_item');
 				    	$size = 'large';
-			    	?><div class="i-blk blk-lg-4 sponsors-item"><img src="<?php echo $image['sizes'][$size] ?>"></div><?php
+			    	?><div class="i-blk blk-lg-4 blk-sm-6 sponsors-item"><img src="<?php echo $image['sizes'][$size] ?>"></div><?php
 
 					endwhile;
 
