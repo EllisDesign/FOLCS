@@ -4,7 +4,7 @@ Redirect 301 /film_festival/2015-film-festival/ /event-series/film-series/
 RedirectMatch 301 ^/team/(.*) /leadership
 RedirectMatch 301 ^/press/(.*) /in-the-press
 
-RedirectMatch 301 ^/ISFC(.*) /event-series/ISFC/
+RedirectMatch 301 (?i)^/ISFC(.*) /event-series/isfc/
 
 
 RedirectMatch 301 ^/addtocalendar/(.*) /feed/calendar/
