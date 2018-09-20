@@ -106,7 +106,7 @@ if( have_rows('event_episode_items') ):
 	        	$size = 'large';
         ?>
         	<section class="event-episode-item event-episode-feature sequence-margin-first sequence-margin-last">
-        		<div class="event-episode-feature-item" style="background-image:url('<?php echo $image['sizes'][$size]; ?>)">
+        		<div class="event-episode-feature-item" style="background-image:url('<?php echo $image['sizes'][$size]; ?>')">
         			<div class="event-episode-feature-details type-center color-light">
         				<?php the_sub_field('episode_feature_details'); ?>
         			</div>
