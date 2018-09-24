@@ -34,7 +34,7 @@
 				        )
 				    ),
 					'nopaging'      => true,
-					'order'         => 'ASC',
+					'order'         => 'DSC',
 					// 'orderby'       => 'menu_order',
 				);
 
@@ -99,7 +99,7 @@
 					// 'nopaging'      => false,
 					'posts_per_page'=> 6,
 					'paged' => $paged,
-					'order'         => 'ASC',
+					'order'         => 'DSC',
 				);
 
 				$press_query = new WP_Query( $press_args );
