@@ -744,7 +744,7 @@ function misha_loadmore_ajax_handler(){
 		// 'nopaging'      => false,
 		'posts_per_page'=> 6,
 		'paged' => $_POST['page'] + 1,
-		'order'         => 'ASC',
+		'order'         => 'DSC',
 	);
 
 	$press_query = new WP_Query( $press_args );
