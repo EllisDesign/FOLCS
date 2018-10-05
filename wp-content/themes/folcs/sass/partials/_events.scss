@@ -21,28 +21,56 @@
 		display:none;
 		position: absolute;
 		z-index: 9;
-		top:25px;
+		top:30px;
 		left:50%;
 		margin-right:0;
 		margin-left:0;
 		background-color:$color-light;
 
+		font-size:1px;
+
 		@include transform(translateX(-50%));
 
 		a {
 			display:inline-block;
-			margin-bottom: 7px;
+			margin-bottom: 12px;
 			color:#808080;
-			font-size:11px;
+			font-size:1px;
 			// white-space:nowrap;
 			// vertical-align:middle;
+			letter-spacing:0;
 
-			// svg {
-			// 	width:auto;
-			// 	height:12px;
-			// 	margin-right: 2px;
-			// 	vertical-align:middle;
-			// }
+			svg {
+				width:auto;
+				height:12px;
+				margin-right: 2px;
+				vertical-align:middle;
+
+				path,
+				polygon {
+					fill:#808080;
+
+					@include transition(fill .2s linear);
+				}
+			}
+
+			&.event-email-link {
+
+				svg {
+					height:9px;
+				}
+			}
+
+			&:hover {
+				
+				svg {
+
+					path,
+					polygon {
+						fill:$color-brand;
+					}
+				}
+			}
 		}
 	}
 }

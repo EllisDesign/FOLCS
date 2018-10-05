@@ -110,7 +110,8 @@ a.block-link, .navigation.pagination a.prev, .navigation.pagination a.next {
 	}
 }
 
-.past-events-search-filters ul li {
+.past-events-search-filters ul li,
+.event-series-filters ul li {
 	background-color:$color-light;
 	color:$color-dark;
 
@@ -127,6 +128,13 @@ a.block-link, .navigation.pagination a.prev, .navigation.pagination a.next {
 	&:hover {
 		background-color:$color-background-light;
 	}
+}
+
+.past-events-search-filters ul li {
+	line-height:$leading-same;
+}
+.event-series-filters ul li {
+	line-height:$leading-12;
 }
 
 .type-feature {
@@ -257,6 +265,9 @@ b, strong {
 }
 .color-light, .color-light * {
 	color:$color-light;
+}
+.color-dark, .color-dark * {
+	color:$color-dark;
 }
 .color-light a.block-link {
 	border-color:#ffffff;

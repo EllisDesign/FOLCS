@@ -26,32 +26,6 @@
 }
 }
 
-.past-events-search-filter {
-	position: relative;
-	display:block;
-	height:44px;
-	padding-top:15px;
-	padding-right:15px;
-	padding-bottom:15px;
-	padding-left:15px;
-	border:1px solid $color-dark;
-	background-color:$color-dark;
-	cursor:pointer;
-}
-
-.past-events-search-filter-icon {
-	position:absolute;
-	top:10px;
-	right:2px;
-	width:24px;
-	height:24px;
-
-	.more-icon {
-		fill: #666666;
-	    stroke: none;
-	}
-}
-
 .past-events-search-more {
 	padding-top:20px;
 	padding-right:20px;
@@ -70,44 +44,103 @@
 	}
 }
 
+
+.filter-menu-icon {
+	position:absolute;
+	top:10px;
+	right:2px;
+	width:24px;
+	height:24px;
+
+	.more-icon {
+		fill: #666666;
+	    stroke: none;
+	}
+}
+
+
+.past-events-search-filter,
+.event-series-filter {
+	position: relative;
+	height:44px;
+	padding-top:15px;
+	padding-right:15px;
+	padding-bottom:15px;
+	padding-left:15px;
+	cursor:pointer;
+	border:1px solid $color-dark;
+}
+
+.past-events-search-filter {
+	display:block;
+	background-color:$color-dark;
+}
+.event-series-filter {
+	padding-top:0;
+	padding-right:28px;//30px;
+	padding-bottom: 0;
+	background-color:$color-light;
+
+	line-height:44px;
+
+	@include transition(all .2s linear);
+
+	&.is-active {
+		background-color:$color-dark;
+		color:$color-light;
+	}
+}
+
+
 .past-events-search-filters {
-	display:none;
-	position: absolute;
-	z-index: 99;
-	top:44px;
 	left:15px;
 	right:0;
-	background-color:$color-light;
-	border-right:1px solid $color-dark;
-	border-left:1px solid $color-dark;
 
 	ul li {
 		padding-top:24px;
 		padding-right:24px;
 		padding-bottom:24px;
 		padding-left:24px;
-		border-bottom:1px solid $color-dark;
-		cursor:pointer;
 	}
 }
 
+.event-series-filters {
+	display:none;
+	position: absolute;
+	z-index: 99;
+	top:44px;
+	left:0;
+	width:100%;
+	background-color:$color-light;
+	border-right:1px solid $color-dark;
+	border-left:1px solid $color-dark;
 
+	ul li {
+		padding-top:0;
+		padding-right:0;
+		padding-bottom:0;
+		padding-left:0;
+		border-bottom:1px solid $color-dark;
+		cursor:default;
 
+		a {
+			display:block;
+			padding-top:15px;
+			padding-right:15px;
+			padding-bottom:15px;
+			padding-left:15px;
+			white-space:nowrap;
+		}
+	}
+}
 
+section.intro {
 
+	@include transition(opacity .2s linear);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	&.has-nav {
+		opacity:0.3;
+	}
+}
 
 

@@ -639,7 +639,7 @@ function folcs_scripts() {
 
 	wp_enqueue_style( 'reset-normalize', get_template_directory_uri() . '/reset-normalize.css', array(), null, 'all');
     
-    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.0.1', 'all');
+    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.0.2', 'all');
 
     wp_enqueue_style( 'googlefonts-style', 'https://fonts.googleapis.com/css?family=Barlow:300,300i,400,500,600,700', array(), null, 'all');
 
@@ -667,6 +667,10 @@ function folcs_scripts() {
 if($template_file == 'page-home.php'){
 	
 	wp_enqueue_script( 'folcs-home', get_template_directory_uri() . '/js/folcs.home.1.0.js', array('jquery-3.3.1'), null, true);
+}
+if($template_file == 'page-event-series.php'){
+	
+	wp_enqueue_script( 'folcs-series', get_template_directory_uri() . '/js/folcs.series.1.0.js', array('jquery-3.3.1'), null, true);
 }
 if($post->post_type == 'series' || $post->post_type == 'upcoming' || $post->post_type == 'past'){
 	
