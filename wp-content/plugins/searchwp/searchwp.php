@@ -3,7 +3,7 @@
 Plugin Name: SearchWP
 Plugin URI: https://searchwp.com/
 Description: The best WordPress search you can find
-Version: 2.9.15
+Version: 2.9.16
 Author: SearchWP, LLC
 Author URI: https://searchwp.com/
 Text Domain: searchwp
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SEARCHWP_VERSION', '2.9.15' );
+define( 'SEARCHWP_VERSION', '2.9.16' );
 define( 'SEARCHWP_PREFIX', 'searchwp_' );
 define( 'SEARCHWP_DBPREFIX', 'swp_' );
 define( 'SEARCHWP_EDD_STORE_URL', 'https://searchwp.com' );
@@ -786,10 +786,7 @@ class SearchWP {
 
 			// if the alternative indexer is in play, we need to process
 			// the purge queue right now instead of relying on background processing
-
-			// This has been causing issues on certain hosts so the purge queue is DISABLED (20180907)
-			// Specifically the check for the alternate indexer has been commented out so we always purge inline
-			// if ( $this->alternate_indexer ) {
+			if ( $this->alternate_indexer ) {
 
 				do_action( 'searchwp_log', 'BEGIN processing purge queue' );
 				foreach ( $this->purgeQueue as $post_to_purge ) {
@@ -803,7 +800,7 @@ class SearchWP {
 				// now that the purge queue has been processed, we need to clear it
 				// out so as to prevent the purge collection from taking place
 				$this->purgeQueue = array();
-			// }
+			}
 
 			searchwp_update_option( 'purge_queue', $this->purgeQueue );
 		}
@@ -931,9 +928,9 @@ if ( is_array( $diagnostics['posts'] ) && isset( $diagnostics['posts'][0] ) ) {
 		$postsArePosts = false;
 	}
 
-	$debug_table->add_header( __('Post ID', 'searchwp' ) );
-	$debug_table->add_header( __('Weight', 'searchwp' ) );
-	$debug_table->add_header( __('Title', 'searchwp' ) );
+	$debug_table->add_header( __( 'Post ID', 'searchwp' ) );
+	$debug_table->add_header( __( 'Weight', 'searchwp' ) );
+	$debug_table->add_header( __( 'Title', 'searchwp' ) );
 
 	foreach ( $diagnostics['posts'] as $key => $post ) {
 		// get the proper ID and title
@@ -947,24 +944,16 @@ if ( is_array( $diagnostics['posts'] ) && isset( $diagnostics['posts'][0] ) ) {
 
 		// the search just ran so we can reference the result weights
 		$weights = $this->results_weights;
-		$post_weight = array_key_exists( $post_id, $weights ) ? absint( $weights[ $post_id ]['weight'] ) : false;
+		$post_weight = array_key_exists( $post_id, $weights ) ? absint( $weights[ $post_id ]['weight'] ) : 0;
 
 		$debug_table->add_row();
-		$debug_table->add_column( $post_id );
-		$debug_table->add_column( $post_weight );
-		$debug_table->add_column( $post_title );
-
-		// update the array key with a streamlined value
-		// $output = '[' . $post_id . ']';
-		// if ( ! empty( $post_weight ) ) {
-		// 	$output .= '(' . $post_weight . ')';
-		// }
-		// $output .= ' ' . $post_title;
-		// echo esc_html( $output ) . "\n";
+		$debug_table->add_column( absint( $post_id ) );
+		$debug_table->add_column( absint( $post_weight ) );
+		$debug_table->add_column( esc_html( strip_tags( $post_title ) ) );
 	}
 
 	echo "\n";
-	echo esc_html( strip_tags( $debug_table->get_table() ) );
+	echo $debug_table->get_table();
 	echo "\n\n";
 } else {
 	echo '[[NONE]]';
@@ -1119,8 +1108,7 @@ if ( is_array( $diagnostics['posts'] ) && isset( $diagnostics['posts'][0] ) ) {
 					do_action( 'searchwp_log', '$post->ID = ' . $post->ID );
 
 					// we need to pull the purge queue manually to see if this post is currently waiting to be indexed
-					// This has been causing issues on certain hosts so the purge queue is DISABLED (20180907)
-					$tmpPurgeQueue = searchwp_get_option( 'purge_queue' ); // This will return an empty array always (20180907)
+					$tmpPurgeQueue = searchwp_get_option( 'purge_queue' );
 					if ( ! empty( $tmpPurgeQueue ) ) {
 						if ( is_array( $tmpPurgeQueue ) ) {
 							do_action( 'searchwp_log', 'Temporary purge queue: ' . implode( ', ', $tmpPurgeQueue ) );
@@ -1377,12 +1365,12 @@ if ( is_array( $diagnostics['posts'] ) && isset( $diagnostics['posts'][0] ) ) {
 				// in the use case where the user is editing posts while the initial index is still being built
 				if ( searchwp_get_setting( 'initial_index_built' ) ) {
 					// @since 2.9.7 the index trigger was moved to later in the request
+					do_action( 'searchwp_log', 'Shutting down after purge request and index trigger' );
 					$this->trigger_index();
 				}
 			}
 
-			do_action( 'searchwp_log', 'Shutting down after purge request and index trigger' );
-			$this->shutdown( true );
+			// The indexer is running in the background, but the purge queue state is still not closed
 			die();
 		} elseif ( ! $this->paused && ! $this->indexing && ! empty( $_REQUEST['swpnonce'] ) && get_option( 'searchwp_transient' ) === sanitize_text_field( $indexnonce = searchwp_get_option( 'indexnonce' ) ) ) {
 
@@ -1419,8 +1407,15 @@ if ( is_array( $diagnostics['posts'] ) && isset( $diagnostics['posts'][0] ) ) {
 			}
 		}
 
+		$processing_purge_queue = absint( get_option( SEARCHWP_PREFIX . 'processing_purge_queue' ) );
+
 		// check to see if we need to process a purgeQueue
-		if ( is_array( $toPurge ) && ! empty( $toPurge ) && false == searchwp_get_setting( 'processing_purge_queue' ) && searchwp_get_setting( 'initial_index_built' ) ) {
+		if (
+			is_array( $toPurge )
+			&& ! empty( $toPurge )
+			&& empty( $processing_purge_queue )
+			&& searchwp_get_setting( 'initial_index_built' )
+		) {
 			do_action( 'searchwp_log', 'Delta update request: ' . implode( ', ', $toPurge ) );
 			if ( apply_filters( 'searchwp_background_deltas', true ) ) {
 				// proceed with delta update
@@ -1449,6 +1444,9 @@ if ( is_array( $diagnostics['posts'] ) && isset( $diagnostics['posts'][0] ) ) {
 							do_action( 'searchwp_log', 'Resetting delta request count' );
 							searchwp_update_option( 'purge_queue_req', 0 );
 						}
+						$purge_queue_count = $processing_purge_queue + 1;
+						do_action( 'searchwp_log', 'Updating purge queue status: ' . (string) $purge_queue_count );
+						update_option( SEARCHWP_PREFIX . 'processing_purge_queue', $purge_queue_count, 'no' );
 						$this->process_updates();
 					} else {
 						$new_purge_request_count = $invalid_purge_requests + 1;
@@ -1460,13 +1458,13 @@ if ( is_array( $diagnostics['posts'] ) && isset( $diagnostics['posts'][0] ) ) {
 				do_action( 'searchwp_log', 'Background delta index update prevented' );
 			}
 		} else {
-			if ( searchwp_get_setting( 'processing_purge_queue' ) ) {
+			// TODO: this is potentially never reached
+			if ( ! empty( $processing_purge_queue ) ) {
 				do_action( 'searchwp_log', 'Cleaning up after processing purge queue' );
-				searchwp_set_setting( 'processing_purge_queue', false );
+				update_option( SEARCHWP_PREFIX . 'processing_purge_queue', 0, 'no' );
 				searchwp_update_option( 'delta_attempts', 0 );
 			}
 		}
-
 	}
 
 
@@ -1476,22 +1474,17 @@ if ( is_array( $diagnostics['posts'] ) && isset( $diagnostics['posts'][0] ) ) {
 	 * @since 1.6
 	 */
 	function process_updates( $conclude = false ) {
+		$processing_purge_queue = absint( get_option( SEARCHWP_PREFIX . 'processing_purge_queue' ) );
 
-		// This has been causing issues on certain hosts so the purge queue is DISABLED (20180907)
-		return;
+		if ( $processing_purge_queue > 1 ) {
+			do_action( 'searchwp_log', 'process_updates() CANCELLED, indexer busy' );
+			return;
+		}
 
-		do_action( 'searchwp_log', 'process_updates()' );
-
-		// $debugging_enabled = apply_filters( 'searchwp_debug', false );
-		// if ( $debugging_enabled ) {
-		// 	$debug = new SearchWPDebug();
-		// 	$call_trace = $debug->get_call_trace();
-		// 	do_action( 'searchwp_log', print_r( $call_trace, true ) );
-		// }
+		do_action( 'searchwp_log', 'process_updates() [' . $processing_purge_queue . ']' );
 
 		$hash = sprintf( '%.22F', microtime( true ) ); // inspired by $doing_wp_cron
 		update_option( 'swppurge_transient', $hash, 'no' );
-		searchwp_set_setting( 'processing_purge_queue', true );
 
 		$destination = esc_url( $this->endpoint . '?swppurge=' . $hash );
 
@@ -2924,6 +2917,7 @@ if ( is_array( $diagnostics['posts'] ) && isset( $diagnostics['posts'][0] ) ) {
 		searchwp_set_setting( 'notices', array() );
 		searchwp_set_setting( 'valid_db_environment', false );
 		searchwp_delete_option( 'indexnonce' );
+		searchwp_update_option( 'purge_queue', array() );
 
 		delete_option( 'searchwp_transient' );
 		delete_option( 'swppurge_transient' );

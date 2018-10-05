@@ -82,6 +82,15 @@ class SWP_Query {
 	public $post_type = array();
 
 	/**
+	 * Post status limiter
+	 *
+	 * @since 2.9.16
+	 * @access public
+	 * @var array
+	 */
+	public $post_status = array();
+
+	/**
 	 * Results pool limiter
 	 *
 	 * @since 2.6
@@ -183,6 +192,24 @@ class SWP_Query {
 	public $request;
 
 	/**
+	 * The order clause
+	 *
+	 * @since 2.9.16
+	 * @access public
+	 * @var string
+	 */
+	public $order;
+
+	/**
+	 * The (limited) orderby clause
+	 *
+	 * @since 2.9.16
+	 * @access public
+	 * @var string
+	 */
+	public $orderby;
+
+	/**
 	 * Constructor; fires the search, results are stored in the posts property
 	 *
 	 * @since 2.6
@@ -203,9 +230,12 @@ class SWP_Query {
 			'post__in'          => array(),
 			'post__not_in'      => array(),
 			'post_type'         => array(),
+			'post_status'       => array( 'publish' ),
 			'tax_query'         => array(),
 			'meta_query'        => array(),
 			'date_query'        => array(),
+			'order'             => 'DESC',
+			'orderby'           => 'relevance',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -235,11 +265,14 @@ class SWP_Query {
 
 		// prep the query based on args
 		$this->maybe_post_type();
+		$this->maybe_post_status();
 		$this->maybe_post__in();
 		$this->maybe_post__not_in();
 		$this->maybe_tax_query();
 		$this->maybe_meta_query();
 		$this->maybe_date_query();
+		$this->maybe_order();
+		$this->maybe_orderby();
 
 		// retrieve the results
 		$this->get_search_results();
@@ -294,7 +327,7 @@ class SWP_Query {
 	}
 
 	/**
-	 * Support post_type argument which allows limiting to a post type
+	 * Support post_type argument which allows limiting by post type
 	 * and in doing so overriding the submitted engine settings
 	 *
 	 * @since 2.6.2
@@ -312,12 +345,154 @@ class SWP_Query {
 	}
 
 	/**
+	 * Support customizing the order clause
+	 *
+	 * @since 2.9.16
+	 */
+	function maybe_order() {
+		$this->order = 'DESC' === strtoupper( $this->order ) ? 'DESC' : 'ASC';
+
+		if ( 'DESC' === $this->order ) {
+			return;
+		}
+
+		add_filter( 'searchwp_search_query_order', array( $this, 'set_order_asc' ) );
+
+		// clean up once this query runs
+		add_action( 'searchwp_swp_query_shutdown', array( $this, 'unset_order_asc' ) );
+	}
+
+	/**
+	 * Callback to set the order clause
+	 *
+	 * @since 2.9.16
+	 */
+	function set_order_asc() {
+		return 'ASC';
+	}
+
+	/**
+	 * Callback to unset order clause customization
+	 *
+	 * @since 2.9.16
+	 */
+	function unset_order_asc() {
+		remove_filter( 'searchwp_search_query_order', array( $this, 'set_order_asc' ) );
+	}
+
+	/**
+	 * Support customizing the orderby clause
+	 *
+	 * @since 2.9.16
+	 */
+	function maybe_orderby() {
+		$allowed_orderby = array(
+			'relevance',
+			'date',
+			'rand',
+			'random',
+		);
+
+		$this->orderby = strtolower( $this->orderby );
+
+		if ( ! in_array( $this->orderby, $allowed_orderby, true ) ) {
+			$this->orderby = 'relevance';
+			return;
+		}
+
+		if ( 'relevance' === $this->orderby ) {
+			return;
+		}
+
+		if ( 'date' === $this->orderby ) {
+			add_filter( 'searchwp_return_orderby_date', array( $this, 'set_orderby_date' ), 20, 2 );
+			add_action( 'searchwp_swp_query_shutdown', array( $this, 'unset_orderby_date' ) );
+		}
+
+		if ( 'rand' === $this->orderby || 'random' === $this->orderby ) {
+			add_filter( 'searchwp_return_orderby_random', array( $this, 'set_orderby_rand' ), 20, 2 );
+			add_action( 'searchwp_swp_query_shutdown', array( $this, 'unset_orderby_rand' ) );
+		}
+	}
+
+	/**
+	 * Callback to set the orderby clause to date
+	 *
+	 * @since 2.9.16
+	 */
+	function set_orderby_date( $orderby_date, $engine ) {
+		if ( $engine !== $this->engine ) {
+			return $orderby_date;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Callback to unset order clause customization
+	 *
+	 * @since 2.9.16
+	 */
+	function unset_orderby_date() {
+		remove_filter( 'searchwp_return_orderby_date', array( $this, 'set_orderby_date' ) );
+	}
+
+	/**
+	 * Callback to set the orderby clause to rand
+	 *
+	 * @since 2.9.16
+	 */
+	function set_orderby_rand( $orderby_rand, $engine ) {
+		if ( $engine !== $this->engine ) {
+			return $orderby_rand;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Callback to unset order clause customization
+	 *
+	 * @since 2.9.16
+	 */
+	function unset_orderby_rand() {
+		remove_filter( 'searchwp_return_orderby_random', array( $this, 'set_orderby_rand' ) );
+	}
+
+	/**
+	 * Support post_status argument which allows limiting by post status
+	 * and in doing so overriding the submitted engine settings
+	 *
+	 * @since 2.6.2
+	 */
+	function maybe_post_status() {
+		if ( empty( $this->post_status ) ) {
+			return;
+		}
+
+		$this->post_status = (array) $this->post_status;
+		add_filter( 'searchwp_post_statuses', array( $this, 'set_post_status' ), 20, 2 );
+
+		// clean up once this query runs
+		add_action( 'searchwp_swp_query_shutdown', array( $this, 'unset_post_status' ) );
+	}
+
+	/**
 	 * Callback to unset engine settings customization
 	 *
 	 * @since 2.7.1
 	 */
 	function unset_post_type() {
 		remove_filter( 'searchwp_engine_settings_' . $this->engine, array( $this, 'set_post_types' ) );
+	}
+
+	/**
+	 * Callback to unset post status customization
+	 *
+	 * @since 2.9.16
+	 */
+	function unset_post_status() {
+		remove_filter( 'searchwp_post_statuses', array( $this, 'set_post_status' ) );
 	}
 
 	/**
@@ -340,6 +515,24 @@ class SWP_Query {
 		}
 
 		return $engine_settings;
+	}
+
+	/**
+	 * Callback for post_status argument that ensures the proper post status limiter is applied
+	 *
+	 * @param array  $post_statuses The incoming post statuses.
+	 * @param string $engine        The current engine.
+	 *
+	 * @since 2.9.16
+	 *
+	 * @return array
+	 */
+	function set_post_status( $post_statuses, $engine ) {
+		if ( $engine !== $this->engine ) {
+			return $post_statuses;
+		}
+
+		return $this->post_status;
 	}
 
 	/**
@@ -722,7 +915,7 @@ class SWP_Query {
 		$this->request = $swp_query->get_last_search_sql();
 
 		$this->found_posts      = intval( $swp_query->foundPosts );
-		$this->post_count       = count( $this->posts );
+		$this->post_count       = is_array( $this->posts ) && ! empty( $this->posts ) ? count( $this->posts ) : 0;
 		$this->max_num_pages    = intval( $swp_query->maxNumPages );
 		$this->posts_weights    = $swp_query->results_weights;
 

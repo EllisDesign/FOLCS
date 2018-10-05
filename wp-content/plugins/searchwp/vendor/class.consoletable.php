@@ -288,6 +288,11 @@ class SearchWPConsoleTable {
 		$output .= str_pad( $cell, $width, $row ? ' ' : '-' ); # cell content
 		$output .= $padding; # right padding
 
+		// Fix for Countable in PHP@7.2
+		if ( is_null( $row ) ) {
+			$row = array();
+		}
+
 		if ( count( $row ) - 1 === $index && $this->border ) {
 			$output .= $row ? '|' : '+';
 		}

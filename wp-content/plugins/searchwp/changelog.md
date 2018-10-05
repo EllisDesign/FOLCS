@@ -1,3 +1,14 @@
+### 2.9.16
+- **[Fix]** Fixes an issue that prevented proper respect of `searchwp_background_deltas`
+- **[Fix]** Fixes an issue with debug log permissions in some cases
+- **[Fix]** Fixes an issue where Custom Field keys were not accurately retrieved in older versions of WordPress
+- **[Fix]** Fixes settings screen JavaScript error in IE11
+- **[Fix]** Fixes an issue preventing the application of `searchwp_search_query_order`
+- **[Improvement]** Notes the requirement that the index must be rebuilt after ticking checkbox to remove minimum character count
+- **[New]** Adds `post_status` parameter to `SWP_Query`
+- **[New]** Adds `order` parameter to `SWP_Query`
+- **[New]** Adds limited `orderby` parameter to `SWP_Query`
+
 ### 2.9.15
 - **[Fix]** Fixes an issue where in some cases delta update requests were not processed correctly
 - **[Fix]** PHP Warning cleanup

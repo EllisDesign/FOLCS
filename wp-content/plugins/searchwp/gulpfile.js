@@ -16,11 +16,6 @@ gulp.task("dev", function() {
     // Retain filename
     .pipe(named())
 
-    // Babel
-    .pipe(babel({
-        presets: ['env']
-    }))
-
     // Webpack
     .pipe(webpackStream({
         resolve: {
@@ -28,7 +23,6 @@ gulp.task("dev", function() {
                 'vue$': 'vue/dist/vue.esm.js'
             }
         },
-        devtool: '#cheap-module-eval-source-map',
         module: {
             rules: [
                 {
@@ -36,19 +30,13 @@ gulp.task("dev", function() {
                     loader: 'vue-loader',
                     options: {}
                 }
-            ],
-            loaders: [
-                {
-                    test: /\.js$/,
-                    loader: 'babel-loader',
-                    exclude: /node_modules/,
-                    query: {
-                        cacheDirectory: true,
-                        presets: ['env']
-                    }
-                }
             ]
         }
+    }))
+
+    // Babel
+    .pipe(babel({
+        presets: ['env']
     }))
 
     // Output
@@ -63,11 +51,6 @@ gulp.task("build", function() {
     // Retain filename
     .pipe(named())
 
-    // Babel
-    .pipe(babel({
-        presets: ['env']
-    }))
-
     // Webpack
     .pipe(webpackStream({
       resolve: {
@@ -81,17 +64,6 @@ gulp.task("build", function() {
                 test: /\.vue$/,
                 loader: "vue-loader"
             }
-        ],
-        loaders: [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    cacheDirectory: true,
-                    presets: ['env']
-                }
-            }
         ]
       },
       plugins: [
@@ -104,6 +76,11 @@ gulp.task("build", function() {
             sourceMap: false
         })
       ]
+    }))
+
+    // Babel
+    .pipe(babel({
+        presets: ['env']
     }))
 
     // Rename with .min

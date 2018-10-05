@@ -273,7 +273,8 @@ class SearchWPSearch {
 
 			do_action( 'searchwp_log', '$terms = ' . var_export( $terms, true ) );
 
-			if ( 'DESC' != strtoupper( apply_filters( 'searchwp_search_query_order', $args['order'] ) ) && 'ASC' != strtoupper( $args['order'] ) ) {
+			$args['order'] = strtoupper( apply_filters( 'searchwp_search_query_order', $args['order'] ) );
+			if ( 'DESC' != $args['order'] && 'ASC' != $args['order'] ) {
 				$args['order'] = 'DESC';
 			}
 

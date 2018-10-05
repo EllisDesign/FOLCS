@@ -22,15 +22,19 @@ class SearchWP_Monolog {
 			$pid = substr( $pid, strlen( $pid ) - 5, strlen( $pid ) );
 		}
 
-		// the default date format is "Y-m-d H:i:s"
-		$dateFormat = "Y-m-d H:i:s";
-		// the default output format is "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n"
-		$output = "%datetime% [%channel%] %message%\n";
-		// finally, create a formatter
-		$formatter = new \Monolog\Formatter\LineFormatter( $output, $dateFormat );
-
 		$stream = new StreamHandler( $logfile, Logger::DEBUG );
-		$stream->setFormatter( $formatter );
+
+		// finally, create a formatter
+		if ( class_exists( '\Monolog\Formatter\LineFormatter' ) ) {
+			// the default date format is "Y-m-d H:i:s"
+			$dateFormat = "Y-m-d H:i:s";
+			// the default output format is "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n"
+			$output = "%datetime% [%channel%] %message%\n";
+
+			$formatter = new \Monolog\Formatter\LineFormatter( $output, $dateFormat );
+
+			$stream->setFormatter( $formatter );
+		}
 
 		$this->logger = new Logger( $pid );
 		$this->logger->pushHandler( $stream );

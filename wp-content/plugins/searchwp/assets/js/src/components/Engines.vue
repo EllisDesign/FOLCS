@@ -262,12 +262,13 @@ export default {
             };
 
             // Find all enabled post types
-            for (let engine in this.engines) {
-                if (this.engines.hasOwnProperty(engine)){
-                    for (let postType in this.engines[ engine ]) {
-                        if (this.engines[ engine ].hasOwnProperty(postType)){
-                            if (this.engines[ engine ][ postType ].hasOwnProperty('enabled')) {
-                                let enginePostType = this.engines[ engine ][ postType ];
+            let engines = this.engines;
+            for (let engine in engines) {
+                if (engines.hasOwnProperty(engine)){
+                    for (let postType in engines[ engine ]) {
+                        if (engines[ engine ].hasOwnProperty(postType)){
+                            if (engines[ engine ][ postType ].hasOwnProperty('enabled')) {
+                                let enginePostType = engines[ engine ][ postType ];
 
                                 if (enginePostType.enabled) {
                                     fingerprint.postTypes.push(postType);

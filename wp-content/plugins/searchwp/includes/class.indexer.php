@@ -794,10 +794,34 @@ class SearchWPIndexer {
 			// if it's in the index, force the indexed flag
 			if ( is_array( $already_indexed ) && ! empty( $already_indexed ) ) {
 				foreach ( $already_indexed as $already_indexed_key => $already_indexed_id ) {
-					do_action( 'searchwp_log', (int) $already_indexed_id . ' is already in the index' );
+					$remaining_terms = get_post_meta( (int) $already_indexed_id, '_' . SEARCHWP_PREFIX . 'terms', true );
+
+					if ( $remaining_terms ) {
+						if ( is_array( $remaining_terms ) ) {
+							$remaining_count = count( $remaining_terms );
+						} else {
+							$remaining_count = 'N/A';
+						}
+						do_action( 'searchwp_log', 'Post ' . (int) $already_indexed_id . ' is being chunked, ' . $remaining_count . ' remain');
+
+						// Reset the attempt count
+						$count = get_post_meta( (int) $already_indexed_id, '_' . SEARCHWP_PREFIX . 'attempts', true );
+						if ( false === $count ) {
+							$count = 0;
+						} else {
+							$count = intval( $count );
+						}
+
+						$count--;
+
+						// increment our counter to prevent the indexer getting stuck on a gigantic PDF
+						update_post_meta( (int) $already_indexed_id, '_' . SEARCHWP_PREFIX . 'attempts', $count );
+					} else {
+						do_action( 'searchwp_log', 'Post ' . (int) $already_indexed_id . ' is already in the index' );
+					}
 
 					// if we're not dealing with a term queue, mark this post as indexed
-					if ( ! get_post_meta( (int) $already_indexed_id, '_' . SEARCHWP_PREFIX . 'terms', true ) ) {
+					if ( ! $remaining_terms ) {
 						update_post_meta( (int) $already_indexed_id, '_' . SEARCHWP_PREFIX . 'last_index', current_time( 'timestamp' ) );
 					} else {
 						// this is a term chunk update, not a conflict
@@ -1733,6 +1757,8 @@ class SearchWPIndexer {
 		$content = preg_replace ( '/<[^>]*>/', ' \\0 ', $content );
 
 		$content = preg_replace( '/&nbsp;/', ' ', $content );
+
+		$content = html_entity_decode( $content );
 
 		if ( ! $skip_extra_processing ) {
 			$content = function_exists( 'mb_strtolower' ) ? mb_strtolower( $content, 'UTF-8' ) : strtolower( $content );

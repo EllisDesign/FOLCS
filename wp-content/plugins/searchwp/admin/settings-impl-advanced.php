@@ -46,7 +46,7 @@ class SearchWP_Settings_Implementation_Advanced {
 
 		$this->implement_toggle( array(
 			'name'              => 'min_word_length',
-			'description'       => __( 'Disable minimum word length', 'searchwp' )
+			'description'       => __( 'Disable minimum word length (toggling <strong>Requires reindex</strong>)', 'searchwp' )
 		), array( $this, 'when_toggle_min_word_length_enabled' ) );
 
 		$this->implement_toggle( array(
