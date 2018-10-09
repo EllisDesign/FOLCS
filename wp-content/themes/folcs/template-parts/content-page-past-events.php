@@ -100,15 +100,3 @@ $past_query = new WP_Query(
 </section>
 
 </div>
-
-<div class="past-events-search-filters js-filters">
-	<ul>
-		<li class="js-filter-search" data-filter="conversations">Conversations</li>
-		<li class="js-filter-search" data-filter="film-series">Film Series</li>
-		<li class="js-filter-search" data-filter="trials-and-error">Trials and Error</li>
-		<li class="js-filter-search" data-filter="theater-of-law">Theater of Law</li>
-		<li class="js-filter-search" data-filter="law-of-the-land">Law of the land</li>
-		<li class="js-filter-search" data-filter="short-film">International Short Film Competition</li>
-		<li class="js-filter-search" data-filter="featured">Featured Events</li>
-	</ul>
-</div>
