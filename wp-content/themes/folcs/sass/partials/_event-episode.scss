@@ -42,7 +42,8 @@
 }
 
 
-.event-episode-feature-item, .event-episode-past-item {
+.event-episode-feature-item,
+.event-episode-past-item {
 	position: relative;
 	@include background('');
 
@@ -81,6 +82,13 @@
 	padding-bottom:130px;
 	padding-left:30px;
 }
+}
+
+.event-episode-text {
+
+	img {
+		max-width:100%;
+	}
 }
 
 .event-episode-gallery-item {
