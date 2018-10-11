@@ -11,16 +11,45 @@
 
 <?php
 
-$past_query = new WP_Query(
+$query_series = isset( $_REQUEST['qseries'] ) ? sanitize_text_field( $_REQUEST['qseries'] ) : '';
 
-	array(
-		'post_type'     => array( 'past' ),
-		'post_status'   => array( 'publish' ),
-		'posts_per_page'=> -1,
-		'nopaging'      => true
-	)
-);
+$terms = get_terms( array(
+    'taxonomy' => 'past-taxonomy',
+    'hide_empty' => false,
+) );
 
+if( ! empty($query_series) && in_array($query_series, array_column($terms, 'slug')) ){
+
+	$past_query = new WP_Query(
+
+		array(
+			'post_type'     => array( 'past' ),
+			'post_status'   => array( 'publish' ),
+			'posts_per_page'=> -1,
+			'tax_query'     => array(
+				array (
+		            'taxonomy' => 'past-taxonomy',
+		            'field' => 'slug',
+		            'terms' => $query_series,
+		        )
+		    ),
+			'nopaging'      => true,
+			'order'         => 'DSC'
+		)
+	);
+
+}else {
+
+	$past_query = new WP_Query(
+
+		array(
+			'post_type'     => array( 'past' ),
+			'post_status'   => array( 'publish' ),
+			'posts_per_page'=> -1,
+			'nopaging'      => true
+		)
+	);
+}
 ?>
 
 <body <?php body_class('page-past-events past-events invert'); ?>>

@@ -355,7 +355,7 @@ if( have_rows('event_episode_items') ):
         				<div class="column-limit">
         					<div class="type-limit">
         						<div class="type-feature"><?php the_sub_field('episode_past_details'); ?></div>
-        						<a href="/past-events/?q=&q_series=<?php the_sub_field('episode_past_link'); ?>" class="type-link block-link">View More</a>
+        						<a href="/past-events/?q=&qseries=<?php the_sub_field('episode_past_link'); ?>" class="type-link block-link">View More</a>
         					</div>
         				</div>
         			</div>
