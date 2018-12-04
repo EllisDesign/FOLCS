@@ -78,9 +78,19 @@ if( have_rows('event_episode_items') ):
 								<h1>
 									<?php the_sub_field('episode_title_detail'); ?>
 								</h1>
+								<?php if(get_sub_field('episode_title_date') || get_sub_field('episode_title_start_time') || get_sub_field('episode_title_location')): ?>
 								<div class="type-details">
-									<span><?php the_sub_field('episode_title_date'); ?></span><span><?php the_sub_field('episode_title_start_time'); ?></span><span><?php the_sub_field('episode_title_location'); ?></span>
+									<?php if(get_sub_field('episode_title_date')): ?>
+										<span><?php the_sub_field('episode_title_date'); ?></span>
+									<?php endif; ?>
+									<?php if(get_sub_field('episode_title_start_time')): ?>
+										<span><?php the_sub_field('episode_title_start_time'); ?></span>
+									<?php endif; ?>
+									<?php if(get_sub_field('episode_title_location')): ?>
+										<span><?php the_sub_field('episode_title_location'); ?></span>
+									<?php endif; ?>
 								</div>
+								<?php endif; ?>
 							</div>
 							<?php
 								$subject = rawurlencode(get_sub_field('episode_title_detail'));
