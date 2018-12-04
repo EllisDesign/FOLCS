@@ -89,8 +89,10 @@
 					        if( get_row_layout() == 'event_episode_title' ):
 
 					        	$date = get_sub_field('episode_title_date', false, false);
-					        	$date = new DateTime($date);
-					        	$date = $date->format('F j');
+					        	if($date){
+						        	$date = new DateTime($date);
+						        	$date = $date->format('F j');
+						        }
 								$title = get_sub_field('episode_title_detail');
 				        ?>
 

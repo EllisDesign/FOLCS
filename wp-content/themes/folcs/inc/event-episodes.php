@@ -34,8 +34,13 @@ if( have_rows('event_episode_items') ):
 
 		<?php
 	        elseif( get_row_layout() == 'event_episode_title' ):
+
         ?>	
-        	<?php if( get_post_type() === 'past' ): ?>
+        	<?php if( get_post_type() === 'past' ): 
+
+	    			$term_list = wp_get_post_terms($post->ID, 'past-taxonomy', array( 'fields' => 'names' ));
+	    			$term = $term_list[0];
+        		?>
 
         		<section class="sequence-margin-first sequence-margin-last">
 
@@ -43,7 +48,7 @@ if( have_rows('event_episode_items') ):
         				<div class="type-limit">
 
         					<div class="category-margin-20 h1-margin-5 type-center">
-        						<div class="type-category">Film Series</div>
+        						<div class="type-category"><?php echo $term; ?></div>
         						<h1>
         							<?php the_sub_field('episode_title_detail'); ?>
         						</h1>
@@ -56,7 +61,12 @@ if( have_rows('event_episode_items') ):
         			</div>
         		</section>
 
-        	<?php else: ?>
+        	<?php else: 
+
+        			$term_list = wp_get_post_terms($post->ID, 'upcoming-taxonomy', array( 'fields' => 'names' ));
+        			$term = $term_list[0];
+
+        		?>
 
 				<section class="sequence-margin-first sequence-margin-last">
 
@@ -64,7 +74,7 @@ if( have_rows('event_episode_items') ):
 						<div class="type-limit">
 
 							<div class="category-margin-20 h1-margin-5 type-center sequence-margin-last">
-								<div class="type-category">CONVERSATIONS</div>
+								<div class="type-category"><?php echo $term; ?></div>
 								<h1>
 									<?php the_sub_field('episode_title_detail'); ?>
 								</h1>
@@ -76,6 +86,9 @@ if( have_rows('event_episode_items') ):
 								$subject = rawurlencode(get_sub_field('episode_title_detail'));
 								$url = rawurlencode(get_permalink());
 							?>
+							
+							<?php if(get_sub_field('episode_title_link')): ?>
+
 							<div class="event-tickets type-center">
 								<a href="<?php the_sub_field('episode_title_link'); ?>" class="type-link block-link">GET TICKETS</a>
 								<div class="event-social">
@@ -119,6 +132,8 @@ if( have_rows('event_episode_items') ):
 									<!-- <a href="<?php echo get_feed_link('calendar'); ?>?id=<?php echo get_the_ID(); ?>">New Calendar</a> -->
 								</div>
 							</div>
+
+							<?php endif; ?>
 
 						</div>
 					</div>
