@@ -90,6 +90,7 @@
 
 					        	$date = get_sub_field('episode_title_date', false, false);
 					        	$date = new DateTime($date);
+					        	$date = $date->format('F j');
 								$title = get_sub_field('episode_title_detail');
 				        ?>
 
@@ -162,7 +163,7 @@
 
 										<div class="type-category"><?php echo $term; ?></div>
 										<div class="h2-qualifier h2-underline">
-											<span><?php echo $date->format('F j'); ?></span>
+											<span><?php echo $date; ?></span>
 										</div>
 										<h2>
 											<span><?php echo $title; ?></span>
