@@ -93,9 +93,13 @@ nav {
 			cursor:default;
 		}
 
-		#logo-text {
-			display:none;
-		}
+		// #logo-text {
+		// 	display:none;
+		// }
+	}
+
+	#logo-text {
+		display:none;
 	}
 
 @include responsive-max(screen-medium) {
