@@ -77,6 +77,10 @@
 
 		        $term_list = wp_get_post_terms($post->ID, 'upcoming-taxonomy', array( 'fields' => 'names' ));
 		        $term = $term_list[0];
+
+		        $allnames = '';
+		        $allportraits = '';
+
 		        ?>
 
 		        <?php
