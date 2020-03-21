@@ -7,6 +7,10 @@
         $hasnav = true;
         $navtype = 'Past Events';
         $navurl = "/past-events";
+    elseif ( get_post_type() === 'blog' ):
+        $hasnav = true;
+        $navtype = 'Blog';
+        $navurl = "/blog";
     elseif ( get_queried_object()->post_name === 'event-series' ):
         $eventseries = true;
     endif;
