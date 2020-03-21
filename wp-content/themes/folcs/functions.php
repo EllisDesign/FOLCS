@@ -745,7 +745,7 @@ if($template_file == 'page-event-series.php'){
 	
 	wp_enqueue_script( 'folcs-series', get_template_directory_uri() . '/js/folcs.series.1.0.js', array('jquery-3.3.1'), null, true);
 }
-if($post->post_type == 'series' || $post->post_type == 'upcoming' || $post->post_type == 'past'){
+if($post->post_type == 'series' || $post->post_type == 'upcoming' || $post->post_type == 'past' || $post->post_type == 'blog'){
 	
 	wp_enqueue_script( 'folcs-gallery', get_template_directory_uri() . '/js/folcs.gallery.1.0.js', array('jquery-3.3.1'), null, true);
 }
