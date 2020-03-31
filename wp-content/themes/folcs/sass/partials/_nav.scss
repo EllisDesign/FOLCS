@@ -357,6 +357,10 @@ nav {
 .main-menu ul li {
     margin-bottom: 40px;
     color:$color-light;
+
+@media only screen and (max-width: 640px), (max-height: 640px) {
+	margin-bottom: 30px;
+}
 }
 
 .main-menu ul li a {
@@ -387,7 +391,7 @@ nav {
 		font-size: 70%;
 	}
 
-@include responsive-max(screen-small) {
+@media only screen and (max-width: 640px), (max-height: 640px) {
 	font-size: $font-subject;
 }
 }
@@ -395,7 +399,7 @@ nav {
 .main-menu ul li:first-child {
 	margin-top:50px;
 
-@include responsive-max(screen-small) {
+@media only screen and (max-width: 640px), (max-height: 640px) {
 	margin-top:0px;
 }
 }
@@ -413,7 +417,7 @@ nav {
     	margin-left:20px;
     }
 
-@include responsive-max(screen-small) {
+@media only screen and (max-width: 640px), (max-height: 640px) {
 
 	position: relative;
 	top: auto;
@@ -440,6 +444,7 @@ nav {
 .page-upcoming-events .nav-item-upcoming-events,
 .page-event-series .nav-item-event-series,
 .page-past-events .nav-item-past-events,
+.page-blog .nav-item-blog,
 .page-become-a-member .nav-item-become-a-member,
 .page-donate .nav-item-donate {
 	color:$color-background-light;

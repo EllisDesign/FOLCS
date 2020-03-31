@@ -331,6 +331,7 @@
                         <li><a href="/#upcoming-events" class="nav-item-upcoming-events js-nav-upcoming-events">Upcoming Events<?php echo ($events > 0) ? '<sup>&nbsp;'.$events.'</sup>' : '' ?></a></li>
                         <li><a href="/event-series" class="nav-item-event-series">Event Series</a></li>
                         <li><a href="/past-events" class="nav-item-past-events">Past Events</a></li>
+                        <li><a href="/blog" class="nav-item-blog">Blog</a></li>
                         <li><a href="/become-a-member" class="nav-item-become-a-member">Become a Member</a></li>
                         <li><a href="/donate" class="nav-item-donate">Donate</a></li>
                         <li>

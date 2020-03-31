@@ -23,7 +23,7 @@ $blog_query = new WP_Query(
 
 ?>
 
-<body <?php body_class('page-past-events past-events invert'); ?>>
+<body <?php body_class('page-blog past-events invert'); ?>>
 <?php include(get_template_directory() . '/inc/nav.php'); ?>
 
 <div class="app">
