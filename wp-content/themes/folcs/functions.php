@@ -151,7 +151,7 @@ function custom_menu_order($menu_ord) {
         'separator1', // First separator
         // 'edit.php',
         'edit.php?post_type=blog',
-        'edit.php?post_type=author',
+        'edit.php?post_type=blog_author',
         'edit.php?post_type=upcoming',
         'edit.php?post_type=past',
         'edit.php?post_type=press',
@@ -455,7 +455,7 @@ function blog_post_type() {
 add_action( 'init', 'blog_post_type', 0 );
 
 
-function author_post_type() {
+function blog_author_post_type() {
 
 	$labels = array(
 		'name'                  => _x( 'Authors', 'Post Type General Name', 'text_domain' ),
@@ -506,10 +506,10 @@ function author_post_type() {
 		'capability_type'       => 'post',
 		'show_in_rest'          => true,
 	);
-	register_post_type( 'author', $args );
+	register_post_type( 'blog_author', $args );
 
 }
-add_action( 'init', 'author_post_type', 0 );
+add_action( 'init', 'blog_author_post_type', 0 );
 
 
 function press_post_type() {

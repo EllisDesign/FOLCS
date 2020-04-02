@@ -27,7 +27,7 @@
 		<div class="row">
 
 			<div class="events-bio-portrait-col author-portrait-col">
-				<div class="events-portrait events-bio-portrait author-portrait" style="background-image:url('<?php echo $image['sizes']['thumbnail']; ?>http://folcs.org/wp-content/uploads/2018/04/irene-e1585604538658.jpeg')"></div>
+				<div class="events-portrait events-bio-portrait author-portrait" style="background-image:url('<?php echo $image['sizes']['thumbnail']; ?>')"></div>
 			</div>
 
 			<div class="events-bio-text-col author-text-col category-margin-20 p-margin-10">
