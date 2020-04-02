@@ -507,6 +507,7 @@ function author_post_type() {
 		'show_in_rest'          => true,
 	);
 	register_post_type( 'author', $args );
+	flush_rewrite_rules();
 
 }
 add_action( 'init', 'author_post_type', 0 );
