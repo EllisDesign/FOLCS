@@ -244,6 +244,11 @@ section {
 		height:154px;
 	}
 
+	&.author-portrait {
+		width:254px;
+		height:254px;
+	}
+
 @include responsive-max(screen-small) {
 	
 	&.home-events-portrait {
@@ -257,6 +262,11 @@ section {
 	}
 
 	&.events-bio-portrait {
+		width:60px;
+		height:60px;
+	}
+
+	&.author-portrait {
 		width:60px;
 		height:60px;
 	}

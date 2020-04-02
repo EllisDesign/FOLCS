@@ -83,15 +83,31 @@
 	width:200px;
 	float:left;
 
+	&.author-portrait-col {
+		width:300px;
+	}
+
 @include responsive-max(screen-small) {
 	width:75px;
+
+	&.author-portrait-col {
+		width:75px;
+	}
 }
 }
 
 .events-bio-text-col {
 	margin-left:200px;
 
+	&.author-text-col {
+		margin-left:300px;
+	}
+
 @include responsive-max(screen-small) {
 	margin-left:0px;
+
+	&.author-text-col {
+		margin-left:0;
+	}
 }
 }
