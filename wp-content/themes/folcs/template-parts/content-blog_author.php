@@ -14,6 +14,7 @@
 
 <div class="app">
 
+<div class="event-episode">
 
 <section class="event-episode-item event-episode-bio sequence-margin-first sequence-margin-last">
 
@@ -133,4 +134,5 @@ $blog_query = new WP_Query(
 	</div>
 </section>
 
+</div>
 </div>

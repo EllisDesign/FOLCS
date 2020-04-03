@@ -29,6 +29,20 @@
 }
 }
 
+.page-author .event-episode {
+	
+	> .sequence-margin-last {
+		padding-bottom:130px;
+	}
+
+@include responsive-max(screen-medium) {
+	
+	> .sequence-margin-last {
+		padding-bottom:65px;
+	}
+}
+}
+
 .event-episodes .event-episode-item:first-child {
 	padding-top:0;
 }
