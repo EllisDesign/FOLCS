@@ -628,23 +628,6 @@ function leader_post_type() {
 add_action( 'init', 'leader_post_type', 0 );
 
 
-add_filter( 'template_include', 'blog_author_template', 99 );
-
-function blog_author_template( $template ) {
-	global $post;
-
-	if ( ($post->post_type == 'blog_author') ) {
-
-		$new_template = locate_template( array( 'single-author.php' ) );
-		if ( '' != $new_template ) {
-			return $new_template;
-		}
-	}
-
-	return $template;
-}
-
-
 // function event_taxonomy() {
 
 //     register_taxonomy(
