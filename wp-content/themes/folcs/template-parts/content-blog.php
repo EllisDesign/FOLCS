@@ -46,9 +46,9 @@
 						<b><?php the_field('author_name'); ?></b><br>
 						<?php the_field('author_title'); ?>
 					</p>
-					<p>
+					<!-- <p>
 						<a href="<?php the_permalink(); ?>">More posts by <?php the_field('author_name'); ?></a>
-					</p>
+					</p> -->
 				</div>
 
 			</div>
