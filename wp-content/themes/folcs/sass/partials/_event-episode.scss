@@ -29,6 +29,7 @@
 }
 }
 
+.page-authors .event-episode,
 .page-author .event-episode {
 	
 	> .sequence-margin-last {
@@ -38,6 +39,17 @@
 @include responsive-max(screen-medium) {
 	
 	> .sequence-margin-last {
+		padding-bottom:65px;
+	}
+}
+}
+
+.page-authors .event-episode {
+
+@include responsive-max(screen-medium) {
+
+	
+	.events-bio.sequence-margin-last {
 		padding-bottom:65px;
 	}
 }

@@ -43,12 +43,12 @@
 				<div class="events-bio-text-col category-margin-20 p-margin-10">
 					<div class="type-category"><?php the_field('author_speaker_type'); ?></div>
 					<p class="type-bio">
-						<b><?php the_field('author_name'); ?></b><br>
+						<b><?php the_field('author_first_name'); ?> <?php the_field('author_last_name'); ?></b><br>
 						<?php the_field('author_title'); ?>
 					</p>
-					<!-- <p>
-						<a href="<?php the_permalink(); ?>">More posts by <?php the_field('author_name'); ?></a>
-					</p> -->
+					<p>
+						<a href="<?php the_permalink(); ?>">More posts by <?php the_field('author_first_name'); ?></a>
+					</p>
 				</div>
 
 			</div>
