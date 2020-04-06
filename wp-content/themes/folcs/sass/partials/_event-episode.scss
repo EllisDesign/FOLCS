@@ -50,6 +50,10 @@
 		padding-bottom:130px;
 	}
 
+	.events-bio.sequence-margin-last:last-child {
+		padding-bottom:0;
+	}
+
 @include responsive-max(screen-medium) {
 
 	
