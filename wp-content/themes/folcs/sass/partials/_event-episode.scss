@@ -45,6 +45,10 @@
 }
 
 .page-authors .event-episode {
+	
+	.events-bio.sequence-margin-last {
+		padding-bottom:130px;
+	}
 
 @include responsive-max(screen-medium) {
 

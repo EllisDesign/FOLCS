@@ -87,6 +87,12 @@
 		width:300px;
 	}
 
+@include responsive-max(screen-medium) {
+	
+	&.author-portrait-col {
+		width:200px;
+	}
+}
 @include responsive-max(screen-small) {
 	width:75px;
 
@@ -103,6 +109,12 @@
 		margin-left:300px;
 	}
 
+@include responsive-max(screen-medium) {
+	
+	&.author-text-col {
+		margin-left:200px;
+	}
+}
 @include responsive-max(screen-small) {
 	margin-left:0px;
 
