@@ -502,7 +502,7 @@ function blog_author_post_type() {
 		'has_archive'           => false,
 		'exclude_from_search'   => false,
 		'publicly_queryable'    => true,
-		'rewrite'               => array( 'slug' => 'author', 'with_front'=>false ),
+		'rewrite'               => array( 'slug' => 'authors', 'with_front'=>false ),
 		'capability_type'       => 'post',
 		'show_in_rest'          => true,
 	);

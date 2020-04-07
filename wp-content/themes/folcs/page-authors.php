@@ -1,5 +1,5 @@
 <?php
-/* Template Name: Author */
+/* Template Name: Authors */
 /**
  * The template for displaying all pages
  *
@@ -20,7 +20,7 @@ get_header();
 	while ( have_posts() ) :
 		the_post();
 
-		get_template_part( 'template-parts/content', 'page-author' );
+		get_template_part( 'template-parts/content', 'page-authors' );
 
 	endwhile; // End of the loop.
 	?>
