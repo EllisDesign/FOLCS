@@ -14,13 +14,17 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	 * Yoast_ACF_Analysis init.
 	 *
 	 * Add hooks and filters.
+	 *
+	 * @return void
 	 */
 	public function init() {
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		add_action( 'admin_init', [ $this, 'admin_init' ] );
 	}
 
 	/**
-	 * Check if all requirements are met and boot plugin if so
+	 * Check if all requirements are met and boot plugin if so.
+	 *
+	 * @return void
 	 */
 	public function admin_init() {
 		$dependencies = new Yoast_ACF_Analysis_Requirements();
@@ -41,13 +45,15 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 
 	/**
 	 * Boots the plugin.
+	 *
+	 * @return void
 	 */
 	public function boot() {
 		$registry = Yoast_ACF_Analysis_Facade::get_registry();
 
 		$configuration = $registry->get( 'config' );
 
-		if ( null !== $configuration && $configuration instanceof Yoast_ACF_Analysis_Configuration ) {
+		if ( $configuration !== null && $configuration instanceof Yoast_ACF_Analysis_Configuration ) {
 			return;
 		}
 
@@ -65,11 +71,32 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 		 *
 		 * @see Yoast_ACF_Analysis_Configuration
 		 *
-		 * @since 2.0.0
+		 * @since      2.0.0
+		 * @deprecated 2.4.0. Use the {@see 'Yoast\WP\ACF\config'} filter instead.
 		 *
 		 * @param Yoast_ACF_Analysis_Configuration $configuration Plugin configuration instance
 		 */
-		$custom_configuration = apply_filters( Yoast_ACF_Analysis_Facade::get_filter_name( 'config' ), $configuration );
+		$custom_configuration = apply_filters_deprecated(
+			'yoast-acf-analysis/config',
+			[ $configuration ],
+			'YoastSEO ACF 2.4.0',
+			'Yoast\WP\ACF\config'
+		);
+
+		/**
+		 * Filters the plugin configuration instance.
+		 *
+		 * You can replace the whole plugin configuration with a custom instance.
+		 * Only use this as a last resort as there are multiple more specific filters in the default configuration.
+		 *
+		 * @see Yoast_ACF_Analysis_Configuration
+		 *
+		 * @since 2.4.0
+		 *
+		 * @param Yoast_ACF_Analysis_Configuration $configuration Plugin configuration instance
+		 */
+		$custom_configuration = apply_filters( 'Yoast\WP\ACF\config', $custom_configuration );
+
 		if ( $custom_configuration instanceof Yoast_ACF_Analysis_Configuration ) {
 			$configuration = $custom_configuration;
 		}
@@ -79,44 +106,66 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 
 	/**
 	 * Filters the Scraper Configuration to add the headlines configuration for the text scraper.
+	 *
+	 * @return void
 	 */
 	protected function register_config_filters() {
 		add_filter(
-			Yoast_ACF_Analysis_Facade::get_filter_name( 'scraper_config' ),
-			array( $this, 'filter_scraper_config' )
+			'Yoast\WP\ACF\scraper_config',
+			[ $this, 'filter_scraper_config' ]
 		);
 	}
 
 	/**
 	 * Enhances the scraper config with headlines configuration.
 	 *
-	 * @param array $scraper_config Scraper configuration.
+	 * @param array $scraper_config The scraper configuration.
 	 *
-	 * @return array Enhanched scraper config.
+	 * @return array The enhanced scraper config.
 	 */
 	public function filter_scraper_config( $scraper_config ) {
-		$scraper_config['text'] = array(
-			/**
-			 * Filters which ACF text fields are to be treated as a headline by the text scraper.
-			 *
-			 * The array has the ACF field key as the array key and the value should be an integer from 1 to 6
-			 * that corresponds to the 6 possible HTML tags <h1> to <h6>.
-			 *
-			 * So this is how to make the field with the key "field_591eb45f2be86" a <h3>:
-			 *
-			 *     $headlines_config = array(
-			 *          'field_591eb45f2be86' => 3
-			 *     );
-			 *
-			 * @since 2.0.0
-			 *
-			 * @param array $headlines_config {
-			 *      @type string $field_name     Name of the ACF field
-			 *      @type int    $headline_level Headline level 1 to 6
-			 * }
-			 */
-			'headlines' => apply_filters( Yoast_ACF_Analysis_Facade::get_filter_name( 'headlines' ), array() ),
+		/**
+		 * Filters which ACF text fields are to be treated as a headline by the text scraper.
+		 *
+		 * @since      2.0.0
+		 * @deprecated 2.4.0. Use the {@see 'Yoast\WP\ACF\headlines'} filter instead.
+		 *
+		 * @param array $headlines_config {
+		 *      @type string $field_name     Name of the ACF field
+		 *      @type int    $headline_level Headline level 1 to 6
+		 * }
+		 */
+		$headline = apply_filters_deprecated(
+			'yoast-acf-analysis/headlines',
+			[ [] ],
+			'YoastSEO ACF 2.4.0',
+			'Yoast\WP\ACF\headlines'
 		);
+
+		/**
+		 * Filters which ACF text fields are to be treated as a headline by the text scraper.
+		 *
+		 * The array has the ACF field key as the array key and the value should be an integer from 1 to 6
+		 * that corresponds to the 6 possible HTML tags <h1> to <h6>.
+		 *
+		 * So this is how to make the field with the key "field_591eb45f2be86" a <h3>:
+		 *
+		 *     $headlines_config = array(
+		 *          'field_591eb45f2be86' => 3
+		 *     );
+		 *
+		 * @since 2.4.0
+		 *
+		 * @param array $headlines_config {
+		 *      @type string $field_name     Name of the ACF field
+		 *      @type int    $headline_level Headline level 1 to 6
+		 * }
+		 */
+		$headline = apply_filters( 'Yoast\WP\ACF\headlines', $headline );
+
+		$scraper_config['text'] = [
+			'headlines' => $headline,
+		];
 
 		return $scraper_config;
 	}
@@ -124,12 +173,12 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	/**
 	 * Retrieves the default field selectors for ACF4.
 	 *
-	 * @return Yoast_ACF_Analysis_String_Store
+	 * @return Yoast_ACF_Analysis_String_Store The blacklist string store.
 	 */
 	protected function get_field_selectors() {
 		$field_selectors = new Yoast_ACF_Analysis_String_Store();
 
-		$default_field_selectors = array(
+		$default_field_selectors = [
 			// Text.
 			'input[type=text][id^=acf]',
 
@@ -150,7 +199,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 
 			// Taxonomy.
 			'.acf-taxonomy-field',
-		);
+		];
 
 		foreach ( $default_field_selectors as $field_selector ) {
 			$field_selectors->add( $field_selector );
@@ -162,13 +211,13 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	/**
 	 * Retrieves the default blacklist.
 	 *
-	 * @return Yoast_ACF_Analysis_String_Store
+	 * @return Yoast_ACF_Analysis_String_Store The blacklist string store.
 	 */
 	protected function get_blacklist_type() {
 
 		$blacklist = new Yoast_ACF_Analysis_String_Store();
 
-		$default_blacklist = array(
+		$default_blacklist = [
 			'number',
 			'password',
 
@@ -192,7 +241,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 			'repeater',
 			'flexible_content',
 			'group',
-		);
+		];
 
 		foreach ( $default_blacklist as $type ) {
 			$blacklist->add( $type );
@@ -215,7 +264,9 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	}
 
 	/**
-	 * @return Yoast_ACF_Analysis_String_Store
+	 * Gets a new string store.
+	 *
+	 * @return Yoast_ACF_Analysis_String_Store A new blacklist string store.
 	 */
 	protected function get_blacklist_name() {
 		return new Yoast_ACF_Analysis_String_Store();

@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /* global YoastSEO, acf, _, jQuery, wp */
 var config = require( "./config/config.js" );
 var helper = require( "./helper.js" );
@@ -214,8 +214,7 @@ fields.each( function() {
 module.exports = field_data;
 
 },{"./../config/config.js":7}],5:[function(require,module,exports){
-/* global _, acf, jQuery */
-
+/* global _, acf, jQuery, wp */
 module.exports = function() {
 	var outerFieldsName = [
 		"flexible_content",
@@ -225,21 +224,54 @@ module.exports = function() {
 
 	var innerFields = [];
 	var outerFields = [];
+	var acfFields = [];
 
-	var fields = _.map( acf.get_fields(), function( field ) {
-		var field_data = jQuery.extend( true, {}, acf.get_data( jQuery( field ) ) );
-		field_data.$el = jQuery( field );
-		field_data.post_meta_key = field_data.name;
+	if ( wp.data.select( "core/block-editor" ) ) {
+		// Return only fields in metabox areas (either below or side) or
+		// ACF block fields in the content (not in the sidebar, to prevent duplicates)
+		var parentContainer = jQuery( ".metabox-location-normal, .metabox-location-side, .acf-block-component.acf-block-body" );
+		acfFields = acf.get_fields( false, parentContainer );
+	} else {
+		acfFields = acf.get_fields();
+	}
+
+	var fields = _.map( acfFields, function( field ) {
+		var fieldData = jQuery.extend( true, {}, acf.get_data( jQuery( field ) ) );
+		fieldData.$el = jQuery( field );
+		fieldData.post_meta_key = fieldData.name;
 
 		// Collect nested and parent
-		if ( outerFieldsName.indexOf( field_data.type ) === -1 ) {
-			innerFields.push( field_data );
+		if ( outerFieldsName.indexOf( fieldData.type ) === -1 ) {
+			innerFields.push( fieldData );
 		} else {
-			outerFields.push( field_data );
+			outerFields.push( fieldData );
 		}
 
-		return field_data;
+		return fieldData;
 	} );
+
+	// Add ACF block previews, they are not returned by acf.get_fields()
+	// First check if we can use Gutenberg.
+	if ( wp.data.select( "core/block-editor" ) ) {
+		// Gutenberg is available.
+		var blocks = wp.data.select( "core/block-editor" ).getBlocks();
+		var blockFields = _.map(
+			_.filter( blocks, function( block ) {
+				return block.name.startsWith( "acf/" ) && jQuery( `[data-block="${block.clientId}"] .acf-block-preview` ).length === 1;
+			} ),
+			function( block ) {
+				var fieldData = {
+					$el: jQuery( `[data-block="${block.clientId}"] .acf-block-preview` ),
+					key: block.attributes.id,
+					type: "block_preview",
+					name: block.name,
+					post_meta_key: block.name,
+				};
+				innerFields.push( fieldData );
+				return fieldData;
+			} );
+		fields = _.union( fields, blockFields );
+	}
 
 	if ( outerFields.length === 0 ) {
 		return fields;
@@ -282,7 +314,7 @@ var Collect = function() {
 };
 
 Collect.prototype.getFieldData = function() {
-	var field_data = this.filterBroken( this.filterBlacklistName( this.filterBlacklistType( this.getData() ) ) );
+	var field_data = this.sort( this.filterBroken( this.filterBlacklistName( this.filterBlacklistType( this.getData() ) ) ) );
 
 	var used_types = _.uniq( _.pluck( field_data, "type" ) );
 
@@ -307,6 +339,10 @@ Collect.prototype.append = function( data ) {
 
 	_.each( field_data, function( field ) {
 		if ( typeof field.content !== "undefined" && field.content !== "" ) {
+			if ( field.order < 0 ) {
+				data = field.content + "\n" + data;
+				return;
+			}
 			data += "\n" + field.content;
 		}
 	} );
@@ -347,6 +383,20 @@ Collect.prototype.filterBroken = function( field_data ) {
 	} );
 };
 
+Collect.prototype.sort = function( field_data ) {
+	if ( typeof config.fieldOrder === "undefined" || ! config.fieldOrder ) {
+		return field_data;
+	}
+
+	_.each( field_data, function( field ) {
+		field.order = ( typeof config.fieldOrder[ field.key ] === "undefined" ) ? 0 : config.fieldOrder[ field.key ];
+	} );
+
+	return field_data.sort( function( a, b ) {
+		return a.order > b.order;
+	} );
+};
+
 module.exports = new Collect();
 
 },{"./../config/config.js":7,"./../helper.js":8,"./../scraper-store.js":11,"./collect-v4.js":4,"./collect-v5.js":5}],7:[function(require,module,exports){
@@ -381,7 +431,7 @@ var config = require( "./config/config.js" );
 
 var ReplaceVar = YoastReplaceVarPlugin.ReplaceVar;
 
-var supportedTypes = [ "email", "text", "textarea", "url", "wysiwyg" ];
+var supportedTypes = [ "email", "text", "textarea", "url", "wysiwyg", "block_preview" ];
 
 var replaceVars = {};
 
@@ -447,6 +497,8 @@ var scraperObjects = {
 	// TODO: Add oembed handler
 	image: require( "./scraper/scraper.image.js" ),
 	gallery: require( "./scraper/scraper.gallery.js" ),
+	// ACF blocks preview
+	block_preview: require( "./scraper/scraper.block_preview.js" ),
 
 	// Choice
 	// TODO: select, checkbox, radio
@@ -454,7 +506,7 @@ var scraperObjects = {
 	// Relational
 	taxonomy: require( "./scraper/scraper.taxonomy.js" ),
 
-	// jQuery
+	// Third-party / jQuery
 	// TODO: google_map, date_picker, color_picker
 
 };
@@ -527,7 +579,28 @@ module.exports = {
 	getScraper: getScraper,
 };
 
-},{"./config/config.js":7,"./scraper/scraper.email.js":12,"./scraper/scraper.gallery.js":13,"./scraper/scraper.image.js":14,"./scraper/scraper.link.js":15,"./scraper/scraper.taxonomy.js":16,"./scraper/scraper.text.js":17,"./scraper/scraper.textarea.js":18,"./scraper/scraper.url.js":19,"./scraper/scraper.wysiwyg.js":20}],12:[function(require,module,exports){
+},{"./config/config.js":7,"./scraper/scraper.block_preview.js":12,"./scraper/scraper.email.js":13,"./scraper/scraper.gallery.js":14,"./scraper/scraper.image.js":15,"./scraper/scraper.link.js":16,"./scraper/scraper.taxonomy.js":17,"./scraper/scraper.text.js":18,"./scraper/scraper.textarea.js":19,"./scraper/scraper.url.js":20,"./scraper/scraper.wysiwyg.js":21}],12:[function(require,module,exports){
+/* global _ */
+
+var Scraper = function() {};
+
+Scraper.prototype.scrape = function( fields ) {
+	fields = _.map( fields, function( field ) {
+		if ( field.type !== "block_preview" ) {
+			return field;
+		}
+
+		field.content = field.$el.html();
+
+		return field;
+	} );
+
+	return fields;
+};
+
+module.exports = Scraper;
+
+},{}],13:[function(require,module,exports){
 /* global _ */
 
 var Scraper = function() {};
@@ -548,7 +621,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 module.exports = Scraper;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /* global _, jQuery */
 
 var attachmentCache = require( "./../cache/cache.attachments.js" );
@@ -590,7 +663,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 module.exports = Scraper;
 
-},{"./../cache/cache.attachments.js":2}],14:[function(require,module,exports){
+},{"./../cache/cache.attachments.js":2}],15:[function(require,module,exports){
 /* global _ */
 
 var attachmentCache = require( "./../cache/cache.attachments.js" );
@@ -628,7 +701,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 module.exports = Scraper;
 
-},{"./../cache/cache.attachments.js":2}],15:[function(require,module,exports){
+},{"./../cache/cache.attachments.js":2}],16:[function(require,module,exports){
 /* global _ */
 require( "./../scraper-store.js" );
 
@@ -663,7 +736,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 module.exports = Scraper;
 
-},{"./../scraper-store.js":11}],16:[function(require,module,exports){
+},{"./../scraper-store.js":11}],17:[function(require,module,exports){
 /* global _, acf */
 
 var Scraper = function() {};
@@ -719,7 +792,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 module.exports = Scraper;
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /* global _ */
 
 var config = require( "./../config/config.js" );
@@ -747,6 +820,8 @@ Scraper.prototype.wrapInHeadline = function( field ) {
 	var level = this.isHeadline( field );
 	if ( level ) {
 		field.content = "<h" + level + ">" + field.content + "</h" + level + ">";
+	} else {
+		field.content = "<p>" + field.content + "</p>";
 	}
 
 	return field;
@@ -772,7 +847,7 @@ Scraper.prototype.isHeadline = function( field ) {
 
 module.exports = Scraper;
 
-},{"./../config/config.js":7}],18:[function(require,module,exports){
+},{"./../config/config.js":7}],19:[function(require,module,exports){
 /* global _ */
 
 var Scraper = function() {};
@@ -783,28 +858,7 @@ Scraper.prototype.scrape = function( fields ) {
 			return field;
 		}
 
-		field.content = field.$el.find( "textarea[id^=acf]" ).val();
-
-		return field;
-	} );
-
-	return fields;
-};
-
-module.exports = Scraper;
-
-},{}],19:[function(require,module,exports){
-/* global _ */
-
-var Scraper = function() {};
-
-Scraper.prototype.scrape = function( fields ) {
-	fields = _.map( fields, function( field ) {
-		if ( field.type !== "url" ) {
-			return field;
-		}
-
-		field.content = field.$el.find( "input[type=url][id^=acf]" ).val();
+		field.content = "<p>" + field.$el.find( "textarea[id^=acf]" ).val() + "</p>";
 
 		return field;
 	} );
@@ -815,6 +869,29 @@ Scraper.prototype.scrape = function( fields ) {
 module.exports = Scraper;
 
 },{}],20:[function(require,module,exports){
+/* global _ */
+
+var Scraper = function() {};
+
+Scraper.prototype.scrape = function( fields ) {
+	fields = _.map( fields, function( field ) {
+		if ( field.type !== "url" ) {
+			return field;
+		}
+
+		var content = field.$el.find( "input[type=url][id^=acf]" ).val();
+
+		field.content = content ? '<a href="' + content + '">' + content + "</a>" : "";
+
+		return field;
+	} );
+
+	return fields;
+};
+
+module.exports = Scraper;
+
+},{}],21:[function(require,module,exports){
 /* global tinyMCE, _ */
 
 var Scraper = function() {};

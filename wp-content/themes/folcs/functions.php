@@ -150,6 +150,8 @@ function custom_menu_order($menu_ord) {
         'index.php', // Dashboard
         'separator1', // First separator
         // 'edit.php',
+        'edit.php?post_type=blog',
+        'edit.php?post_type=blog_author',
         'edit.php?post_type=upcoming',
         'edit.php?post_type=past',
         'edit.php?post_type=press',
@@ -395,6 +397,121 @@ function past_post_type() {
 add_action( 'init', 'past_post_type', 0 );
 
 
+function blog_post_type() {
+
+	$labels = array(
+		'name'                  => _x( 'Blog', 'Post Type General Name', 'text_domain' ),
+		'singular_name'         => _x( 'Blog', 'Post Type Singular Name', 'text_domain' ),
+		'menu_name'             => __( 'Blog', 'text_domain' ),
+		'name_admin_bar'        => __( 'Blog', 'text_domain' ),
+		'archives'              => __( 'Blog Archives', 'text_domain' ),
+		'attributes'            => __( 'Blog Attributes', 'text_domain' ),
+		'parent_item_colon'     => __( 'Parent Blog:', 'text_domain' ),
+		'all_items'             => __( 'All Blog', 'text_domain' ),
+		'add_new_item'          => __( 'Add New Blog', 'text_domain' ),
+		'add_new'               => __( 'Add New', 'text_domain' ),
+		'new_item'              => __( 'New Blog', 'text_domain' ),
+		'edit_item'             => __( 'Edit Blog', 'text_domain' ),
+		'update_item'           => __( 'Update Blog', 'text_domain' ),
+		'view_item'             => __( 'View Blog', 'text_domain' ),
+		'view_items'            => __( 'View Blog', 'text_domain' ),
+		'search_items'          => __( 'Search Blog', 'text_domain' ),
+		'not_found'             => __( 'Not found', 'text_domain' ),
+		'not_found_in_trash'    => __( 'Not found in Trash', 'text_domain' ),
+		'featured_image'        => __( 'Featured Image', 'text_domain' ),
+		'set_featured_image'    => __( 'Set featured image', 'text_domain' ),
+		'remove_featured_image' => __( 'Remove featured image', 'text_domain' ),
+		'use_featured_image'    => __( 'Use as featured image', 'text_domain' ),
+		'insert_into_item'      => __( 'Insert into Blog', 'text_domain' ),
+		'uploaded_to_this_item' => __( 'Uploaded to this Blog', 'text_domain' ),
+		'items_list'            => __( 'Blog list', 'text_domain' ),
+		'items_list_navigation' => __( 'Blog list navigation', 'text_domain' ),
+		'filter_items_list'     => __( 'Filter Blog list', 'text_domain' ),
+	);
+	$args = array(
+		'label'                 => __( 'Blog', 'text_domain' ),
+		'description'           => __( 'Blog', 'text_domain' ),
+		'labels'                => $labels,
+		'supports'              => array( 'title', 'revisions', 'custom-fields', 'author', 'thumbnail' ),
+		'taxonomies'            => array( 'blog-taxonomy' ),
+		'hierarchical'          => false,
+		'public'                => true,
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'menu_position'         => 0,
+		'show_in_admin_bar'     => true,
+		'show_in_nav_menus'     => true,
+		'can_export'            => true,
+		'has_archive'           => false,
+		'exclude_from_search'   => false,
+		'publicly_queryable'    => true,
+		'rewrite'               => array( 'slug' => 'blog', 'with_front'=>false ),
+		'capability_type'       => 'post',
+		'show_in_rest'          => true,
+	);
+	register_post_type( 'blog', $args );
+
+}
+add_action( 'init', 'blog_post_type', 0 );
+
+
+function blog_author_post_type() {
+
+	$labels = array(
+		'name'                  => _x( 'Authors', 'Post Type General Name', 'text_domain' ),
+		'singular_name'         => _x( 'Author', 'Post Type Singular Name', 'text_domain' ),
+		'menu_name'             => __( 'Authors', 'text_domain' ),
+		'name_admin_bar'        => __( 'Authors', 'text_domain' ),
+		'archives'              => __( 'Authors Archives', 'text_domain' ),
+		'attributes'            => __( 'Authors Attributes', 'text_domain' ),
+		'parent_item_colon'     => __( 'Parent Authors:', 'text_domain' ),
+		'all_items'             => __( 'All Authors', 'text_domain' ),
+		'add_new_item'          => __( 'Add New Author', 'text_domain' ),
+		'add_new'               => __( 'Add New', 'text_domain' ),
+		'new_item'              => __( 'New Author', 'text_domain' ),
+		'edit_item'             => __( 'Edit Author', 'text_domain' ),
+		'update_item'           => __( 'Update Author', 'text_domain' ),
+		'view_item'             => __( 'View Author', 'text_domain' ),
+		'view_items'            => __( 'View Authors', 'text_domain' ),
+		'search_items'          => __( 'Search Authors', 'text_domain' ),
+		'not_found'             => __( 'Not found', 'text_domain' ),
+		'not_found_in_trash'    => __( 'Not found in Trash', 'text_domain' ),
+		'featured_image'        => __( 'Featured Image', 'text_domain' ),
+		'set_featured_image'    => __( 'Set featured image', 'text_domain' ),
+		'remove_featured_image' => __( 'Remove featured image', 'text_domain' ),
+		'use_featured_image'    => __( 'Use as featured image', 'text_domain' ),
+		'insert_into_item'      => __( 'Insert into Authors', 'text_domain' ),
+		'uploaded_to_this_item' => __( 'Uploaded to this Authors', 'text_domain' ),
+		'items_list'            => __( 'Authors list', 'text_domain' ),
+		'items_list_navigation' => __( 'Authors list navigation', 'text_domain' ),
+		'filter_items_list'     => __( 'Filter Authors list', 'text_domain' ),
+	);
+	$args = array(
+		'label'                 => __( 'Authors', 'text_domain' ),
+		'description'           => __( 'Authors', 'text_domain' ),
+		'labels'                => $labels,
+		'supports'              => array( 'title', 'revisions', 'custom-fields', 'author', 'thumbnail' ),
+		'hierarchical'          => false,
+		'public'                => true,
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'menu_position'         => 0,
+		'show_in_admin_bar'     => true,
+		'show_in_nav_menus'     => true,
+		'can_export'            => true,
+		'has_archive'           => false,
+		'exclude_from_search'   => false,
+		'publicly_queryable'    => true,
+		'rewrite'               => array( 'slug' => 'authors', 'with_front'=>false ),
+		'capability_type'       => 'post',
+		'show_in_rest'          => true,
+	);
+	register_post_type( 'blog_author', $args );
+
+}
+add_action( 'init', 'blog_author_post_type', 0 );
+
+
 function press_post_type() {
 
 	$labels = array(
@@ -554,6 +671,20 @@ function past_taxonomy() {
 }
 add_action( 'init', 'past_taxonomy' );
 
+function blog_taxonomy() {
+
+    register_taxonomy(
+        'blog-taxonomy',
+        array( 'blog' ),
+        array(
+            'label' => __( 'Blog Category' ),
+            'rewrite' => array( 'slug' => 'blog-category' ),
+            'hierarchical' => true,
+        )
+    );
+}
+add_action( 'init', 'blog_taxonomy' );
+
 function press_taxonomy() {
 
     register_taxonomy(
@@ -639,7 +770,7 @@ function folcs_scripts() {
 
 	wp_enqueue_style( 'reset-normalize', get_template_directory_uri() . '/reset-normalize.css', array(), null, 'all');
     
-    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.0.4', 'all');
+    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.0.8', 'all');
 
     wp_enqueue_style( 'googlefonts-style', 'https://fonts.googleapis.com/css?family=Barlow:300,300i,400,500,600,700', array(), null, 'all');
 
@@ -672,7 +803,7 @@ if($template_file == 'page-event-series.php'){
 	
 	wp_enqueue_script( 'folcs-series', get_template_directory_uri() . '/js/folcs.series.1.0.js', array('jquery-3.3.1'), null, true);
 }
-if($post->post_type == 'series' || $post->post_type == 'upcoming' || $post->post_type == 'past'){
+if($post->post_type == 'series' || $post->post_type == 'upcoming' || $post->post_type == 'past' || $post->post_type == 'blog'){
 	
 	wp_enqueue_script( 'folcs-gallery', get_template_directory_uri() . '/js/folcs.gallery.1.0.js', array('jquery-3.3.1'), null, true);
 }
@@ -723,10 +854,12 @@ require get_template_directory() . '/inc/class.taxonomy-single-term.php';
 
 $custom_tax_upcoming = new Taxonomy_Single_Term( 'upcoming-taxonomy', array( 'upcoming' ), 'radio' );
 $custom_tax_past = new Taxonomy_Single_Term( 'past-taxonomy', array( 'past' ), 'radio' );
+$custom_tax_blog = new Taxonomy_Single_Term( 'blog-taxonomy', array( 'blog' ), 'radio' );
 $custom_tax_leader = new Taxonomy_Single_Term( 'leader-taxonomy', array( 'leader' ), 'radio' );
 
 $custom_tax_upcoming->set( 'priority', 'low' );
 $custom_tax_past->set( 'priority', 'low' );
+$custom_tax_blog->set( 'priority', 'low' );
 $custom_tax_leader->set( 'priority', 'low' );
 
 

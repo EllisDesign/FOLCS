@@ -61,6 +61,31 @@ if( have_rows('event_episode_items') ):
         			</div>
         		</section>
 
+        	<?php elseif( get_post_type() === 'blog' ): 
+
+	    			$term_list = wp_get_post_terms($post->ID, 'blog-taxonomy', array( 'fields' => 'names' ));
+	    			$term = $term_list[0];
+        		?>
+
+        		<section class="sequence-margin-first sequence-margin-last">
+
+        			<div class="column-limit">
+        				<div class="type-limit">
+
+        					<div class="category-margin-20 h1-margin-5 type-center">
+        						<div class="type-category"><?php echo $term; ?></div>
+        						<h1>
+        							<?php the_sub_field('episode_title_detail'); ?>
+        						</h1>
+        						<div class="type-details">
+        							<?php the_sub_field('episode_title_date'); ?>
+        						</div>
+        					</div>
+
+        				</div>
+        			</div>
+        		</section>
+
         	<?php else: 
 
         			$term_list = wp_get_post_terms($post->ID, 'upcoming-taxonomy', array( 'fields' => 'names' ));
