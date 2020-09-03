@@ -29,6 +29,40 @@
 }
 }
 
+.page-authors .event-episode,
+.page-author .event-episode {
+	
+	> .sequence-margin-last {
+		padding-bottom:130px;
+	}
+
+@include responsive-max(screen-medium) {
+	
+	> .sequence-margin-last {
+		padding-bottom:65px;
+	}
+}
+}
+
+.page-authors .event-episode {
+	
+	.events-bio.sequence-margin-last {
+		padding-bottom:130px;
+	}
+
+	.events-bio.sequence-margin-last:last-child {
+		padding-bottom:0;
+	}
+
+@include responsive-max(screen-medium) {
+
+	
+	.events-bio.sequence-margin-last {
+		padding-bottom:65px;
+	}
+}
+}
+
 .event-episodes .event-episode-item:first-child {
 	padding-top:0;
 }
