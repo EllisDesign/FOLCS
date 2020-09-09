@@ -313,8 +313,9 @@
                     <li data-filter="conversations"><a href="/event-series/conversations/">Conversations</a></li>
                     <li data-filter="film-series"><a href="/event-series/film-series/">Film Series</a></li>
                     <li data-filter="trials-and-error"><a href="/event-series/trials-and-error/">Trials &amp; Error</a></li>
-                    <li data-filter="theater-of-law"><a href="/event-series/theater-of-law/">Theater of Law</a></li>
+                    <li data-filter="virtual-film-club"><a href="/event-series/virtual-film-club/">Virtual Film Club</a></li>
                     <li data-filter="law-of-the-land"><a href="/event-series/law-of-the-land/">Law of the Land</a></li>
+                    <li data-filter="theater-of-law"><a href="/event-series/theater-of-law/">Theater of Law</a></li>
                     <li data-filter="ISFC"><a href="/event-series/ISFC/">International Short<br>Film Competition</a></li>
                 </ul>
             </div>
