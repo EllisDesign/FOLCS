@@ -1,46 +1,45 @@
 <?php
 
-
 namespace wpdFormAttr\Field;
 
 class TextAreaField extends Field {
 
     protected function dashboardForm() {
         ?>
-        <div class="wpd-field-body" style="display: <?php echo $this->display; ?>">
+        <div class="wpd-field-body" style="display: <?php echo esc_attr($this->display); ?>">
             <div class="wpd-field-option wpdiscuz-item">
-                <input class="wpd-field-type" type="hidden" value="<?php echo $this->type; ?>" name="<?php echo $this->fieldInputName; ?>[type]" />
-                <label><?php _e('Name', 'wpdiscuz'); ?>:</label> 
-                <input class="wpd-field-name" type="text" value="<?php echo $this->fieldData['name']; ?>" name="<?php echo $this->fieldInputName; ?>[name]" required />
-                <p class="wpd-info"><?php _e('Also used for field placeholder', 'wpdiscuz'); ?></p>
+                <input class="wpd-field-type" type="hidden" value="<?php echo esc_attr($this->type); ?>" name="<?php echo esc_attr($this->fieldInputName); ?>[type]" />
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[name]"><?php esc_html_e("Name", "wpdiscuz"); ?>:</label> 
+                <input class="wpd-field-name" type="text" value="<?php echo esc_attr($this->fieldData["name"]); ?>" name="<?php echo esc_attr($this->fieldInputName); ?>[name]" id="<?php echo esc_attr($this->fieldInputName); ?>[name]" required />
+                <p class="wpd-info"><?php esc_html_e("Also used for field placeholder", "wpdiscuz"); ?></p>
             </div>
             <div class="wpd-field-option">
-                <label><?php _e('Description', 'wpdiscuz'); ?>:</label> 
-                <input type="text" value="<?php echo $this->fieldData['desc']; ?>" name="<?php echo $this->fieldInputName; ?>[desc]" />
-                <p class="wpd-info"><?php _e('Field specific short description or some rule related to inserted information.', 'wpdiscuz'); ?></p>
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[desc]"><?php esc_html_e("Description", "wpdiscuz"); ?>:</label> 
+                <input type="text" value="<?php echo esc_attr($this->fieldData["desc"]); ?>" name="<?php echo esc_attr($this->fieldInputName); ?>[desc]" id="<?php echo esc_attr($this->fieldInputName); ?>[desc]" />
+                <p class="wpd-info"><?php esc_html_e("Field specific short description or some rule related to inserted information.", "wpdiscuz"); ?></p>
             </div>
             <div class="wpd-field-option">
-                <label><?php _e('Field is required', 'wpdiscuz'); ?>:</label> 
-                <input type="checkbox" value="1" <?php checked($this->fieldData['required'], 1, true); ?> name="<?php echo $this->fieldInputName; ?>[required]" />
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[required]"><?php esc_html_e("Field is required", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["required"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[required]" id="<?php echo esc_attr($this->fieldInputName); ?>[required]" />
             </div>
             <div class="wpd-field-option">
-                <label><?php _e('Display on reply form', 'wpdiscuz'); ?>:</label> 
-                <input type="checkbox" value="1" <?php checked($this->fieldData['is_show_sform'], 1, true); ?> name="<?php echo $this->fieldInputName; ?>[is_show_sform]" />
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[is_show_sform]"><?php esc_html_e("Display on reply form", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["is_show_sform"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[is_show_sform]" id="<?php echo esc_attr($this->fieldInputName); ?>[is_show_sform]" />
             </div>
             <div class="wpd-field-option">
-                <label><?php _e('Display on comment', 'wpdiscuz'); ?>:</label> 
-                <input type="checkbox" value="1" <?php checked($this->fieldData['is_show_on_comment'], 1, true); ?> name="<?php echo $this->fieldInputName; ?>[is_show_on_comment]" />
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]"><?php esc_html_e("Display on comment", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["is_show_on_comment"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]" id="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]" />
             </div>
             <div class="wpd-advaced-options wpd-field-option">
-                <small class="wpd-advaced-options-title"><?php _e('Advanced Options', 'wpdiscuz'); ?></small>
+                <small class="wpd-advaced-options-title"><?php esc_html_e("Advanced Options", "wpdiscuz"); ?></small>
                 <div class="wpd-field-option wpd-advaced-options-cont">
                     <div class="wpd-field-option">
-                        <label><?php _e('Meta Key', 'wpdiscuz'); ?>:</label> 
-                        <input type="text" value="<?php echo $this->name; ?>"  name="<?php echo $this->fieldInputName; ?>[meta_key]"  required="required"/>
+                        <label for="<?php echo esc_attr($this->fieldInputName); ?>[meta_key]"><?php esc_html_e("Meta Key", "wpdiscuz"); ?>:</label> 
+                        <input type="text" value="<?php echo esc_attr($this->name); ?>" name="<?php echo esc_attr($this->fieldInputName); ?>[meta_key]" id="<?php echo esc_attr($this->fieldInputName); ?>[meta_key]" required="required"/>
                     </div>
                     <div class="wpd-field-option">
-                        <label><?php _e('Replace old meta key', 'wpdiscuz'); ?>:</label> 
-                        <input type="checkbox" value="1" checked="checked"  name="<?php echo $this->fieldInputName; ?>[meta_key_replace]" />
+                        <label for="<?php echo esc_attr($this->fieldInputName); ?>[meta_key_replace]"><?php esc_html_e("Replace old meta key", "wpdiscuz"); ?>:</label> 
+                        <input type="checkbox" value="1" checked="checked" name="<?php echo esc_attr($this->fieldInputName); ?>[meta_key_replace]" id="<?php echo esc_attr($this->fieldInputName); ?>[meta_key_replace]" />
                     </div>
                 </div>
             </div>
@@ -49,50 +48,51 @@ class TextAreaField extends Field {
         <?php
     }
 
-    public function editCommentHtml($key, $value, $data,$comment) {
-        if ($comment->comment_parent && !$data['is_show_sform']) {
-            return '';
+    public function editCommentHtml($key, $value, $data, $comment) {
+        if ($comment->comment_parent && !$data["is_show_sform"]) {
+            return "";
         }
-        $html = '<tr class="' . $key . '-wrapper"><td class="first">';
-        $html .= '<label for = "' . $key . '">' . $data['name'] . ': </label>';
-        $html .= '</td><td>';
-        $html .= '<div class="wpdiscuz-item">';
-        $required = $data['required'] ? 'required="required"' : '';
-        $html .= '<textarea  ' . $required . ' class="wpd-field wpd-field-textarea" id="' . $key . '"  name="' . $key . '">'.esc_html($value).'</textarea>';
-        $html .= '</div>';
-        $html .= '</td></tr >';
+        $html = "<tr class='" . esc_attr($key) . "-wrapper wpd-edit-textarea'><td class='first'>";
+        $html .= "<label for='" . esc_attr($key) . "'>" . esc_html($data["name"]) . ": </label>";
+        $html .= "</td><td>";
+        $html .= "<div class='wpdiscuz-item'>";
+        $required = $data["required"] ? "required='required'" : "";
+        $html .= "<textarea  $required class='wpd-field wpd-field-textarea' id='" . esc_attr($key) . "'  name='" . esc_attr($key) . "'>" . esc_html($value) . "</textarea>";
+        $html .= "</div>";
+        $html .= "</td></tr>";
         return $html;
     }
 
     public function frontFormHtml($name, $args, $options, $currentUser, $uniqueId, $isMainForm) {
-        if(!$isMainForm && !$args['is_show_sform']){
+        if (!$isMainForm && !$args["is_show_sform"]) {
             return;
         }
         ?>
-        <div class="wpdiscuz-item <?php echo $name, '-wrapper'; ?>">
-            <?php $required = $args['required'] ? 'required="required"' : ''; ?>
-            <textarea <?php echo $required; ?> class="<?php echo $name; ?> wpd-field wpd-field-textarea"  name="<?php echo $name; ?>" value="" placeholder="<?php _e($args['name'], 'wpdiscuz'); echo !empty($args['required']) ? '*' : ''; ?>"></textarea>
-            <?php if ($args['desc']) { ?>
-            <div class="wpd-field-desc"><i class="far fa-question-circle" aria-hidden="true"></i><span><?php echo $args['desc']; ?></span></div>
+        <div class="wpdiscuz-item <?php echo "$name-wrapper"; ?>">
+            <?php $required = $args["required"] ? "required='required'" : ""; ?>
+            <textarea id="<?php echo esc_attr($name) . "-" . $uniqueId; ?>" <?php echo $required; ?> class="<?php echo esc_attr($name); ?> wpd-field wpd-field-textarea"  name="<?php echo esc_attr($name); ?>" value="" placeholder="<?php echo esc_attr__($args["name"], "wpdiscuz") . (!empty($args["required"]) ? "*" : ""); ?>"></textarea>
+            <label for="<?php echo esc_attr($name) . "-" . $uniqueId; ?>" class="wpdlb"><?php echo esc_attr__($args["name"], "wpdiscuz") . (!empty($args["required"]) ? "*" : ""); ?></label>
+            <?php if ($args["desc"]) { ?>
+                <div class="wpd-field-desc"><i class="far fa-question-circle"></i><span><?php echo esc_html($args["desc"]); ?></span></div>
             <?php } ?>
         </div>
         <?php
     }
 
     public function frontHtml($value, $args) {
-        $html = '<div class="wpd-custom-field wpd-cf-text">';
-        $html .= '<div class="wpd-cf-label">' . $args['name'] . '</div> <div class="wpd-cf-value"> ' . apply_filters('wpdiscuz_custom_field_textarea', nl2br($value) , $args) . '</div>';
-        $html .= '</div>';
+        $html = "<div class='wpd-custom-field wpd-cf-text'>";
+        $html .= "<div class='wpd-cf-label'>" . esc_html($args["name"]) . "</div> <div class='wpd-cf-value'> " . esc_html(apply_filters("wpdiscuz_custom_field_textarea", nl2br($value), $args)) . "</div>";
+        $html .= "</div>";
         return $html;
     }
 
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
-        if(!$this->isCommentParentZero() && !$args['is_show_sform']){
-            return '';
+        if (!$this->isCommentParentZero() && !$args["is_show_sform"]) {
+            return "";
         }
         $value = filter_input(INPUT_POST, $fieldName, FILTER_SANITIZE_STRING);
-        if (!$value && $args['required']) {
-            wp_die(__($args['name'], 'wpdiscuz') . ' : ' . __('field is required!', 'wpdiscuz'));
+        if (!$value && $args["required"]) {
+            wp_die(esc_html__($args["name"], "wpdiscuz") . " : " . esc_html__("field is required!", "wpdiscuz"));
         }
         return $value;
     }

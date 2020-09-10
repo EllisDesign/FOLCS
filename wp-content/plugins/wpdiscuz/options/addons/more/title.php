@@ -1,6 +1,6 @@
 <?php
-if (!defined('ABSPATH')) {
+if (!defined("ABSPATH")) {
     exit();
 }
 ?>
-<li><?php _e('More Addons...', 'wpdiscuz'); ?></li>
+<li><?php esc_html_e("More Addons...", "wpdiscuz"); ?></li>

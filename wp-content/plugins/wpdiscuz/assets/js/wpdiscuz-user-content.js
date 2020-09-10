@@ -1,15 +1,11 @@
 ;
 jQuery(document).ready(function ($) {
     var refreshAfterDeleting = 0;
-    var isNativeAjaxEnabled = wpdiscuzAjaxObj.wpdiscuz_options.isNativeAjaxEnabled;
+    var isNativeAjaxEnabled = parseInt(wpdiscuzAjaxObj.isNativeAjaxEnabled);
+    var additionalTab = parseInt(wpdiscuzUCObj.additionalTab);
     $(document).delegate('.wpd-info,.wpd-page-link,.wpd-delete-content,.wpd-user-email-delete-links', 'click', function (e) {
         e.preventDefault();
     });
-
-//    $('#wc_delete_content_message').delay(3000).fadeOut(1500, function () {
-//        $(this).remove();
-//        location.href = location.href.substring(0, location.href.indexOf('delete') - 1);
-//    });
 
     $(document).delegate('.wpd-info.wpd-not-clicked', 'click', function (e) {
         var btn = $(this);
@@ -25,29 +21,47 @@ jQuery(document).ready(function ($) {
         var oldClass = icon.attr('class');
         icon.removeClass();
         icon.addClass('fas fa-pulse fa-spinner');
-        var ajax = isNativeAjaxEnabled ? getUCAjaxObj(false, data) : getUCACustomAjaxObj(false, data);
-        ajax.done(function (response) {
-            btn.addClass('wpd-not-clicked');
-            icon.removeClass();
-            icon.addClass(oldClass);
-            if (response) {
-                $('#wpdUserContentInfo').html(response);
-                $('#wpdUserContentInfo ul.wpd-list .wpd-list-item:first-child').addClass('wpd-active');
-                $('#wpdUserContentInfo div.wpd-content .wpd-content-item:first-child').addClass('wpd-active');
+        wpdiscuzAjaxObj.getAjaxObj(isNativeAjaxEnabled || additionalTab, false, data)
+                .done(function (response) {
+                    btn.addClass('wpd-not-clicked');
+                    icon.removeClass();
+                    icon.addClass(oldClass);
+                    if (response) {
+                        $('#wpdUserContentInfo').html(response);
+                        $('#wpdUserContentInfo ul.wpd-list .wpd-list-item:first-child').addClass('wpd-active');
+                        $('#wpdUserContentInfo div.wpd-content .wpd-content-item:first-child').addClass('wpd-active');
 
-                if (!($('#wpdUserContentInfo').is(':visible'))) {
-                    $('#wpdUserContentInfoAnchor').trigger('click');
-                }
-            }
-        });
+                        if (!($('#wpdUserContentInfo').is(':visible'))) {
+                            $('#wpdUserContentInfoAnchor').trigger('click');
+                        }
+                    }
+                });
     }
 
     $(document).delegate('.wpd-list-item', 'click', function () {
         var relValue = $('input.wpd-rel', this).val();
         $('#wpdUserContentInfo .wpd-list-item').removeClass('wpd-active');
         $('#wpdUserContentInfo .wpd-content-item').removeClass('wpd-active');
-        $(this).addClass('wpd-active');
-        $('#wpdUserContentInfo #' + relValue).addClass('wpd-active');
+        var $this = $(this);
+        if (!$('#wpdUserContentInfo #' + relValue).text().length) {
+            var data = new FormData();
+            data.append('action', $this.attr('data-action'));
+            data.append('page', 0);
+            $('#wpdUserContentInfo #' + relValue).addClass('wpd-active');
+            $('#wpdUserContentInfo #' + relValue).css('text-align', 'center');
+            wpdiscuzAjaxObj.getAjaxObj(isNativeAjaxEnabled || additionalTab, true, data)
+                    .done(function (response) {
+                        if (response) {
+                            $('#wpdUserContentInfo #' + relValue).css('text-align', '');
+                            $this.addClass('wpd-active');
+                            $('#wpdUserContentInfo #' + relValue).html(response);
+                        }
+                        $('#wpdiscuz-loading-bar').hide();
+                    });
+        } else {
+            $this.addClass('wpd-active');
+            $('#wpdUserContentInfo #' + relValue).addClass('wpd-active');
+        }
     });
 
 
@@ -59,14 +73,14 @@ jQuery(document).ready(function ($) {
         var data = new FormData();
         data.append('action', action);
         data.append('page', goToPage);
-        var ajax = isNativeAjaxEnabled ? getUCAjaxObj(true, data) : getUCACustomAjaxObj(true, data);
-        ajax.done(function (response) {
-            btn.addClass('wpd-not-clicked');
-            if (response) {
-                $('.wpd-content-item.wpd-active').html(response);
-            }
-            $('.wpdiscuz-loading-bar').hide();
-        });
+        wpdiscuzAjaxObj.getAjaxObj(isNativeAjaxEnabled || additionalTab, true, data)
+                .done(function (response) {
+                    btn.addClass('wpd-not-clicked');
+                    if (response) {
+                        $('.wpd-content-item.wpd-active').html(response);
+                    }
+                    $('#wpdiscuz-loading-bar').hide();
+                });
     });
 
     $(document).delegate('.wpd-delete-content.wpd-not-clicked', 'click', function () {
@@ -97,16 +111,13 @@ jQuery(document).ready(function ($) {
             data.append('page', goToPage);
             data.append('action', action);
 
-
-            var ajax = isNativeAjaxEnabled ? getUCAjaxObj(false, data) : getUCACustomAjaxObj(false, data);
-            ajax.done(function (response) {
-                btn.addClass('wpd-not-clicked');
-                icon.removeClass().addClass(oldClass);
-                $('.wpd-content-item.wpd-active').html(response);
-                if (action == 'wpdDeleteComment' || action == 'wpdCancelFollow') {
-                    refreshAfterDeleting = 1;
-                }
-            });
+            wpdiscuzAjaxObj.getAjaxObj(isNativeAjaxEnabled || additionalTab, false, data)
+                    .done(function (response) {
+                        btn.addClass('wpd-not-clicked');
+                        icon.removeClass().addClass(oldClass);
+                        $('.wpd-content-item.wpd-active').html(response);
+                        refreshAfterDeleting = 1;
+                    });
 
         }
     });
@@ -125,11 +136,11 @@ jQuery(document).ready(function ($) {
         $('.wpd-loading', btn).addClass('wpd-show');
         var data = new FormData();
         data.append('action', 'wpdEmailDeleteLinks');
-        var ajax = isNativeAjaxEnabled ? getUCAjaxObj(false, data) : getUCACustomAjaxObj(false, data);
-        ajax.done(function (response) {
-            btn.addClass('wpd-not-clicked');
-            $('[data-lity-close]', window.parent.document).trigger('click');
-        });
+        wpdiscuzAjaxObj.getAjaxObj(isNativeAjaxEnabled || additionalTab, false, data)
+                .done(function (response) {
+                    btn.addClass('wpd-not-clicked');
+                    $('[data-lity-close]', window.parent.document).trigger('click');
+                });
     });
 
     $(document).delegate('.wpd-user-settings-button.wpd-not-clicked', 'click', function () {
@@ -142,25 +153,25 @@ jQuery(document).ready(function ($) {
             var data = new FormData();
             data.append('action', 'wpdGuestAction');
             data.append('guestAction', guestAction);
-            var ajax = isNativeAjaxEnabled ? getUCAjaxObj(false, data) : getUCACustomAjaxObj(false, data);
-            ajax.done(function (response) {
-                btn.addClass('wpd-not-clicked');
-                btn.find('.wpd-loading').removeClass('wpd-show');
-                try {
-                    var r = $.parseJSON(response);
-                    btn.after(r.message);
-                    var messageWrap = btn.next('.wpd-guest-action-message');
-                    messageWrap.fadeIn(100).fadeOut(7000, function () {
-                        messageWrap.remove();
-                        if (parseInt(r.code) === 1) {
-                            btn.parent().remove();
-                            guestActionDeleteCookieClass();
+            wpdiscuzAjaxObj.getAjaxObj(isNativeAjaxEnabled || additionalTab, false, data)
+                    .done(function (response) {
+                        btn.addClass('wpd-not-clicked');
+                        btn.find('.wpd-loading').removeClass('wpd-show');
+                        try {
+                            var r = $.parseJSON(response);
+                            btn.after(r.message);
+                            var messageWrap = btn.next('.wpd-guest-action-message');
+                            messageWrap.fadeIn(100).fadeOut(7000, function () {
+                                messageWrap.remove();
+                                if (parseInt(r.code) === 1) {
+                                    btn.parent().remove();
+                                    guestActionDeleteCookieClass();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
                         }
                     });
-                } catch (e) {
-                    console.log(e);
-                }
-            });
         } else {
             wpdDeleteAllCookies();
         }
@@ -180,45 +191,7 @@ jQuery(document).ready(function ($) {
             var name = eqPos > -1 ? wpdCookie.substr(0, eqPos) : wpdCookie;
             Cookies.remove(name.trim());
         }
-        Cookies.remove(wpdiscuzAjaxObj.wpdiscuz_options.lastVisitKey, {path: window.location});
         location.reload(true);
     }
 
-    /**
-     * @param {type} action the action key 
-     * @param {type} data the request properties
-     * @returns {jqXHR}
-     */
-    function getUCAjaxObj(isShowTopLoading, data) {
-        if (isShowTopLoading) {
-            $('.wpdiscuz-loading-bar').show();
-        }
-        data.append('postId', wpdiscuzAjaxObj.wpdiscuz_options.wc_post_id);
-        return $.ajax({
-            type: 'POST',
-            url: wpdiscuzAjaxObj.url,
-            data: data,
-            contentType: false,
-            processData: false,
-        });
-    }
-
-    /**
-     * @param {type} action the action key 
-     * @param {type} data the request properties
-     * @returns {jqXHR}
-     */
-    function getUCACustomAjaxObj(isShowTopLoading, data) {
-        if (isShowTopLoading) {
-            $('.wpdiscuz-loading-bar').show();
-        }
-        data.append('postId', wpdiscuzAjaxObj.wpdiscuz_options.wc_post_id);
-        return $.ajax({
-            type: 'POST',
-            url: wpdiscuzAjaxObj.customAjaxUrl,
-            data: data,
-            contentType: false,
-            processData: false,
-        });
-    }
 });

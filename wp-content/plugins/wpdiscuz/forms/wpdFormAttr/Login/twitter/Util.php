@@ -14,7 +14,7 @@ class Util
      */
     public static function urlencodeRfc3986($input)
     {
-        $output = '';
+        $output = "";
         if (is_array($input)) {
             $output = array_map([__NAMESPACE__ . '\Util', 'urlencodeRfc3986'], $input);
         } elseif (is_scalar($input)) {
@@ -36,7 +36,7 @@ class Util
     /**
      * This function takes a input like a=b&a=c&d=e and returns the parsed
      * parameters like this
-     * array('a' => array('b','c'), 'd' => 'e')
+     * ['a' => ['b','c'], 'd' => 'e']
      *
      * @param string $input
      *
@@ -54,7 +54,7 @@ class Util
         foreach ($pairs as $pair) {
             $split = explode('=', $pair, 2);
             $parameter = Util::urldecodeRfc3986($split[0]);
-            $value = isset($split[1]) ? Util::urldecodeRfc3986($split[1]) : '';
+            $value = isset($split[1]) ? Util::urldecodeRfc3986($split[1]) : "";
 
             if (isset($parameters[$parameter])) {
                 // We have already recieved parameter(s) with this name, so add to the list
@@ -82,7 +82,7 @@ class Util
     public static function buildHttpQuery(array $params)
     {
         if (empty($params)) {
-            return '';
+            return "";
         }
 
         // Urlencode both keys and values

@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH')) {
+if (!defined("ABSPATH")) {
     exit();
 }
 
@@ -86,13 +86,13 @@ if (!$isMuExists) {
                 <tr scope="row">
                     <th><label for="wmuIsImagesAllowed">Enable Image uploader</label>
                     </th>
-                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsImagesAllowed"/> &nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . '/options/addons/images/image.png') ?>"/>
+                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsImagesAllowed"/> &nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/options/addons/images/image.png") ?>"/>
                     </td>
                 </tr>
                 <tr scope="row">
                     <th><label for="wmuIsVideosAllowed">Enable Video and Audio uploader</label>
                     </th>
-                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsVideosAllowed"/> &nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . '/options/addons/images/video.png') ?>"/>
+                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsVideosAllowed"/> &nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/options/addons/images/video.png") ?>"/>
                     </td>
                 </tr>
                 <tr scope="row">
@@ -100,7 +100,7 @@ if (!$isMuExists) {
                         <label for="wmuIsFilesAllowed">Enable other files uploader</label>
                         <p style="font-size:13px; color:#999999; width:98%; padding-left:0px; margin-left:0px;">This uploader allows to attach non-image and non-video files like zip, doc, pdf, txt...</p>
                     </th>
-                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsFilesAllowed"/> &nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . '/options/addons/images/file.png') ?>"/>
+                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsFilesAllowed"/> &nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/options/addons/images/file.png") ?>"/>
                     </td>
                 </tr>
                 <tr scope="row">
@@ -108,7 +108,7 @@ if (!$isMuExists) {
                         <label for="wmuIsEmbed">Allow media embedding function</label>
                         <p style="font-size:13px; color:#999999; width:98%; padding-left:0px; margin-left:0px;">This is the auto-embed function which converts e.g. <strong>YouTube</strong> video URL to Embedded Player and so on...</p>
                     </th>
-                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsEmbed"/> &nbsp;&nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . '/options/addons/images/html5-youtub-player.png') ?>" style="vertical-align:middle; height:65px;" title="Player Screenshot"/>
+                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsEmbed"/> &nbsp;&nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/options/addons/images/html5-youtub-player.png") ?>" style="vertical-align:middle; height:65px;" title="Player Screenshot"/>
                     </td>
                 </tr>
                 <tr scope="row" class="tr-wmuIsEmbedContent">
@@ -116,7 +116,7 @@ if (!$isMuExists) {
                         <label for="wmuIsEmbedContent">Allow content embedding function</label>
                         <p style="font-size:13px; color:#999999; width:98%; padding-left:0px; margin-left:0px;">This is the auto-embed function which converts site content</p>
                     </th>
-                    <td><input type="checkbox" value="1" name="" id="wmuIsEmbedContent"/> &nbsp;&nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . '/options/addons/images/embedded-content.png') ?>" style="vertical-align:middle; height:250px;" title="Embedded Content Screenshot"/>
+                    <td><input type="checkbox" value="1" name="" id="wmuIsEmbedContent"/> &nbsp;&nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/options/addons/images/embedded-content.png") ?>" style="vertical-align:middle; height:250px;" title="Embedded Content Screenshot"/>
                     </td>
                 </tr>
                 <tr scope="row">
@@ -124,14 +124,14 @@ if (!$isMuExists) {
                         <label for="wmuIsHtml5Video">Enable HTML5 video player</label>
                         <p style="font-size:13px; color:#999999; width:98%; padding-left:0px; margin-left:0px;">Uploaded video files will be added as a download link under comment text. However if file format is .mp4, .webm or .ogg, it'll convert link to HTML5 video player.</p>
                     </th>
-                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsHtml5Video"/> &nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . '/options/addons/images/html5-video-player.png') ?>" style="vertical-align:middle; height:70px;" title="Player Screenshot"/>
+                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsHtml5Video"/> &nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/options/addons/images/html5-video-player.png") ?>" style="vertical-align:middle; height:70px;" title="Player Screenshot"/>
                     </td>
                     </td>
                 </tr>
                 <tr scope="row">
                     <th><label for="wmuIsHtml5Audio">Enable HTML5 audio player</label>
                     </th>
-                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsHtml5Audio"/> &nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . '/options/addons/images/html5-audio-player.png') ?>" style="vertical-align:middle;" title="Player Screenshot"/>
+                    <td><input type="checkbox" checked='checked' value="1" name="" id="wmuIsHtml5Audio"/> &nbsp; <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/options/addons/images/html5-audio-player.png") ?>" style="vertical-align:middle;" title="Player Screenshot"/>
                     </td>
                 </tr>
                 <tr scope="row">

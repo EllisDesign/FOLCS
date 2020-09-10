@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH')) {
+if (!defined("ABSPATH")) {
     exit();
 }
 
@@ -142,7 +142,7 @@ if (!$isAlExists) {
                         </style>
                         <div style="width:100%;">
                             <div class="wv_level_box">
-                                <div style="text-align:center;"><i class="fas fa-user" aria-hidden="true" style="color:#0CD85D"></i>
+                                <div style="text-align:center;"><i class="fas fa-user" style="color:#0CD85D"></i>
                                 </div>
                                 <div>
                                     <input placeholder="Total Votes" name="" value="5" type="number">
@@ -154,7 +154,7 @@ if (!$isAlExists) {
                                 </div>
                             </div>
                             <div class="wv_level_box">
-                                <div style="text-align:center;"><i class="fas fa-star" aria-hidden="true" style="color:#E5D600"></i>
+                                <div style="text-align:center;"><i class="fas fa-star" style="color:#E5D600"></i>
                                 </div>
                                 <div>
                                     <input placeholder="Total Votes" name="" value="10" type="number">
@@ -166,7 +166,7 @@ if (!$isAlExists) {
                                 </div>
                             </div>
                             <div class="wv_level_box">
-                                <div style="text-align:center;"><i class="fas fa-certificate" aria-hidden="true" style="color:#FF812D"></i>
+                                <div style="text-align:center;"><i class="fas fa-certificate" style="color:#FF812D"></i>
                                 </div>
                                 <div>
                                     <input placeholder="Total Votes" name="" value="50" type="number">
@@ -178,7 +178,7 @@ if (!$isAlExists) {
                                 </div>
                             </div>
                             <div class="wv_level_box">
-                                <div style="text-align:center;"><i class="fas fa-shield-alt" aria-hidden="true" style="color:#43A6DF"></i>
+                                <div style="text-align:center;"><i class="fas fa-shield-alt" style="color:#43A6DF"></i>
                                 </div>
                                 <div>
                                     <input placeholder="Total Votes" name="" value="100" type="number">
@@ -190,7 +190,7 @@ if (!$isAlExists) {
                                 </div>
                             </div>
                             <div class="wv_level_box">
-                                <div style="text-align:center;"><i class="fas fa-trophy" aria-hidden="true" style="color:#E04A47;"></i>
+                                <div style="text-align:center;"><i class="fas fa-trophy" style="color:#E04A47;"></i>
                                 </div>
                                 <div>
                                     <input placeholder="Total Votes" name="" value="500" type="number">

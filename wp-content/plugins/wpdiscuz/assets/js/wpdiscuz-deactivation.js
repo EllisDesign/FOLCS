@@ -26,6 +26,8 @@ jQuery(document).ready(function ($) {
                 var checkedItem = $('.wpd-deactivation-reason:checked');
                 var parentItem = checkedItem.parents('.wpd-deactivation-reason-item');
                 var reasonDesc = $('.dr_more_info', parentItem);
+                var receiveEmail = $('[name=deactivation_feedback_receive_email]', parentItem).attr('checked');
+                var receiverEmail = $('[name=deactivation_feedback_email]', parentItem);
                 var isValid = true;
 
                 if (reasonDesc.length && reasonDesc.is(':visible')) {
@@ -42,6 +44,9 @@ jQuery(document).ready(function ($) {
                     if (reasonDesc.length && $.trim(reasonDesc.val().length) > 0) {
                         formData += '&deactivation_reason_desc=' + reasonDesc.val();
                     }
+                    if (receiveEmail && receiverEmail.length && $.trim(receiverEmail.val().length) > 0) {
+                        formData += '&deactivation_feedback_email=' + receiverEmail.val();
+                    }
                     $('.wpd-loading', this).toggleClass('wpdiscuz-hidden');
                 } else {
                     alert(deactivationObj.msgReasonDescRequired);
@@ -50,7 +55,7 @@ jQuery(document).ready(function ($) {
             } else {
                 formData = 'never_show=1';
             }
-
+            
             if (formData) {
                 $.ajax({
                     type: 'POST',

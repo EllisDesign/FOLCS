@@ -10,7 +10,7 @@ jQuery(document).ready(function ($) {
     QTags.addButton('wpdiscuz_spoiler', 'spoiler', '[spoiler title=" "]', '[/spoiler]', '', 'Spoiler', 115);
     quicktags(settings);
 
-    $(document).delegate('.wc-reply-button', 'click', function () {
+    $(document).delegate('.wpd-reply-button', 'click', function () {
         var uniqueId = 'wc-textarea-' + wpdiscuzGetUniqueId($(this));
         if (uniqueId) {
             var settings = {
@@ -23,8 +23,8 @@ jQuery(document).ready(function ($) {
     });
     function wpdiscuzGetUniqueId(field) {
         var uniqueId = 0;
-        if (field.parents('.wc-comment').attr('id')) {
-            uniqueId = field.parents('.wc-comment').attr('id');
+        if (field.parents('.wpd-comment').attr('id')) {
+            uniqueId = field.parents('.wpd-comment').attr('id');
         }
         if (uniqueId !== 0 && uniqueId.length) {
             uniqueId = uniqueId.substring(uniqueId.lastIndexOf('-') + 1);

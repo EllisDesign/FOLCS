@@ -9,18 +9,18 @@ class PersonalDataExporter implements wpdFormConst {
 
     private static $_instance = null;
     private $generalOptions;
-    private $fields = array();
+    private $fields = [];
 
     private function __construct($options) {
         $this->generalOptions = $options;
         $this->initFormsFields();
-        add_filter('wp_privacy_personal_data_exporters', array(&$this, 'wpdiscuzCommentsPersonalDataExport'), 13);
+        add_filter("wp_privacy_personal_data_exporters", [&$this, "wpdiscuzCommentsPersonalDataExport"], 13);
     }
 
     private function initFormsFields() {
-        $forms = get_posts(array('numberposts' => -1, 'post_type' => self::WPDISCUZ_FORMS_CONTENT_TYPE));
+        $forms = get_posts(["numberposts" => -1, "post_type" => self::WPDISCUZ_FORMS_CONTENT_TYPE]);
         if ($forms) {
-            foreach ($forms as $form) {
+            foreach ($forms as $k => $form) {
                 $wpdiscuzForm = new Form($this->generalOptions, $form->ID);
                 $wpdiscuzForm->initFormFields();
                 $formFields = $wpdiscuzForm->getFormCustomFields();
@@ -32,10 +32,10 @@ class PersonalDataExporter implements wpdFormConst {
     }
 
     public function wpdiscuzCommentsPersonalDataExport($exporters) {
-        $exporters['wpdiscuz'] = array(
-            'exporter_friendly_name' => __('wpDiscuz Fields Data', 'wpdiscuz'),
-            'callback' => array(&$this, 'customFieldsExport')
-        );
+        $exporters["wpdiscuz"] = [
+            "exporter_friendly_name" => esc_html__("wpDiscuz Fields Data", "wpdiscuz"),
+            "callback" => [&$this, "customFieldsExport"],
+        ];
         return $exporters;
     }
 
@@ -43,64 +43,64 @@ class PersonalDataExporter implements wpdFormConst {
         $number = 500; // Limit us to avoid timing out
         $page = (int) $page;
         $done = true;
-        $export_items = array();
+        $export_items = [];
 
-        $doExport = apply_filters('wpdiscuz_do_export_personal_data', false);
+        $doExport = apply_filters("wpdiscuz_do_export_personal_data", false);
         
         if ($this->fields || $doExport) {
             $comments = get_comments(
-                    array(
-                        'author_email' => $email_address,
-                        'number' => $number,
-                        'paged' => $page,
-                        'order_by' => 'comment_ID',
-                        'order' => 'ASC',
-                    )
+                    [
+                        "author_email" => $email_address,
+                        "number" => $number,
+                        "paged" => $page,
+                        "order_by" => "comment_ID",
+                        "order" => "ASC",
+                    ]
             );
 
 
-            foreach ((array) $comments as $comment) {
+            foreach ((array) $comments as $k => $comment) {
                 $commentId = $comment->comment_ID;
-                $data = array();
-                $commentMeta = get_metadata('comment', $commentId);
+                $data = [];
+                $commentMeta = get_metadata("comment", $commentId);
                 foreach ($this->fields as $key => $field) {
                     if (isset($commentMeta[$key])) {
                         $value = $this->generateFieldData($commentMeta[$key][0]);
                         if (empty($value)) {
                             continue;
                         }
-                        $data[] = array(
-                            'name' => $field['name'],
-                            'value' => $value
-                        );
+                        $data[] = [
+                            "name" => $field["name"],
+                            "value" => $value,
+                        ];
                     }
                 }
-                $data = apply_filters('wpdiscuz_privacy_personal_data_export', $data, $commentId);
+                $data = apply_filters("wpdiscuz_privacy_personal_data_export", $data, $commentId);
                 if ($data) {
-                    $export_items[] = array(
-                        'group_id' => 'comments',
-                        'group_label' => __('Comments'),
-                        'item_id' => "comment-$commentId",
-                        'data' => $data,
-                    );
+                    $export_items[] = [
+                        "group_id" => "comments",
+                        "group_label" => esc_html__("Comments"),
+                        "item_id" => "comment-$commentId",
+                        "data" => $data,
+                    ];
                 }
             }
             $done = count($comments) < $number;
         }
-        return array(
-            'data' => $export_items,
-            'done' => $done,
-        );
+        return [
+            "data" => $export_items,
+            "done" => $done,
+        ];
     }
 
     private function generateFieldData($data) {
-        $value = '';
+        $value = "";
         $data = maybe_unserialize($data);
         if (empty($data)) {
-            return '';
+            return "";
         }
         if (is_array($data)) {
-            $value = implode(', ', $data);
+            $value = implode(", ", $data);
         } else {
             $value = $data;
         }

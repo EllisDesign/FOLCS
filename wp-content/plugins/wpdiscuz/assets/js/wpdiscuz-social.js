@@ -1,5 +1,5 @@
 //============================== FACEBOOK API INIT  ========================== //
-if ((wpdiscuzAjaxObj.wpdiscuz_options.enableFbLogin || wpdiscuzAjaxObj.wpdiscuz_options.enableFbShare) && wpdiscuzAjaxObj.wpdiscuz_options.facebookAppID) {
+if ((wpdiscuzAjaxObj.enableFbLogin || wpdiscuzAjaxObj.enableFbShare) && wpdiscuzAjaxObj.facebookAppID) {
     (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {
@@ -14,10 +14,10 @@ if ((wpdiscuzAjaxObj.wpdiscuz_options.enableFbLogin || wpdiscuzAjaxObj.wpdiscuz_
 
     window.fbAsyncInit = function () {
         FB.init({
-            appId: wpdiscuzAjaxObj.wpdiscuz_options.facebookAppID,
+            appId: wpdiscuzAjaxObj.facebookAppID,
             cookie: true,
             xfbml: true,
-            version: 'v2.8'
+            version: 'v7.0'
         });
     };
 }
@@ -31,56 +31,39 @@ function wpcShareCommentFB(url, quote) {
 
 //============================== GOOGLE API INIT  ========================== //
 
-if (wpdiscuzAjaxObj.wpdiscuz_options.enableGoogleLogin && wpdiscuzAjaxObj.wpdiscuz_options.googleAppID) {
-    (function (d, s, id) {
-        var js, gjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-            return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://apis.google.com/js/platform.js?onload=wpdiscuzGooglePlatformInit";
-        gjs.parentNode.insertBefore(js, gjs);
-    }(document, 'script', 'google-jssdk'));
-
-    function wpdiscuzGooglePlatformInit() {
-        if (wpdiscuzAjaxObj.wpdiscuz_options.enableGoogleLogin && wpdiscuzAjaxObj.wpdiscuz_options.googleAppID) {
-            gapi.load('auth2', function () {
-                gapi.auth2.init({client_id: wpdiscuzAjaxObj.wpdiscuz_options.googleAppID});
-            });
-        }
-    }
-
-}
-
 jQuery(document).ready(function ($) {
     wpdDisplayErrorMessage();
-    $(document).delegate('.wc-comment-link .fa-facebook-f', 'click', function () {
-        if (wpdiscuzAjaxObj.wpdiscuz_options.enableFbShare != 1) {
+    if (Cookies.get('wpdiscuz_scroll_to_comments')) {
+        Cookies.remove('wpdiscuz_scroll_to_comments', {path: '/'});
+        $('html, body').animate({
+            scrollTop: $('#comments').offset().top - 32
+        }, 1000);
+    }
+    $(document).delegate('.wpd-comment-share .fa-facebook-f', 'click', function () {
+        if (wpdiscuzAjaxObj.enableFbShare != 1) {
             return;
         }
-        var commentID = $(this).parents('.wc-comment').find('.wc-comment-right').attr('id');
+        var commentID = $(this).parents('.wpd-comment').find('.wpd-comment-right').attr('id');
         var postUrl = window.location.href;
         if (postUrl.indexOf('#') !== -1) {
             postUrl = postUrl.substring(0, postUrl.indexOf('#'));
         }
         postUrl += '#' + commentID;
-        var commentContent = $(this).parents('.wc-comment-right').find('.wc-comment-text').text();
+        var commentContent = $(this).parents('.wpd-comment-right').find('.wpd-comment-text').text();
         wpcShareCommentFB(postUrl, commentContent);
     });
 
-    var socialLoginContainer, socialLoginProvider = '';
-    $(document).delegate('#wpcomm .wpdiscuz-social-login .wpdiscuz-login-button', 'click', function () {
-        socialLoginContainer = $(this).parents('.wpdiscuz-social-login');
+    var socialLoginProvider = '';
+    $(document).delegate('#wpdcom .wpd-social-login .wpdiscuz-login-button', 'click', function () {
+        var socialLoginContainer = $(this).parents('.wpd-social-login');
         socialLoginProvider = wpdInitProvider($(this));
         wpdSocialLoginIsConfirmAgreement(socialLoginProvider, socialLoginContainer);
-
     });
 
-    $(document).delegate('#wpcomm .wpd-agreement-buttons-right .wpd-agreement-button', 'click', function () {
-        socialLoginContainer.parents('.wpdiscuz-ftb-right').next().slideUp(700);
+    $(document).delegate('#wpdcom .wpd-agreement-buttons-right .wpd-agreement-button', 'click', function () {
+        var socialLoginContainer = $(this).parents('.wpd-form-wrap, .wpd-form').find('.wpd-social-login-agreement').slideUp(700);
         if ($(this).hasClass('wpd-agreement-button-agree')) {
-            if (wpdiscuzAjaxObj.wpdiscuz_options.isCookiesEnabled) {
+            if (wpdiscuzAjaxObj.isCookiesEnabled) {
                 Cookies.set('socialLoginAgreementConfirmed', 1, {expires: 30, path: '/'});
             }
             wpdCallSocialLogin(socialLoginProvider, socialLoginContainer);
@@ -88,10 +71,10 @@ jQuery(document).ready(function ($) {
     });
 
     function wpdSocialLoginIsConfirmAgreement(provider, container) {
-        if (wpdiscuzAjaxObj.wpdiscuz_options.socialLoginAgreementCheckbox != 1 || Cookies.get('socialLoginAgreementConfirmed') == 1) {
+        if (parseInt(wpdiscuzAjaxObj.socialLoginAgreementCheckbox) != 1 || Cookies.get('socialLoginAgreementConfirmed') == 1) {
             wpdCallSocialLogin(provider, container);
         } else {
-            container.parents('.wpdiscuz-ftb-right').next().slideDown(700);
+            container.parents('.wpd-form-wrap, .wpd-form').find('.wpd-social-login-agreement').first().slideDown(700);
         }
         return false;
     }
@@ -100,7 +83,8 @@ jQuery(document).ready(function ($) {
     function wpdCallSocialLogin(provider, container) {
         var token, userID = '';
         wpdSocialLoginLoadingBar(container, 1);
-       if (provider === 'facebook' && wpdiscuzAjaxObj.wpdiscuz_options.facebookUseOAuth2 == 0) {
+        Cookies.set('wpdiscuz_scroll_to_comments', 1, {path: '/'});
+        if (provider === 'facebook' && wpdiscuzAjaxObj.facebookUseOAuth2 == 0) {
             FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
                     token = response.authResponse.accessToken;
@@ -116,20 +100,6 @@ jQuery(document).ready(function ($) {
                     }, {scope: 'public_profile,email'});
                 }
             });
-        } else 
-            if (provider === 'google') {
-            var googleAuth = gapi.auth2.getAuthInstance();
-            if (googleAuth.isSignedIn.get()) {
-                token = googleAuth.currentUser.get().getAuthResponse().id_token;
-                wpdSendRequest(provider, token, userID, container);
-            } else {
-                googleAuth.signIn().then(function (respons) {
-                    token = respons.getAuthResponse().id_token;
-                    wpdSendRequest(provider, token, userID, container);
-                }, function (reason) {
-                    console.log(reason.error);
-                });
-            }
         } else {
             wpdSendRequest(provider, token, userID, container);
         }
@@ -145,7 +115,7 @@ jQuery(document).ready(function ($) {
                 provider: provider,
                 token: token,
                 userID: userID,
-                postID: wpdiscuzAjaxObj.wpdiscuz_options.wc_post_id
+                postID: wpdiscuzAjaxObj.wc_post_id
             }
         }).done(function (wpdiscuz_response) {
             wpdHandleResponse(wpdiscuz_response, container);
@@ -162,7 +132,7 @@ jQuery(document).ready(function ($) {
             if (parseInt(code) === 200) {
                 location.assign(url);
             } else {
-                container.append('<div class="wpdiscuz-social-login-error">' + message + '</div>');
+                wpdiscuzAjaxObj.setCommentMessage(message, 'error');
             }
         } catch (e) {
             console.log(e);
@@ -174,30 +144,56 @@ jQuery(document).ready(function ($) {
         var errorMessage = Cookies.get('wpdiscuz_social_login_message');
         if (errorMessage && errorMessage !== 'undefined') {
             Cookies.remove('wpdiscuz_social_login_message');
-            var container = $('#wpcomm .wpdiscuz-social-login').first();
-            $('.wpdiscuz-social-login-error').remove();
-            container.append('<div class="wpdiscuz-social-login-error">' + decodeURIComponent(errorMessage.replace(/\+/g, '%20')) + '</div>');
-            $('html, body').animate({
-                scrollTop: container.offset().top}, 700);
+            wpdiscuzAjaxObj.setCommentMessage(decodeURIComponent(errorMessage.replace(/\+/g, '%20')), 'error');
         }
     }
 
     function wpdInitProvider($obj) {
         var provider = '';
-        if ($obj.hasClass('wpdiscuz-facebook-button')) {
+        if ($obj.hasClass('wpdsn-fb')) {
             provider = 'facebook';
         }
-        if ($obj.hasClass('wpdiscuz-google-button')) {
+        if ($obj.hasClass('wpdsn-insta')) {
+            provider = 'instagram';
+        }
+        if ($obj.hasClass('wpdsn-gg')) {
             provider = 'google';
         }
-        if ($obj.hasClass('wpdiscuz-twitter-button')) {
+        if ($obj.hasClass('wpdsn-ds')) {
+            provider = 'disqus';
+        }
+        if ($obj.hasClass('wpdsn-wp')) {
+            provider = 'wordpress';
+        }
+        if ($obj.hasClass('wpdsn-tw')) {
             provider = 'twitter';
         }
-        if ($obj.hasClass('wpdiscuz-vk-button')) {
+        if ($obj.hasClass('wpdsn-vk')) {
             provider = 'vk';
         }
-        if ($obj.hasClass('wpdiscuz-ok-button')) {
+        if ($obj.hasClass('wpdsn-ok')) {
             provider = 'ok';
+        }
+        if ($obj.hasClass('wpdsn-linked')) {
+            provider = 'linkedin';
+        }
+        if ($obj.hasClass('wpdsn-yandex')) {
+            provider = 'yandex';
+        }
+        if ($obj.hasClass('wpdsn-mailru')) {
+            provider = 'mailru';
+        }
+        if ($obj.hasClass('wpdsn-weixin')) {
+            provider = 'wechat';
+        }
+        if ($obj.hasClass('wpdsn-weibo')) {
+            provider = 'weibo';
+        }
+        if ($obj.hasClass('wpdsn-qq')) {
+            provider = 'qq';
+        }
+        if ($obj.hasClass('wpdsn-baidu')) {
+            provider = 'baidu';
         }
         return provider;
     }

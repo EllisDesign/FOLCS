@@ -1,50 +1,34 @@
 <?php
-if (!defined('ABSPATH')) {
+if (!defined("ABSPATH")) {
     exit();
 }
+
+$tools = [
+    ["selector" => "options", "file" => WPDISCUZ_DIR_PATH . "/options/tools-layouts/tool-options.php"],
+    ["selector" => "phrases", "file" => WPDISCUZ_DIR_PATH . "/options/tools-layouts/tool-phrases.php"],
+    ["selector" => "images", "file" => WPDISCUZ_DIR_PATH . "/options/tools-layouts/tool-images.php"],
+    ["selector" => "regenerate", "file" => WPDISCUZ_DIR_PATH . "/options/tools-layouts/tool-regenerate.php"],
+    ["selector" => "subscriptions", "file" => WPDISCUZ_DIR_PATH . "/options/tools-layouts/tool-subscriptions.php"],
+    ["selector" => "ratings", "file" => WPDISCUZ_DIR_PATH . "/options/tools-layouts/tool-ratings.php"],
+    ["selector" => "database", "file" => WPDISCUZ_DIR_PATH . "/options/tools-layouts/tool-database.php"],
+];
+$tools = apply_filters("wpdiscuz_dashboard_tools", $tools);
 ?>
 <div class="wrap wpdiscuz_tools_page">
-    <div style="float:left; width:50px; height:55px; margin:10px 10px 20px 0px;">
-        <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . '/assets/img/plugin-icon/plugin-icon-48.png'); ?>" style="border:2px solid #fff;"/>
+    <div style="float:left; width:50px; height:55px; margin:10px 10px 10px 0px;">
+        <img src="<?php echo esc_url_raw(plugins_url(WPDISCUZ_DIR_NAME . "/assets/img/dashboard/wpdiscuz-7-logo.png")); ?>" style="height: 48px;"/>
     </div>
-    <h1 style="padding-bottom:20px; padding-top:15px;"><?php _e('wpDiscuz Tools', 'wpdiscuz'); ?></h1>
+    <h1 style="padding-bottom:20px; padding-top:15px;"><?php esc_html_e("wpDiscuz Tools", "wpdiscuz"); ?></h1>
     <br style="clear:both" />
-    <?php settings_errors('wpdiscuz'); ?>
+    <?php settings_errors("wpdiscuz"); ?>
     <div id="toolsTab">
-        <ul class="resp-tabs-list tools_tab_id">
-            <li><?php _e('Export options', 'wpdiscuz'); ?></li>
-            <li><?php _e('Import options', 'wpdiscuz'); ?></li>
-            <li><?php _e('Import subscriptions', 'wpdiscuz'); ?></li>            
-            <li><?php _e('Other', 'wpdiscuz'); ?></li>
-        </ul>
-        <div class="resp-tabs-container tools_tab_id">
-            <?php
-            include_once WPDISCUZ_DIR_PATH . '/options/tools-layouts/options-export.php';
-            include_once WPDISCUZ_DIR_PATH . '/options/tools-layouts/options-import.php';
-            include_once WPDISCUZ_DIR_PATH . '/options/tools-layouts/subscriptions-import.php';
-            include_once WPDISCUZ_DIR_PATH . '/options/tools-layouts/tools-other.php';
-            ?>
-        </div>
-    </div>
-    <script>
-        jQuery(document).ready(function ($) {
-            var width = 0;
-            var toolsTabsType = 'default';
-            $('#toolsTab ul.resp-tabs-list.tools_tab_id li').each(function () {
-                width += $(this).outerWidth(true);
-            });
-
-            if (width > $('#toolsTab').innerWidth()) {
-                toolsTabsType = 'vertical';
+        <?php
+        if ($tools && is_array($tools))
+            foreach ($tools as $tool) {
+                if (!empty($tool["selector"]) && !empty($tool["file"]) && file_exists($tool["file"])) {
+                    include_once $tool["file"];
+                }
             }
-
-            //Horizontal Tab
-            $('#toolsTab').wpdiscuzEasyResponsiveTabs({
-                type: toolsTabsType, //Types: default, vertical, accordion
-                width: 'auto', //auto or any width like 600px
-                fit: true, // 100% fit in a container
-                tabidentify: 'tools_tab_id' // The tab groups identifier
-            });
-        });
-    </script>
+        ?>
+    </div>
 </div>

@@ -147,7 +147,7 @@ var wpdiscuzForm = {
                 '<div class="wpd-form-row-actions">' +
                 '<i class="fas fa-columns" title="' + wpdFormAdminOptions.two_column + '"></i>|' +
                 '<i class="fas fa-trash-alt" title="' + wpdFormAdminOptions.delete + '"></i>|' +
-                '<i class="fas fa-arrows-alt" aria-hidden="true" title="' + wpdFormAdminOptions.move + '"></i>' +
+                '<i class="fas fa-arrows-alt" title="' + wpdFormAdminOptions.move + '"></i>' +
                 '</div></div>' +
                 '<div  class="wpd-form-row">' +
                 '<div class="wpd-form-row-body">' +

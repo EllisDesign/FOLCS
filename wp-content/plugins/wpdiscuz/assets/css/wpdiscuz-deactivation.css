@@ -79,3 +79,48 @@
         transform: rotate(359deg);
     }
 }
+
+#wpdDeactivationReason .deactivation_feedback {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#wpdDeactivationReason .wpd-info {
+    width: 100%;
+    padding: 5px 0;
+    color: #777;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 18px;
+    margin: 0;
+}
+
+#wpdDeactivationReason .wpddf_left {
+    flex-shrink: 0;
+    flex-grow: 0;
+    align-self: center;
+    padding: 0 15px 0 10px;
+}
+
+#wpdDeactivationReason .wpddf_right {
+    flex-grow: 1;
+}
+
+#wpdDeactivationReason .wpddf_right input {
+    height: 35px;
+    width: 100%;
+    padding: 3px 15px;
+    font-weight: 100;
+    font-style: italic;
+}
+
+#wpdDeactivationReason .wpd-deactivation-reason-more-info textarea {
+    width: 100%;
+    margin-top: 10px;
+}
+
+#wpdDeactivationReason .wpd_deactivation_feedback {
+    display: flex;
+    flex-wrap: wrap;
+}

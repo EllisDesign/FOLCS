@@ -440,7 +440,7 @@ class TwitterOAuth extends Config
         ];
 
         if ($this->useCAFile()) {
-            $options[CURLOPT_CAINFO] = __DIR__ . DIRECTORY_SEPARATOR . 'cacert.pem';
+            $options[CURLOPT_CAINFO] = __DIR__ . '/cacert.pem';
         }
 
         if ($this->gzipEncoding) {
@@ -556,7 +556,7 @@ class TwitterOAuth extends Config
      */
     private function pharRunning()
     {
-        return class_exists('Phar') && \Phar::running(false) !== '';
+        return class_exists('Phar') && \Phar::running(false) !== "";
     }
 
     /**

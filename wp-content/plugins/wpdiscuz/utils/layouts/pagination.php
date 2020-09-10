@@ -1,5 +1,5 @@
 <?php
-if (!defined('ABSPATH')) {
+if (!defined("ABSPATH")) {
     exit();
 }
 
@@ -19,15 +19,13 @@ if ($pageCount && $pageCount > 1) {
     <div class='wpd-pagination'>
         <?php
         if ($page - $lrItemsCount > 0) {
-            $phrasePaginationFirst = __('&laquo;', 'wpdiscuz');
             ?>
-            <a href='#0' class='wpd-page-link wpd-not-clicked' data-wpd-page='0'><?php echo $phrasePaginationFirst; ?></a>
+            <a href='#0' class='wpd-page-link wpd-not-clicked' data-wpd-page='0'><?php esc_html_e("&laquo;", "wpdiscuz"); ?></a>
             <?php
         }
         if ($page > 0) {
-            $phrasePaginationPrevious = __('&lsaquo;', 'wpdiscuz');
             ?>
-            <a href='#<?php echo $page - 1; ?>' class='wpd-page-link wpd-not-clicked' data-wpd-page='<?php echo $page - 1; ?>'><?php echo $phrasePaginationPrevious; ?></a>
+            <a href='#<?php echo esc_url_raw($page - 1); ?>' class='wpd-page-link wpd-not-clicked' data-wpd-page='<?php echo esc_attr($page - 1); ?>'><?php esc_html_e("&lsaquo;", "wpdiscuz"); ?></a>
             <?php
         }
         for ($i = $start; $i <= $end; $i++) {
@@ -35,27 +33,25 @@ if ($pageCount && $pageCount > 1) {
             if ($i < $pageCount) {
                 if ($i == $page) {
                     ?>
-                    <span style="background: <?php echo $this->optionsSerialized->primaryColor; ?>;" class='wpd-page-link wpd-current-page' data-wpd-page='<?php echo $i; ?>'><?php echo $pageText; ?></span>
+                    <span style="background: <?php echo esc_attr($this->options->thread_styles["primaryColor"]); ?>;" class='wpd-page-link wpd-current-page' data-wpd-page='<?php echo esc_attr($i); ?>'><?php echo esc_html($pageText); ?></span>
                 <?php } else { ?>
-                    <a href='#<?php echo $i; ?>' class='wpd-page-link wpd-not-clicked' data-wpd-page='<?php echo $i; ?>'><?php echo $pageText; ?></a>
+                    <a href='#<?php echo esc_url_raw($i); ?>' class='wpd-page-link wpd-not-clicked' data-wpd-page='<?php echo esc_attr($i); ?>'><?php echo esc_html($pageText); ?></a>
                     <?php
                 }
             }
         }
         if ($page < $pageCount - 1) {
-            $phrasePaginationNext = __('&rsaquo;', 'wpdiscuz');
             ?>
-            <a href='#<?php echo $page + 1; ?>' class='wpd-page-link wpd-not-clicked' data-wpd-page='<?php echo $page + 1; ?>'><?php echo $phrasePaginationNext; ?></a>
+            <a href='#<?php echo esc_url_raw($page + 1); ?>' class='wpd-page-link wpd-not-clicked' data-wpd-page='<?php echo esc_attr($page + 1); ?>'><?php esc_html_e("&rsaquo;", "wpdiscuz"); ?></a>
             <?php
         }
         if ($page + $lrItemsCount < $pageCount - 1) {
-            $phrasePaginationLast = __('&raquo;', 'wpdiscuz');
             ?>
-            <a href='#<?php echo intval($pageCount) - 1; ?>' class='wpd-page-link wpd-not-clicked' data-wpd-page='<?php echo intval($pageCount) - 1; ?>'><?php echo $phrasePaginationLast; ?></a>
+            <a href='#<?php echo esc_url_raw(intval($pageCount) - 1); ?>' class='wpd-page-link wpd-not-clicked' data-wpd-page='<?php echo esc_attr(intval($pageCount) - 1); ?>'><?php esc_html_e("&raquo;", "wpdiscuz"); ?></a>
             <?php
         }
         ?>                    
-        <input type='hidden' class='wpd-action' value='<?php echo htmlentities($action, ENT_QUOTES); ?>'/>
+        <input type='hidden' class='wpd-action' value='<?php echo esc_attr($action); ?>'/>
         <div class="clear"></div>
     </div>
     <?php

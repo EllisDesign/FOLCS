@@ -10,7 +10,7 @@ class TwitterOAuthException extends \Exception {
     public function getOAuthMessage() {
         $message = json_decode($this->message);
         if (isset($message->errors) && is_array($message->errors)) {
-            $oautException = '';
+            $oautException = "";
             foreach ($message->errors as $error) {
                 $oautException .=  $error->message . '<br>';
             }
