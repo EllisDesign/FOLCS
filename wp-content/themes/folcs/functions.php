@@ -715,7 +715,7 @@ add_action( 'init', 'leader_taxonomy' );
 
 
 function rewrite_virtual_film_club() {
-    add_rewrite_rule('past-events/virtual-film-club/?$','index.php?page_id=3319&qseries=film-club','top');// LIVE
+    add_rewrite_rule('past-events/virtual-film-club/?$','index.php?page_id=4045&qseries=film-club','top');// LIVE
 }
 add_action('init', 'rewrite_virtual_film_club', 10, 0);
 
