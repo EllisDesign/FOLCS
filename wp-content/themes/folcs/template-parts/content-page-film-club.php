@@ -11,7 +11,6 @@
 
 <?php
 
-$query_series = isset( $_REQUEST['qseries'] ) ? sanitize_text_field( $_REQUEST['qseries'] ) : '';
 
 global $wp_query;
 $query_series = $wp_query->query_vars['qseries'];
@@ -21,38 +20,24 @@ $terms = get_terms( array(
     'hide_empty' => false,
 ) );
 
-if( ! empty($query_series) && in_array($query_series, array_column($terms, 'slug')) ){
 
-	$past_query = new WP_Query(
+$past_query = new WP_Query(
 
-		array(
-			'post_type'     => array( 'past' ),
-			'post_status'   => array( 'publish' ),
-			'posts_per_page'=> -1,
-			'tax_query'     => array(
-				array (
-		            'taxonomy' => 'past-taxonomy',
-		            'field' => 'slug',
-		            'terms' => $query_series,
-		        )
-		    ),
-			'nopaging'      => true,
-			'order'         => 'DSC'
-		)
-	);
-
-}else {
-
-	$past_query = new WP_Query(
-
-		array(
-			'post_type'     => array( 'past' ),
-			'post_status'   => array( 'publish' ),
-			'posts_per_page'=> -1,
-			'nopaging'      => true
-		)
-	);
-}
+	array(
+		'post_type'     => array( 'past' ),
+		'post_status'   => array( 'publish' ),
+		'posts_per_page'=> -1,
+		'tax_query'     => array(
+			array (
+	            'taxonomy' => 'past-taxonomy',
+	            'field' => 'slug',
+	            'terms' => $query_series,
+	        )
+	    ),
+		'nopaging'      => true,
+		'order'         => 'DSC'
+	)
+);
 ?>
 
 <body <?php body_class('page-past-events past-events invert'); ?>>

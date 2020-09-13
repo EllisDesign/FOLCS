@@ -714,6 +714,17 @@ function leader_taxonomy() {
 add_action( 'init', 'leader_taxonomy' );
 
 
+function rewrite_virtual_film_club() {
+    add_rewrite_rule('past-events/virtual-film-club/?$','index.php?page_id=3319&qseries=film-club','top');// LIVE
+}
+add_action('init', 'rewrite_virtual_film_club', 10, 0);
+
+function custom_rewrite_tag() {
+  add_rewrite_tag('%qseries%', '([^&]+)');
+}
+add_action('init', 'custom_rewrite_tag', 10, 0);
+
+
 function my_searchwp_acf_repeater_keys( $keys ) {
 	$keys[] = 'event_episode_items';
 	return $keys;
