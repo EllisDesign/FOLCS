@@ -18,7 +18,7 @@ $past_query = new WP_Query(
 	array(
 		'post_type'     => array( 'past' ),
 		'post_status'   => array( 'publish' ),
-		'posts_per_page'=> 4,
+		'posts_per_page'=> 12,
 		'paged' => $paged,
 		'tax_query'     => array(
 			array (
