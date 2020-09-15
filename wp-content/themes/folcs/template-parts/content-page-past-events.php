@@ -142,7 +142,7 @@ if( ! empty($query_series) && in_array($query_series, array_column($terms, 'slug
 
 		</div>
 
-			<?php wp_reset_query(); ?>
+			<?php wp_reset_postdata(); ?>
 
 		
 

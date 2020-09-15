@@ -11,13 +11,15 @@
 
 <?php
 
+$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
 $past_query = new WP_Query(
 
 	array(
 		'post_type'     => array( 'past' ),
 		'post_status'   => array( 'publish' ),
-		'posts_per_page'=> -1,
+		'posts_per_page'=> 4,
+		'paged' => $paged,
 		'tax_query'     => array(
 			array (
 	            'taxonomy' => 'past-type',
@@ -25,7 +27,7 @@ $past_query = new WP_Query(
 	            'terms' => 'virtual-event',
 	        )
 	    ),
-		'nopaging'      => true,
+		// 'nopaging'      => true,
 		'order'         => 'DSC'
 	)
 );
@@ -97,6 +99,25 @@ $past_query = new WP_Query(
 
 
 		<?php endforeach; ?>
+
+		</div>
+
+		<div class="past-events-nav navigation pagination">
+		<?php
+
+			$big = 999999999;
+
+			 echo paginate_links( array(
+			    'base' => str_replace( $big, '%#%', get_pagenum_link( $big ) ),
+			    'format' => '?paged=%#%',
+			    'current' => max( 1, get_query_var('paged') ),
+			    'total' => $past_query->max_num_pages,
+			    'mid_size' => 1
+			) );
+
+		?>
+
+		</div>
 
 			<?php wp_reset_postdata(); ?>
 
