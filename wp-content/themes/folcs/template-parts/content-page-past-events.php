@@ -13,13 +13,12 @@
 
 $query_series = isset( $_REQUEST['qseries'] ) ? sanitize_text_field( $_REQUEST['qseries'] ) : '';
 
-global $wp_query;
-$query_series = $wp_query->query_vars['qseries'];
-
 $terms = get_terms( array(
     'taxonomy' => 'past-taxonomy',
     'hide_empty' => false,
 ) );
+
+$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
 if( ! empty($query_series) && in_array($query_series, array_column($terms, 'slug')) ){
 
@@ -48,8 +47,9 @@ if( ! empty($query_series) && in_array($query_series, array_column($terms, 'slug
 		array(
 			'post_type'     => array( 'past' ),
 			'post_status'   => array( 'publish' ),
-			'posts_per_page'=> -1,
-			'nopaging'      => true
+			'posts_per_page'=> 12,
+			'paged' => $paged,
+			// 'nopaging'      => true
 		)
 	);
 }
@@ -122,9 +122,29 @@ if( ! empty($query_series) && in_array($query_series, array_column($terms, 'slug
 
 		<?php endforeach; ?>
 
-			<?php wp_reset_postdata(); ?>
+		</div>
+
+
+		<div class="past-events-nav navigation pagination">
+		<?php
+
+			$big = 999999999;
+
+			 echo paginate_links( array(
+			    'base' => str_replace( $big, '%#%', get_pagenum_link( $big ) ),
+			    'format' => '?paged=%#%',
+			    'current' => max( 1, get_query_var('paged') ),
+			    'total' => $past_query->max_num_pages,
+			    'mid_size' => 1
+			) );
+
+		?>
 
 		</div>
+
+			<?php wp_reset_query(); ?>
+
+		
 
 	<?php endif; ?>
 

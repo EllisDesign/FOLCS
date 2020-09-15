@@ -1,5 +1,5 @@
 <?php
-/* Template Name: Film Club */
+/* Template Name: Virtual Events */
 /**
  * The template for displaying all pages
  *
@@ -20,7 +20,7 @@ get_header();
 	while ( have_posts() ) :
 		the_post();
 
-		get_template_part( 'template-parts/content', 'page-film-club' );
+		get_template_part( 'template-parts/content', 'page-virtual-events' );
 
 	endwhile; // End of the loop.
 	?>

@@ -375,7 +375,7 @@ function past_post_type() {
 		'description'           => __( 'Past Events', 'text_domain' ),
 		'labels'                => $labels,
 		'supports'              => array( 'title', 'revisions', 'custom-fields', 'author', 'thumbnail' ),
-		'taxonomies'            => array( 'past-taxonomy' ),
+		'taxonomies'            => array( 'past-taxonomy', 'past-type' ),
 		'hierarchical'          => false,
 		'public'                => true,
 		'show_ui'               => true,
@@ -387,7 +387,7 @@ function past_post_type() {
 		'has_archive'           => false,
 		'exclude_from_search'   => false,
 		'publicly_queryable'    => true,
-		'rewrite'               => array( 'slug' => 'past-events', 'with_front'=>false ),
+		'rewrite'               => array( 'slug' => 'past-event', 'with_front'=>false ),
 		'capability_type'       => 'post',
 		'show_in_rest'          => true,
 	);
@@ -671,6 +671,20 @@ function past_taxonomy() {
 }
 add_action( 'init', 'past_taxonomy' );
 
+function past_type() {
+
+    register_taxonomy(
+        'past-type',
+        array( 'past' ),
+        array(
+            'label' => __( 'Past Type' ),
+            'rewrite' => array( 'slug' => 'past-type' ),
+            'hierarchical' => true,
+        )
+    );
+}
+add_action( 'init', 'past_type' );
+
 function blog_taxonomy() {
 
     register_taxonomy(
@@ -714,15 +728,15 @@ function leader_taxonomy() {
 add_action( 'init', 'leader_taxonomy' );
 
 
-function rewrite_virtual_film_club() {
-    add_rewrite_rule('past-events/virtual-film-club/?$','index.php?page_id=4045&qseries=film-club','top');// LIVE
-}
-add_action('init', 'rewrite_virtual_film_club', 10, 0);
+// function rewrite_virtual_film_club() {
+//     add_rewrite_rule('past-events/virtual-film-club/?$','index.php?page_id=4045&qseries=film-club','top');// LIVE
+// }
+// add_action('init', 'rewrite_virtual_film_club', 10, 0);
 
-function custom_rewrite_tag() {
-  add_rewrite_tag('%qseries%', '([^&]+)');
-}
-add_action('init', 'custom_rewrite_tag', 10, 0);
+// function custom_rewrite_tag() {
+//   add_rewrite_tag('%qseries%', '([^&]+)');
+// }
+// add_action('init', 'custom_rewrite_tag', 10, 0);
 
 
 function my_searchwp_acf_repeater_keys( $keys ) {
@@ -781,7 +795,7 @@ function folcs_scripts() {
 
 	wp_enqueue_style( 'reset-normalize', get_template_directory_uri() . '/reset-normalize.css', array(), null, 'all');
     
-    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.0.8', 'all');
+    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.0.9', 'all');
 
     wp_enqueue_style( 'googlefonts-style', 'https://fonts.googleapis.com/css?family=Barlow:300,300i,400,500,600,700', array(), null, 'all');
 
@@ -865,11 +879,13 @@ require get_template_directory() . '/inc/class.taxonomy-single-term.php';
 
 $custom_tax_upcoming = new Taxonomy_Single_Term( 'upcoming-taxonomy', array( 'upcoming' ), 'radio' );
 $custom_tax_past = new Taxonomy_Single_Term( 'past-taxonomy', array( 'past' ), 'radio' );
+$custom_tax_type = new Taxonomy_Single_Term( 'past-type', array( 'past' ), 'radio' );
 $custom_tax_blog = new Taxonomy_Single_Term( 'blog-taxonomy', array( 'blog' ), 'radio' );
 $custom_tax_leader = new Taxonomy_Single_Term( 'leader-taxonomy', array( 'leader' ), 'radio' );
 
 $custom_tax_upcoming->set( 'priority', 'low' );
 $custom_tax_past->set( 'priority', 'low' );
+$custom_tax_type->set( 'priority', 'low' );
 $custom_tax_blog->set( 'priority', 'low' );
 $custom_tax_leader->set( 'priority', 'low' );
 

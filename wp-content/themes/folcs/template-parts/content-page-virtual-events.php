@@ -12,15 +12,6 @@
 <?php
 
 
-global $wp_query;
-$query_series = $wp_query->query_vars['qseries'];
-
-$terms = get_terms( array(
-    'taxonomy' => 'past-taxonomy',
-    'hide_empty' => false,
-) );
-
-
 $past_query = new WP_Query(
 
 	array(
@@ -29,9 +20,9 @@ $past_query = new WP_Query(
 		'posts_per_page'=> -1,
 		'tax_query'     => array(
 			array (
-	            'taxonomy' => 'past-taxonomy',
+	            'taxonomy' => 'past-type',
 	            'field' => 'slug',
-	            'terms' => $query_series,
+	            'terms' => 'virtual-event',
 	        )
 	    ),
 		'nopaging'      => true,

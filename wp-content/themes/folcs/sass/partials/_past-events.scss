@@ -144,3 +144,16 @@ section.intro {
 }
 
 
+
+.past-events-nav {
+	margin-top: 100px;
+	text-align: center;
+
+@include responsive-max(screen-medium) {
+	margin-top: 65px;
+}
+}
+
+
+
+

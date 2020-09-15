@@ -12,9 +12,9 @@
 	text-transform:uppercase;
 }
 
-.navigation.pagination {
-	text-align:right;
-}
+// .navigation.pagination {
+// 	text-align:right;
+// }
 
 a.type-link {
 	// text-decoration:underline;
@@ -22,15 +22,22 @@ a.type-link {
 
 .navigation.pagination a.page-numbers {
 	display:inline-block;
-	padding:20px 10px;
+	padding:20px 5px;//20px 10px
 	border:2px solid transparent;
 	text-align:center;
 	text-decoration:none;
+
+@include responsive-max(screen-small) {
+
+	&:not(.prev):not(.next) {
+		display: none;
+	}
+}
 }
 
 .navigation.pagination span.page-numbers {
 	display:inline-block;
-	padding:20px 10px;
+	padding:20px 5px;//20px 10px
 	border:2px solid transparent;
 	text-align:center;
 	text-decoration:none;
@@ -38,6 +45,21 @@ a.type-link {
 	&.current {
 		opacity: 0.3;
 	}
+
+	&.dots {
+		padding:20px 0;
+	}
+
+@include responsive-max(screen-small) {
+
+	&:not(.current) {
+		display: none;
+	}
+
+	&.current {
+		padding:10px 5px;
+	}
+}
 }
 
 a.block-link, .navigation.pagination a.prev, .navigation.pagination a.next {
@@ -50,6 +72,29 @@ a.block-link, .navigation.pagination a.prev, .navigation.pagination a.next {
 	&.multi-line {
 		line-height:$leading-145;
 	}
+}
+
+.navigation.pagination a.prev, .navigation.pagination a.next {
+
+@include responsive-max(screen-small) {
+	padding:10px 15px;
+}
+}
+
+.navigation.pagination a.prev {
+	margin-right: 20px;
+
+@include responsive-max(screen-small) {
+	margin-right: 10px;
+}
+}
+
+.navigation.pagination a.next {
+	margin-left: 20px;
+
+@include responsive-max(screen-small) {
+	margin-left: 10px;
+}
 }
 
 .type-content a.block-link {
