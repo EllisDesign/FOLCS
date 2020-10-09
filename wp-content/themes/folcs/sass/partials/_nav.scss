@@ -68,7 +68,8 @@ nav {
 	width:209px;
 	height:73px;
 
-	svg {
+	svg,
+	img {
 		width:100%;
 		height:auto;
 	}
@@ -84,10 +85,14 @@ nav {
 		}
 	}
 
+	.nav-home {
+		display: none;
+	}
+
 	.page-home & {
 		top:14px;
 		width:209px;
-		height:73px;
+		height:83px;//73px;
 
 		a {
 			cursor:default;
@@ -96,6 +101,14 @@ nav {
 		// #logo-text {
 		// 	display:none;
 		// }
+
+		.nav-home {
+			display: block;
+		}
+
+		svg {
+			display:none;
+		}
 	}
 
 	#logo-text {
@@ -117,7 +130,7 @@ nav {
 		top:8px;
 		left:8px;
 		width:172px;
-		height:60px;//40
+		height:68px;//60px;//40
 	}
 }
 }

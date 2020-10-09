@@ -21,7 +21,7 @@
     <div class="nav">
     <div class="nav-reverse">
 	<div class="nav-logo">
-       <a href="/"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="209px" height="73px" viewBox="0 0 209 73">
+       <a href="/"><img src="<?php echo get_template_directory_uri(); ?>/images/logo-folcs-wht.png" alt="FOLCS" class="nav-home"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="209px" height="73px" viewBox="0 0 209 73">
         <g>
             <path d="M65,31.5860405c0-2.0924454-0.2210541-4.1348572-0.6263809-6.1132278l0.0154953-0.012043l-0.021286-0.024271
                 C61.4195518,11.1322489,48.4027863,0.3204197,32.8300018,0.3204197c-14.2796059,0-26.6511307,8.9160719-30.7824421,22.1762924

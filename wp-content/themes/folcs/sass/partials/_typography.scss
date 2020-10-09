@@ -166,17 +166,16 @@ a.block-link, .navigation.pagination a.prev, .navigation.pagination a.next {
 		family:$font-secondary;
 	}
 
-	line-height:$leading-same;
-
 	@include transition(all .2s linear);
 
-	&:hover {
+	&:hover:not(.is-active) {
 		background-color:$color-background-light;
 	}
 }
 
 .past-events-search-filters ul li {
-	line-height:$leading-same;
+	// line-height:$leading-same;
+	line-height:$leading-12;
 }
 .event-series-filters ul li {
 	line-height:$leading-12;
