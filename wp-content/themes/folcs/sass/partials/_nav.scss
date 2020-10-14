@@ -78,16 +78,26 @@ nav {
 		fill:$color-dark;
 	}
 
+	.nav-logo-wht {
+		display: none;
+	}
+
 	.nav-light & {
 		
 		svg path, svg polygon {
 			fill:$color-light;
 		}
+
+		.nav-logo-blk {
+			display: none;
+		}
+
+		.nav-logo-wht {
+			display: inline;
+		}
 	}
 
-	.nav-home {
-		display: none;
-	}
+	
 
 	.page-home & {
 		top:14px;
@@ -102,13 +112,13 @@ nav {
 		// 	display:none;
 		// }
 
-		.nav-home {
-			display: block;
-		}
+		// .nav-home {
+		// 	display: block;
+		// }
 
-		svg {
-			display:none;
-		}
+		// svg {
+		// 	display:none;
+		// }
 	}
 
 	#logo-text {

@@ -795,7 +795,7 @@ function folcs_scripts() {
 
 	wp_enqueue_style( 'reset-normalize', get_template_directory_uri() . '/reset-normalize.css', array(), null, 'all');
     
-    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.1.0', 'all');
+    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.1.1', 'all');
 
     wp_enqueue_style( 'googlefonts-style', 'https://fonts.googleapis.com/css?family=Barlow:300,300i,400,500,600,700', array(), null, 'all');
 
