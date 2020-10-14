@@ -105,6 +105,9 @@ add_action( 'after_setup_theme', 'folcs_setup' );
 // add_action( 'after_setup_theme', 'folcs_content_width', 0 );
 
 
+add_filter( 'big_image_size_threshold', '__return_false' );
+
+
 // Remove Default Post Type from Menus
 function remove_default_post_type() {
     remove_menu_page( 'edit.php' );
