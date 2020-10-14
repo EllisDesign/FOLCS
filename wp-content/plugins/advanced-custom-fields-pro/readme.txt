@@ -67,6 +67,17 @@ From your WordPress dashboard
 
 == Changelog ==
 
+= 5.9.1 =
+*Release Date - 8 September 2020*
+
+* Fix - Fixed guten-bug causing "Preview Post" button to publish changes.
+* Fix - Fixed guten-bug causing JS errors when editing with Elementor or Beaver Builder.
+* Fix - Fixed bug in Color Picker field causing JS error on front-end forms.
+* Fix - Fixed bug in Post Taxonomy location rule causing incomplete list of rule choices.
+* Fix - Reverted Local JSON "save to source path" enhancement due to DX feedback. 
+* i18n - Updated Indonesian translations thanks to Rio Bahtiar.
+* i18n - Updated Turkish translation thanks to Emre Erkan.
+
 = 5.9.0 =
 *Release Date - 17 August 2020*
 
@@ -111,6 +122,8 @@ From your WordPress dashboard
 * i18n - Changed Croatian locale code from "hr_HR to "hr".
 * i18n - Updated Portuguese translation thanks to Pedro Mendonça.
 * i18n - Updated French Canadian translation thanks to Bérenger Zyla.
+* i18n - Updated French translation thanks to Maxime Bernard-Jacquet.
+* i18n - Updated German translations thanks to Ralf Koller.
 
 = 5.8.14 =
 *Release Date - 13 August 2020*
