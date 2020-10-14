@@ -1,6 +1,3 @@
 .DS_Store
 wp-config.php
 wp-content/uploads/
-wp-content/themes/*
-!wp-content/themes/folcs/
-wp-content/themes/folcs/**/temp/
