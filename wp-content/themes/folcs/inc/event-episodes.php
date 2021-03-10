@@ -195,9 +195,13 @@ if( have_rows('event_episode_items') ):
 
 
 		<?php
-	        elseif( get_row_layout() == 'event_episode_text' ): 
+	        elseif( get_row_layout() == 'event_episode_text' ):
+
+	        	$field = get_sub_field_object('episode_text_details');
+				$name = $field['name'];
+	        	$class = ($name == 'event_episode_items_2_episode_text_details' && $post->post_name == 'covid-19') ? ' section-background-light' : '';
         ?>
-			<section class="event-episode-item event-episode-text h1-margin-30 p-margin-15 sequence-margin-first sequence-margin-last">
+			<section class="event-episode-item event-episode-text h1-margin-30 p-margin-15 sequence-margin-first sequence-margin-last<?php echo $class; ?>">
 				<div class="column-limit">
 					<div class="type-limit">
 						<?php the_sub_field('episode_text_details'); ?>

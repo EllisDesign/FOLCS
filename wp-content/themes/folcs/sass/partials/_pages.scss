@@ -1,0 +1,10 @@
+.event-episode .sequence-margin-last.section-background-light {
+	padding-top:95px;
+	padding-bottom:95px;
+	background-color:$color-background-light;
+
+@include responsive-max(screen-medium) {
+	padding-top:50px;
+	padding-bottom:50px;
+}
+}
