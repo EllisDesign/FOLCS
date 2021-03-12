@@ -223,8 +223,19 @@ if( function_exists('acf_add_options_page') ) {
 			'capability'	=> 'edit_posts',
 			'redirect'		=> false
 		));
-	
 }
+
+
+function add_slug_body_class( $classes ) {
+	global $post;
+
+	if ( isset( $post ) ) {
+		$classes[] = $post->post_type . '-' . $post->post_name;
+	}
+	return $classes;
+}
+add_filter( 'body_class', 'add_slug_body_class' );
+
 
 
 function series_post_type() {
@@ -798,7 +809,7 @@ function folcs_scripts() {
 
 	wp_enqueue_style( 'reset-normalize', get_template_directory_uri() . '/reset-normalize.css', array(), null, 'all');
     
-    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.1.3', 'all');
+    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.1.4', 'all');
 
     wp_enqueue_style( 'googlefonts-style', 'https://fonts.googleapis.com/css?family=Barlow:300,300i,400,500,600,700', array(), null, 'all');
 

@@ -68,6 +68,7 @@
                         <li><a href="/blog" class="nav-item-blog">Blog</a></li>
                         <li><a href="/become-a-member" class="nav-item-become-a-member">Become a Member</a></li>
                         <li><a href="/donate" class="nav-item-donate">Donate</a></li>
+                        <li><a href="/covid-19" class="nav-item-covid-19">COVID-19 Response</a></li>
                         <li>
                             <div class="type-link">
                                 <a href="/leadership" class="nav-item-leadership">Leadership</a> <a href="/in-the-press" class="nav-item-in-the-press">In the Press</a> <a href="/about" class="nav-item-about">About</a> <a href="/contact" class="nav-item-contact">Contact</a>
