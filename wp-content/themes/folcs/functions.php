@@ -813,7 +813,7 @@ function folcs_scripts() {
 
     wp_enqueue_style( 'googlefonts-style', 'https://fonts.googleapis.com/css?family=Barlow:300,300i,400,500,600,700', array(), null, 'all');
 
-    wp_enqueue_style( 'adobetypekit-style', 'https://use.typekit.net/hjs5kct.css', array(), null, 'all');
+    wp_enqueue_style( 'adobetypekit-style', 'https://use.typekit.net/zko3dtt.css', array(), null, 'all');
 
     wp_enqueue_script( 'jquery-3.3.1', get_template_directory_uri() . '/js/vendor/jquery-3.3.1.min.js', array(), null, true);
 
