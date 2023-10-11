@@ -3,7 +3,7 @@
  * Plugin Name: Enable Media Replace
  * Plugin URI: https://wordpress.org/plugins/enable-media-replace/
  * Description: Enable replacing media files by uploading a new file in the "Edit Media" section of the WordPress Media Library.
- * Version: 3.5.0
+ * Version: 4.1.4
  * Author: ShortPixel
  * Author URI: https://shortpixel.com
  * GitHub Plugin URI: https://github.com/short-pixel-optimizer/enable-media-replace
@@ -20,14 +20,12 @@
  *
  * @author      ShortPixel  <https://shortpixel.com>
  * @copyright   ShortPixel 2018-2020
- * @package     wordpress
+ * @package     WordPress
  * @subpackage  enable-media-replace
  *
  */
 
-namespace EnableMediaReplace;
-
-define('EMR_VERSION', '3.5.0');
+define( 'EMR_VERSION', '4.1.4' );
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -35,37 +33,71 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /* Not sure why we define this?
 if(!defined("S3_UPLOADS_AUTOENABLE")) {
-    define('S3_UPLOADS_AUTOENABLE', true);
+	define('S3_UPLOADS_AUTOENABLE', true);
 } */
 
-if (! defined("EMR_ROOT_FILE")) {
-	  define("EMR_ROOT_FILE", __FILE__);
+if ( ! defined( 'EMR_ROOT_FILE' ) ) {
+	  define( 'EMR_ROOT_FILE', __FILE__ );
 }
 
-if(!defined("SHORTPIXEL_AFFILIATE_CODE")) {
-	define("SHORTPIXEL_AFFILIATE_CODE", 'VKG6LYN28044');
+if ( ! defined( 'SHORTPIXEL_AFFILIATE_CODE' ) ) {
+	define( 'SHORTPIXEL_AFFILIATE_CODE', 'VKG6LYN28044' );
 }
 
-$plugin_path = plugin_dir_path(EMR_ROOT_FILE);
+/** Usage:
+* Define in wp-config.php
+* // User must have this capability to replace all
+* define('EMR_CAPABILITY' ,'edit_upload_all' );
+* // User must have first capability to replace all OR second capability to replace only own files
+* define('EMR_CAPABILITY' ,array('edit_upload_all', 'edit_upload_user') );
+*
+*
+**/
+if ( ! defined( 'EMR_CAPABILITY' ) ) {
+	define( 'EMR_CAPABILITY', false );
+}
 
-require_once($plugin_path . 'build/shortpixel/autoload.php');
-require_once($plugin_path . 'classes/compat.php');
-require_once($plugin_path . 'classes/functions.php');
-require_once($plugin_path . 'classes/replacer.php');
-require_once($plugin_path . 'classes/uihelper.php');
-require_once($plugin_path . 'classes/file.php');
-require_once($plugin_path . 'classes/cache.php');
-require_once($plugin_path . 'classes/emr-plugin.php');
-require_once($plugin_path . 'classes/externals.php');
-require_once($plugin_path . 'classes/external/elementor.php');
-require_once($plugin_path . 'classes/external/wpbakery.php');
-require_once($plugin_path . 'thumbnail_updater.php');
+/* if (! defined('EMR_CAPABILITY_USERONLY'))
+  define('EMR_CAPABILITY_USERONLY', false); */
 
-$emr_plugin = EnableMediaReplacePlugin::get();
+$plugin_path = plugin_dir_path( EMR_ROOT_FILE );
 
-register_uninstall_hook(__FILE__, 'emr_uninstall');
+require_once( $plugin_path . 'build/shortpixel/autoload.php' );
+require_once( $plugin_path . 'classes/compat.php' );
+require_once( $plugin_path . 'classes/functions.php' );
+//require_once( $plugin_path . 'classes/replacer.php' );
+require_once( $plugin_path . 'classes/uihelper.php' );
+//require_once( $plugin_path . 'classes/file.php' );
+require_once( $plugin_path . 'classes/cache.php' );
+require_once( $plugin_path . 'classes/api.php' );
+require_once( $plugin_path . 'classes/ajax.php' );
+require_once( $plugin_path . 'classes/emr-plugin.php' );
+require_once( $plugin_path . 'classes/installHelper.php' );
 
-function emr_uninstall()
+// @todo Needs replacing with PSR-4
+require_once( $plugin_path . 'classes/Controller/ReplaceController.php');
+require_once( $plugin_path . 'classes/Controller/RemoteNoticeController.php');
+
+require_once( $plugin_path . 'classes/ViewController.php');
+require_once( $plugin_path . 'classes/ViewController/UploadViewController.php');
+require_once( $plugin_path . 'classes/ViewController/ReplaceViewController.php');
+require_once( $plugin_path . 'classes/ViewController/RemoveBackgroundViewController.php');
+
+require_once( $plugin_path . 'classes/externals.php' );
+require_once( $plugin_path . 'classes/external/elementor.php' );
+require_once( $plugin_path . 'classes/external/wpbakery.php' );
+require_once( $plugin_path . 'classes/external/upsell_installer.php' );
+require_once( $plugin_path . 'classes/external/siteorigin.php' );
+require_once( $plugin_path . 'classes/external/wp-offload.php' );
+
+require_once( $plugin_path . 'thumbnail_updater.php' );
+
+function emr()
 {
-	delete_option('enable_media_replace');
+	return EnableMediaReplace\EnableMediaReplacePlugin::get();
 }
+emr(); // runtime.
+
+//register_uninstall_hook( __FILE__, '\EnableMediaReplace\emr_uninstall' );
+register_deactivation_hook( __FILE__,  array('\EnableMediaReplace\InstallHelper','deactivatePlugin') );
+register_uninstall_hook(__FILE__,  array('\EnableMediaReplace\InstallHelper','uninstallPlugin') );
