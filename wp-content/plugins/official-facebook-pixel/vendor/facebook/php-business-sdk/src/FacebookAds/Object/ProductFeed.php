@@ -32,10 +32,13 @@ use FacebookAds\Object\Fields\ProductFeedFields;
 use FacebookAds\Object\Values\ProductFeedDelimiterValues;
 use FacebookAds\Object\Values\ProductFeedEncodingValues;
 use FacebookAds\Object\Values\ProductFeedFeedTypeValues;
+use FacebookAds\Object\Values\ProductFeedIngestionSourceTypeValues;
 use FacebookAds\Object\Values\ProductFeedItemSubTypeValues;
 use FacebookAds\Object\Values\ProductFeedOverrideTypeValues;
 use FacebookAds\Object\Values\ProductFeedQuotedFieldsModeValues;
 use FacebookAds\Object\Values\ProductFeedRuleRuleTypeValues;
+use FacebookAds\Object\Values\ProductItemErrorPriorityValues;
+use FacebookAds\Object\Values\ProductItemErrorTypeValues;
 
 /**
  * This class is auto-generated.
@@ -65,6 +68,7 @@ class ProductFeed extends AbstractCrudObject {
   protected static function getReferencedEnums() {
     $ref_enums = array();
     $ref_enums['Delimiter'] = ProductFeedDelimiterValues::getInstance()->getValues();
+    $ref_enums['IngestionSourceType'] = ProductFeedIngestionSourceTypeValues::getInstance()->getValues();
     $ref_enums['QuotedFieldsMode'] = ProductFeedQuotedFieldsModeValues::getInstance()->getValues();
     $ref_enums['Encoding'] = ProductFeedEncodingValues::getInstance()->getValues();
     $ref_enums['FeedType'] = ProductFeedFeedTypeValues::getInstance()->getValues();
@@ -199,7 +203,7 @@ class ProductFeed extends AbstractCrudObject {
     return $pending ? $request : $request->execute();
   }
 
-  public function getProducts(array $fields = array(), array $params = array(), $pending = false) {
+  public function getMediaTitles(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
     $param_types = array(
@@ -207,6 +211,35 @@ class ProductFeed extends AbstractCrudObject {
       'filter' => 'Object',
     );
     $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/media_titles',
+      new MediaTitle(),
+      'EDGE',
+      MediaTitle::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getProducts(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'bulk_pagination' => 'bool',
+      'error_priority' => 'error_priority_enum',
+      'error_type' => 'error_type_enum',
+      'filter' => 'Object',
+    );
+    $enums = array(
+      'error_priority_enum' => ProductItemErrorPriorityValues::getInstance()->getValues(),
+      'error_type_enum' => ProductItemErrorTypeValues::getInstance()->getValues(),
     );
 
     $request = new ApiRequest(
@@ -267,6 +300,30 @@ class ProductFeed extends AbstractCrudObject {
       new ProductFeedRule(),
       'EDGE',
       ProductFeedRule::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function createSupplementaryFeedAssoc(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'assoc_data' => 'list<map>',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/supplementary_feed_assocs',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -477,6 +534,7 @@ class ProductFeed extends AbstractCrudObject {
       'deletion_enabled' => 'bool',
       'delimiter' => 'delimiter_enum',
       'encoding' => 'encoding_enum',
+      'migrated_from_feed_id' => 'string',
       'name' => 'string',
       'quoted_fields_mode' => 'quoted_fields_mode_enum',
       'schedule' => 'string',

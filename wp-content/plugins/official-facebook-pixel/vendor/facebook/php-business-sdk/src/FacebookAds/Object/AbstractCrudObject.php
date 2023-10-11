@@ -61,7 +61,7 @@ class AbstractCrudObject extends AbstractObject {
     // two integer connected by an underscore, like "123_456"
 
     $int_id = $id;
-    if (strpos($id, 'act_') === 0) {
+    if ($id !== null && strpos($id, 'act_') === 0) {
       $int_id = substr($id, 4);
     }
     $split_by_underscore = explode('_', (string) $id);
@@ -388,7 +388,7 @@ class AbstractCrudObject extends AbstractObject {
   protected function fetchConnection(
     array $fields = array(),
     array $params = array(),
-    $prototype_class,
+    $prototype_class = '',
     $endpoint = null) {
     $fields = implode(',', $fields ?: static::getDefaultReadFields());
     if ($fields) {

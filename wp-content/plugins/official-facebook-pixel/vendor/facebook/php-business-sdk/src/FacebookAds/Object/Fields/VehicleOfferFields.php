@@ -54,6 +54,7 @@ class VehicleOfferFields extends AbstractEnum {
   const END_DATE = 'end_date';
   const END_TIME = 'end_time';
   const ID = 'id';
+  const IMAGE_FETCH_STATUS = 'image_fetch_status';
   const IMAGES = 'images';
   const MAKE = 'make';
   const MODEL = 'model';
@@ -68,8 +69,10 @@ class VehicleOfferFields extends AbstractEnum {
   const TERM_QUALIFIER = 'term_qualifier';
   const TITLE = 'title';
   const TRIM = 'trim';
+  const UNIT_PRICE = 'unit_price';
   const URL = 'url';
   const VEHICLE_OFFER_ID = 'vehicle_offer_id';
+  const VISIBILITY = 'visibility';
   const YEAR = 'year';
 
   public function getFieldTypes() {
@@ -91,6 +94,7 @@ class VehicleOfferFields extends AbstractEnum {
       'end_date' => 'string',
       'end_time' => 'int',
       'id' => 'string',
+      'image_fetch_status' => 'ImageFetchStatus',
       'images' => 'list<string>',
       'make' => 'string',
       'model' => 'string',
@@ -105,8 +109,10 @@ class VehicleOfferFields extends AbstractEnum {
       'term_qualifier' => 'string',
       'title' => 'string',
       'trim' => 'string',
+      'unit_price' => 'Object',
       'url' => 'string',
       'vehicle_offer_id' => 'string',
+      'visibility' => 'Visibility',
       'year' => 'int',
     );
   }

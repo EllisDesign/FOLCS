@@ -199,7 +199,8 @@ Cache.prototype.clear =  function( store ) {
 module.exports = new Cache();
 
 },{}],4:[function(require,module,exports){
-/* global _, acf, jQuery, wp */
+/* global _, acf, jQuery, wp, window */
+
 module.exports = function() {
 	var outerFieldsName = [
 		"flexible_content",
@@ -211,9 +212,12 @@ module.exports = function() {
 	var outerFields = [];
 	var acfFields = [];
 
-	if ( wp.data.select( "core/block-editor" ) ) {
-		// Return only fields in metabox areas (either below or side) or
-		// ACF block fields in the content (not in the sidebar, to prevent duplicates)
+	// Check if Gutenberg editor is used.
+	if ( window.wpseoScriptData.isBlockEditor ) {
+	        /*
+	         * Return only fields in metabox areas (either below or side) or
+	         * ACF block fields in the content (not in the sidebar, to prevent duplicates).
+		*/
 		var parentContainer = jQuery( ".metabox-location-normal, .metabox-location-side, .acf-block-component.acf-block-body" );
 		acfFields = acf.get_fields( false, parentContainer );
 	} else {
@@ -398,12 +402,25 @@ module.exports = {
 /* global jQuery, YoastSEO, wp, YoastACFAnalysis: true */
 /* exported YoastACFAnalysis */
 
-var App = require( "./app.js" );
+const App = require( "./app.js" );
+
+/**
+ * Initializes the YoastACFAnalysis app.
+ *
+ * @returns {void}
+ */
+function initializeYoastACFAnalysis() {
+	YoastACFAnalysis = new App();
+}
 
 wp.domReady( function() {
-	if ( "undefined" !== typeof YoastSEO ) {
-		YoastACFAnalysis = new App();
+	if ( ! ( YoastSEO && YoastSEO.app ) ) {
+		// Give it one more attempt in 100ms.
+		setTimeout( initializeYoastACFAnalysis, 100 );
+		return;
 	}
+
+	initializeYoastACFAnalysis();
 } );
 
 },{"./app.js":1}],9:[function(require,module,exports){

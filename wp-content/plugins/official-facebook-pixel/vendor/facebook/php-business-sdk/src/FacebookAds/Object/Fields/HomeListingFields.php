@@ -60,6 +60,7 @@ class HomeListingFields extends AbstractEnum {
   const HEATING_TYPE = 'heating_type';
   const HOME_LISTING_ID = 'home_listing_id';
   const ID = 'id';
+  const IMAGE_FETCH_STATUS = 'image_fetch_status';
   const IMAGES = 'images';
   const LAUNDRY_TYPE = 'laundry_type';
   const LISTING_TYPE = 'listing_type';
@@ -78,7 +79,9 @@ class HomeListingFields extends AbstractEnum {
   const PRICE = 'price';
   const PROPERTY_TYPE = 'property_type';
   const SANITIZED_IMAGES = 'sanitized_images';
+  const UNIT_PRICE = 'unit_price';
   const URL = 'url';
+  const VISIBILITY = 'visibility';
   const YEAR_BUILT = 'year_built';
 
   public function getFieldTypes() {
@@ -106,6 +109,7 @@ class HomeListingFields extends AbstractEnum {
       'heating_type' => 'string',
       'home_listing_id' => 'string',
       'id' => 'string',
+      'image_fetch_status' => 'ImageFetchStatus',
       'images' => 'list<string>',
       'laundry_type' => 'string',
       'listing_type' => 'string',
@@ -124,7 +128,9 @@ class HomeListingFields extends AbstractEnum {
       'price' => 'string',
       'property_type' => 'string',
       'sanitized_images' => 'list<string>',
+      'unit_price' => 'Object',
       'url' => 'string',
+      'visibility' => 'Visibility',
       'year_built' => 'int',
     );
   }

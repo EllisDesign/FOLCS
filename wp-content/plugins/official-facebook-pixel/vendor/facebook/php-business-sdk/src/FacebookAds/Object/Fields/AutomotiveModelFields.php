@@ -52,6 +52,7 @@ class AutomotiveModelFields extends AbstractEnum {
   const FUEL_TYPE = 'fuel_type';
   const GENERATION = 'generation';
   const ID = 'id';
+  const IMAGE_FETCH_STATUS = 'image_fetch_status';
   const IMAGES = 'images';
   const INTERIOR_COLOR = 'interior_color';
   const INTERIOR_UPHOLSTERY = 'interior_upholstery';
@@ -62,7 +63,9 @@ class AutomotiveModelFields extends AbstractEnum {
   const TITLE = 'title';
   const TRANSMISSION = 'transmission';
   const TRIM = 'trim';
+  const UNIT_PRICE = 'unit_price';
   const URL = 'url';
+  const VISIBILITY = 'visibility';
   const YEAR = 'year';
 
   public function getFieldTypes() {
@@ -82,6 +85,7 @@ class AutomotiveModelFields extends AbstractEnum {
       'fuel_type' => 'string',
       'generation' => 'string',
       'id' => 'string',
+      'image_fetch_status' => 'ImageFetchStatus',
       'images' => 'list<string>',
       'interior_color' => 'string',
       'interior_upholstery' => 'string',
@@ -92,8 +96,10 @@ class AutomotiveModelFields extends AbstractEnum {
       'title' => 'string',
       'transmission' => 'string',
       'trim' => 'string',
+      'unit_price' => 'Object',
       'url' => 'string',
-      'year' => 'unsigned int',
+      'visibility' => 'Visibility',
+      'year' => 'int',
     );
   }
 }

@@ -1,6 +1,6 @@
 <?php
 /*
-* Copyright (C) 2017-present, Facebook, Inc.
+* Copyright (C) 2017-present, Meta, Inc.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,6 @@ class FacebookWordpressPixelInjection {
       add_action(
         'wp_head',
         array($this, 'injectPixelNoscriptCode'));
-
       foreach (FacebookPluginConfig::integrationConfig() as $key => $value) {
         $class_name = 'FacebookPixelPlugin\\Integration\\'.$value;
         $class_name::injectPixelCode();
@@ -46,16 +45,14 @@ class FacebookWordpressPixelInjection {
   }
 
   public function sendPendingEvents(){
-    if(FacebookWordpressOptions::getUseS2S()){
-      $pending_events =
-        FacebookServerSideEvent::getInstance()->getPendingEvents();
-      if(count($pending_events) > 0){
-        do_action(
-          'send_server_events',
-          $pending_events,
-          count($pending_events)
-        );
-      }
+    $pending_events =
+      FacebookServerSideEvent::getInstance()->getPendingEvents();
+    if(count($pending_events) > 0){
+      do_action(
+        'send_server_events',
+        $pending_events,
+        count($pending_events)
+      );
     }
   }
 
@@ -71,6 +68,11 @@ class FacebookWordpressPixelInjection {
 
     self::$renderCache[FacebookPluginConfig::IS_PIXEL_RENDERED] = true;
     echo(FacebookPixel::getPixelBaseCode());
+    $capiIntegrationStatus =
+    FacebookWordpressOptions::getCapiIntegrationStatus();
+    if($capiIntegrationStatus === '1'){
+      echo(FacebookPixel::getOpenBridgeConfigCode());
+    }
     echo(FacebookPixel::getPixelInitCode(
       FacebookWordpressOptions::getAgentString(),
       FacebookWordpressOptions::getUserInfo()));

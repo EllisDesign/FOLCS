@@ -35,7 +35,6 @@ use FacebookAds\Object\Values\AdCreativeCallToActionTypeValues;
 use FacebookAds\Object\Values\AdCreativeCategorizationCriteriaValues;
 use FacebookAds\Object\Values\AdCreativeCategoryMediaSourceValues;
 use FacebookAds\Object\Values\AdCreativeDynamicAdVoiceValues;
-use FacebookAds\Object\Values\AdCreativeInstantCheckoutSettingValues;
 use FacebookAds\Object\Values\AdCreativeObjectTypeValues;
 use FacebookAds\Object\Values\AdCreativeOperatorValues;
 use FacebookAds\Object\Values\AdCreativeStatusValues;
@@ -72,15 +71,14 @@ class AdCreative extends AbstractCrudObject {
 
   protected static function getReferencedEnums() {
     $ref_enums = array();
-    $ref_enums['ApplinkTreatment'] = AdCreativeApplinkTreatmentValues::getInstance()->getValues();
     $ref_enums['CallToActionType'] = AdCreativeCallToActionTypeValues::getInstance()->getValues();
     $ref_enums['ObjectType'] = AdCreativeObjectTypeValues::getInstance()->getValues();
     $ref_enums['Status'] = AdCreativeStatusValues::getInstance()->getValues();
+    $ref_enums['ApplinkTreatment'] = AdCreativeApplinkTreatmentValues::getInstance()->getValues();
     $ref_enums['AuthorizationCategory'] = AdCreativeAuthorizationCategoryValues::getInstance()->getValues();
     $ref_enums['CategorizationCriteria'] = AdCreativeCategorizationCriteriaValues::getInstance()->getValues();
     $ref_enums['CategoryMediaSource'] = AdCreativeCategoryMediaSourceValues::getInstance()->getValues();
     $ref_enums['DynamicAdVoice'] = AdCreativeDynamicAdVoiceValues::getInstance()->getValues();
-    $ref_enums['InstantCheckoutSetting'] = AdCreativeInstantCheckoutSettingValues::getInstance()->getValues();
     $ref_enums['Operator'] = AdCreativeOperatorValues::getInstance()->getValues();
     return $ref_enums;
   }
@@ -210,7 +208,6 @@ class AdCreative extends AbstractCrudObject {
     $param_types = array(
       'thumbnail_height' => 'unsigned int',
       'thumbnail_width' => 'unsigned int',
-      'with_unified_spec' => 'bool',
     );
     $enums = array(
     );

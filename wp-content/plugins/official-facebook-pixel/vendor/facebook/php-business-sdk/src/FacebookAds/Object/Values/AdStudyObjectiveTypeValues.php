@@ -39,9 +39,11 @@ class AdStudyObjectiveTypeValues extends AbstractEnum {
 
   const BRAND = 'BRAND';
   const BRANDLIFT = 'BRANDLIFT';
+  const CONVERSIONS = 'CONVERSIONS';
   const FTL = 'FTL';
   const MAE = 'MAE';
   const MAI = 'MAI';
+  const MPC_CONVERSION = 'MPC_CONVERSION';
   const NONSALES = 'NONSALES';
   const PARTNER = 'PARTNER';
   const SALES = 'SALES';

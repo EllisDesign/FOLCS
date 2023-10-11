@@ -52,8 +52,10 @@ class AdgroupPlacementSpecificReviewFeedbackFields extends AbstractEnum {
   const DRI_COUNTERFEIT = 'dri_counterfeit';
   const FACEBOOK = 'facebook';
   const FACEBOOK_PAGES_LIVE_SHOPPING = 'facebook_pages_live_shopping';
+  const INDEPENDENT_WORK = 'independent_work';
   const INSTAGRAM = 'instagram';
   const INSTAGRAM_SHOP = 'instagram_shop';
+  const JOB_SEARCH = 'job_search';
   const LEAD_GEN_HONEYPOT = 'lead_gen_honeypot';
   const MARKETPLACE = 'marketplace';
   const MARKETPLACE_HOME_RENTALS = 'marketplace_home_rentals';
@@ -61,6 +63,7 @@ class AdgroupPlacementSpecificReviewFeedbackFields extends AbstractEnum {
   const MARKETPLACE_MOTORS = 'marketplace_motors';
   const MARKETPLACE_SHOPS = 'marketplace_shops';
   const MAX_REVIEW_PLACEMENTS = 'max_review_placements';
+  const NEIGHBORHOODS = 'neighborhoods';
   const PAGE_ADMIN = 'page_admin';
   const PRODUCT = 'product';
   const PRODUCT_SERVICE = 'product_service';
@@ -68,6 +71,7 @@ class AdgroupPlacementSpecificReviewFeedbackFields extends AbstractEnum {
   const SELLER = 'seller';
   const SHOPS = 'shops';
   const TRAFFIC_QUALITY = 'traffic_quality';
+  const UNIFIED_COMMERCE_CONTENT = 'unified_commerce_content';
   const WHATSAPP = 'whatsapp';
 
   public function getFieldTypes() {
@@ -87,8 +91,10 @@ class AdgroupPlacementSpecificReviewFeedbackFields extends AbstractEnum {
       'dri_counterfeit' => 'map<string, string>',
       'facebook' => 'map<string, string>',
       'facebook_pages_live_shopping' => 'map<string, string>',
+      'independent_work' => 'map<string, string>',
       'instagram' => 'map<string, string>',
       'instagram_shop' => 'map<string, string>',
+      'job_search' => 'map<string, string>',
       'lead_gen_honeypot' => 'map<string, string>',
       'marketplace' => 'map<string, string>',
       'marketplace_home_rentals' => 'map<string, string>',
@@ -96,6 +102,7 @@ class AdgroupPlacementSpecificReviewFeedbackFields extends AbstractEnum {
       'marketplace_motors' => 'map<string, string>',
       'marketplace_shops' => 'map<string, string>',
       'max_review_placements' => 'map<string, string>',
+      'neighborhoods' => 'map<string, string>',
       'page_admin' => 'map<string, string>',
       'product' => 'map<string, string>',
       'product_service' => 'map<string, string>',
@@ -103,6 +110,7 @@ class AdgroupPlacementSpecificReviewFeedbackFields extends AbstractEnum {
       'seller' => 'map<string, string>',
       'shops' => 'map<string, string>',
       'traffic_quality' => 'map<string, string>',
+      'unified_commerce_content' => 'map<string, string>',
       'whatsapp' => 'map<string, string>',
     );
   }

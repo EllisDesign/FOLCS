@@ -73,6 +73,7 @@ class AdActivityEventTypeValues extends AbstractEnum {
   const FUNDING_EVENT_INITIATED = 'funding_event_initiated';
   const FUNDING_EVENT_SUCCESSFUL = 'funding_event_successful';
   const LIFETIME_BUDGET_SPENT = 'lifetime_budget_spent';
+  const MERGE_CAMPAIGNS = 'merge_campaigns';
   const RECEIVE_AUDIENCE = 'receive_audience';
   const REMOVE_FUNDING_SOURCE = 'remove_funding_source';
   const REMOVE_SHARED_AUDIENCE = 'remove_shared_audience';
@@ -106,7 +107,6 @@ class AdActivityEventTypeValues extends AbstractEnum {
   const UPDATE_CAMPAIGN_BUDGET = 'update_campaign_budget';
   const UPDATE_CAMPAIGN_BUDGET_OPTIMIZATION_TOGGLING_STATUS = 'update_campaign_budget_optimization_toggling_status';
   const UPDATE_CAMPAIGN_DELIVERY_TYPE = 'update_campaign_delivery_type';
-  const UPDATE_CAMPAIGN_DURATION = 'update_campaign_duration';
   const UPDATE_CAMPAIGN_GROUP_AD_SCHEDULING = 'update_campaign_group_ad_scheduling';
   const UPDATE_CAMPAIGN_GROUP_DELIVERY_TYPE = 'update_campaign_group_delivery_type';
   const UPDATE_CAMPAIGN_GROUP_SPEND_CAP = 'update_campaign_group_spend_cap';

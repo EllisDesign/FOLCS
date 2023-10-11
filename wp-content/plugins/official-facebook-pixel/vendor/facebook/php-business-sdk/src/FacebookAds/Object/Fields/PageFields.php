@@ -60,6 +60,7 @@ class PageFields extends AbstractEnum {
   const CHECKINS = 'checkins';
   const COMPANY_OVERVIEW = 'company_overview';
   const CONNECTED_INSTAGRAM_ACCOUNT = 'connected_instagram_account';
+  const CONNECTED_PAGE_BACKED_INSTAGRAM_ACCOUNT = 'connected_page_backed_instagram_account';
   const CONTACT_ADDRESS = 'contact_address';
   const COPYRIGHT_WHITELISTED_IG_PARTNERS = 'copyright_whitelisted_ig_partners';
   const COUNTRY_PAGE_LIKES = 'country_page_likes';
@@ -78,6 +79,7 @@ class PageFields extends AbstractEnum {
   const FAN_COUNT = 'fan_count';
   const FEATURED_VIDEO = 'featured_video';
   const FEATURES = 'features';
+  const FOLLOWERS_COUNT = 'followers_count';
   const FOOD_STYLES = 'food_styles';
   const FOUNDED = 'founded';
   const GENERAL_INFO = 'general_info';
@@ -86,6 +88,7 @@ class PageFields extends AbstractEnum {
   const GLOBAL_BRAND_PAGE_NAME = 'global_brand_page_name';
   const GLOBAL_BRAND_ROOT_ID = 'global_brand_root_id';
   const HAS_ADDED_APP = 'has_added_app';
+  const HAS_TRANSITIONED_TO_NEW_PAGE_EXPERIENCE = 'has_transitioned_to_new_page_experience';
   const HAS_WHATSAPP_BUSINESS_NUMBER = 'has_whatsapp_business_number';
   const HAS_WHATSAPP_NUMBER = 'has_whatsapp_number';
   const HOMETOWN = 'hometown';
@@ -116,10 +119,12 @@ class PageFields extends AbstractEnum {
   const MEMBERS = 'members';
   const MERCHANT_ID = 'merchant_id';
   const MERCHANT_REVIEW_STATUS = 'merchant_review_status';
+  const MESSAGING_FEATURE_STATUS = 'messaging_feature_status';
   const MESSENGER_ADS_DEFAULT_ICEBREAKERS = 'messenger_ads_default_icebreakers';
   const MESSENGER_ADS_DEFAULT_PAGE_WELCOME_MESSAGE = 'messenger_ads_default_page_welcome_message';
   const MESSENGER_ADS_DEFAULT_QUICK_REPLIES = 'messenger_ads_default_quick_replies';
   const MESSENGER_ADS_QUICK_REPLIES_TYPE = 'messenger_ads_quick_replies_type';
+  const MINI_SHOP_STOREFRONT = 'mini_shop_storefront';
   const MISSION = 'mission';
   const MPG = 'mpg';
   const NAME = 'name';
@@ -128,6 +133,7 @@ class PageFields extends AbstractEnum {
   const NEW_LIKE_COUNT = 'new_like_count';
   const OFFER_ELIGIBLE = 'offer_eligible';
   const OVERALL_STAR_RATING = 'overall_star_rating';
+  const OWNER_BUSINESS = 'owner_business';
   const PAGE_TOKEN = 'page_token';
   const PARENT_PAGE = 'parent_page';
   const PARKING = 'parking';
@@ -204,6 +210,7 @@ class PageFields extends AbstractEnum {
       'checkins' => 'unsigned int',
       'company_overview' => 'string',
       'connected_instagram_account' => 'IGUser',
+      'connected_page_backed_instagram_account' => 'IGUser',
       'contact_address' => 'MailingAddress',
       'copyright_whitelisted_ig_partners' => 'list<string>',
       'country_page_likes' => 'unsigned int',
@@ -222,6 +229,7 @@ class PageFields extends AbstractEnum {
       'fan_count' => 'unsigned int',
       'featured_video' => 'AdVideo',
       'features' => 'string',
+      'followers_count' => 'unsigned int',
       'food_styles' => 'list<string>',
       'founded' => 'string',
       'general_info' => 'string',
@@ -230,6 +238,7 @@ class PageFields extends AbstractEnum {
       'global_brand_page_name' => 'string',
       'global_brand_root_id' => 'string',
       'has_added_app' => 'bool',
+      'has_transitioned_to_new_page_experience' => 'bool',
       'has_whatsapp_business_number' => 'bool',
       'has_whatsapp_number' => 'bool',
       'hometown' => 'string',
@@ -260,10 +269,12 @@ class PageFields extends AbstractEnum {
       'members' => 'string',
       'merchant_id' => 'string',
       'merchant_review_status' => 'string',
+      'messaging_feature_status' => 'MessagingFeatureStatus',
       'messenger_ads_default_icebreakers' => 'list<string>',
       'messenger_ads_default_page_welcome_message' => 'MessengerDestinationPageWelcomeMessage',
       'messenger_ads_default_quick_replies' => 'list<string>',
       'messenger_ads_quick_replies_type' => 'string',
+      'mini_shop_storefront' => 'Shop',
       'mission' => 'string',
       'mpg' => 'string',
       'name' => 'string',
@@ -272,6 +283,7 @@ class PageFields extends AbstractEnum {
       'new_like_count' => 'unsigned int',
       'offer_eligible' => 'bool',
       'overall_star_rating' => 'float',
+      'owner_business' => 'Business',
       'page_token' => 'string',
       'parent_page' => 'Page',
       'parking' => 'PageParking',

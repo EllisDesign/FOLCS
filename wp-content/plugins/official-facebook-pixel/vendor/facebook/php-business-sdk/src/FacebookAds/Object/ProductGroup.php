@@ -33,6 +33,7 @@ use FacebookAds\Object\Values\ProductItemAvailabilityValues;
 use FacebookAds\Object\Values\ProductItemCommerceTaxCategoryValues;
 use FacebookAds\Object\Values\ProductItemConditionValues;
 use FacebookAds\Object\Values\ProductItemGenderValues;
+use FacebookAds\Object\Values\ProductItemMarkedForProductLaunchValues;
 use FacebookAds\Object\Values\ProductItemVisibilityValues;
 
 /**
@@ -113,6 +114,11 @@ class ProductGroup extends AbstractCrudObject {
       'custom_label_2' => 'string',
       'custom_label_3' => 'string',
       'custom_label_4' => 'string',
+      'custom_number_0' => 'unsigned int',
+      'custom_number_1' => 'unsigned int',
+      'custom_number_2' => 'unsigned int',
+      'custom_number_3' => 'unsigned int',
+      'custom_number_4' => 'unsigned int',
       'description' => 'string',
       'expiration_date' => 'string',
       'fb_product_category' => 'string',
@@ -131,6 +137,7 @@ class ProductGroup extends AbstractCrudObject {
       'iphone_url' => 'string',
       'launch_date' => 'string',
       'manufacturer_part_number' => 'string',
+      'marked_for_product_launch' => 'marked_for_product_launch_enum',
       'material' => 'string',
       'mobile_link' => 'string',
       'name' => 'string',
@@ -141,6 +148,7 @@ class ProductGroup extends AbstractCrudObject {
       'pattern' => 'string',
       'price' => 'unsigned int',
       'product_type' => 'string',
+      'quantity_to_sell_on_facebook' => 'unsigned int',
       'retailer_id' => 'string',
       'return_policy_days' => 'unsigned int',
       'sale_price' => 'unsigned int',
@@ -160,6 +168,7 @@ class ProductGroup extends AbstractCrudObject {
       'commerce_tax_category_enum' => ProductItemCommerceTaxCategoryValues::getInstance()->getValues(),
       'condition_enum' => ProductItemConditionValues::getInstance()->getValues(),
       'gender_enum' => ProductItemGenderValues::getInstance()->getValues(),
+      'marked_for_product_launch_enum' => ProductItemMarkedForProductLaunchValues::getInstance()->getValues(),
       'visibility_enum' => ProductItemVisibilityValues::getInstance()->getValues(),
     );
 
@@ -182,8 +191,13 @@ class ProductGroup extends AbstractCrudObject {
     $this->assureId();
 
     $param_types = array(
+      'deletion_method' => 'deletion_method_enum',
     );
     $enums = array(
+      'deletion_method_enum' => array(
+        'DELETE_ITEMS',
+        'ONLY_IF_EMPTY',
+      ),
     );
 
     $request = new ApiRequest(

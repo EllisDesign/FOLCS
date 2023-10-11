@@ -146,13 +146,12 @@ class Event extends AbstractCrudObject {
       'description' => 'string',
       'enable_backup_ingest' => 'bool',
       'encoding_settings' => 'string',
+      'event_params' => 'Object',
       'fisheye_video_cropped' => 'bool',
       'front_z_rotation' => 'float',
       'is_audio_only' => 'bool',
       'is_spherical' => 'bool',
-      'live_encoders' => 'list<string>',
       'original_fov' => 'unsigned int',
-      'planned_start_time' => 'int',
       'privacy' => 'string',
       'projection' => 'projection_enum',
       'published' => 'bool',
@@ -272,6 +271,29 @@ class Event extends AbstractCrudObject {
       new Profile(),
       'EDGE',
       Profile::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getTicketTiers(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/ticket_tiers',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);

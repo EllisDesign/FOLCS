@@ -48,6 +48,7 @@ class Event implements ArrayAccess {
     'data_processing_options' => 'string[]',
     'data_processing_options_country' => 'int',
     'data_processing_options_state' => 'int',
+    'action_source' => 'string',
   );
   /**
    * Array of attributes where the key is the local name, and the value is the original name
@@ -63,7 +64,8 @@ class Event implements ArrayAccess {
     'custom_data' => 'custom_data',
     'data_processing_options' => 'data_processing_options',
     'data_processing_options_country' => 'data_processing_options_country',
-    'data_processing_options_state' => 'data_processing_options_state'
+    'data_processing_options_state' => 'data_processing_options_state',
+    'action_source' => 'action_source',
   );
 
   /**
@@ -81,6 +83,7 @@ class Event implements ArrayAccess {
     'data_processing_options' => 'setDataProcessingOptions',
     'data_processing_options_country' => 'setDataProcessingOptionsCountry',
     'data_processing_options_state' => 'setDataProcessingOptionsState',
+    'action_source' => 'setActionSource',
   );
   /**
    * Array of attributes to getter functions (for serialization of requests)
@@ -97,6 +100,7 @@ class Event implements ArrayAccess {
     'data_processing_options' => 'getDataProcessingOptions',
     'data_processing_options_country' => 'getDataProcessingOptionsCountry',
     'data_processing_options_state' => 'getDataProcessingOptionsState',
+    'action_source' => 'getActionSource',
   );
   /**
    * Associative array for storing property values
@@ -106,7 +110,7 @@ class Event implements ArrayAccess {
 
   /**
    * Constructor
-   * @param mixed[] $data Associated array of property value initalizing the model
+   * @param mixed[] $data Associated array of property value initializing the model
    */
   public function __construct(array $data = null) {
     $this->container['event_name'] = isset($data['event_name']) ? $data['event_name'] : null;
@@ -119,6 +123,7 @@ class Event implements ArrayAccess {
     $this->container['data_processing_options'] = isset($data['data_processing_options']) ? $data['data_processing_options'] : null;
     $this->container['data_processing_options_country'] = isset($data['data_processing_options_country']) ? $data['data_processing_options_country'] : null;
     $this->container['data_processing_options_state'] = isset($data['data_processing_options_state']) ? $data['data_processing_options_state'] : null;
+    $this->container['action_source'] = isset($data['action_source']) ? $data['action_source'] : null;
   }
 
   public static function paramTypes() {
@@ -296,11 +301,28 @@ class Event implements ArrayAccess {
   }
 
   /**
+   * Gets action_source, this is where the Conversion occurred.
+   * @return string
+   */
+  public function getActionSource() {
+    return $this->container['action_source'];
+  }
+
+  /**
+   * Sets action_source, this is where the Conversion occurred.
+   * @return $this
+   */
+  public function setActionSource($action_source) {
+    $this->container['action_source'] = $action_source;
+    return $this;
+  }
+
+  /**
    * Returns true if offset exists. False otherwise.
    * @param integer $offset Offset
    * @return boolean
    */
-  public function offsetExists($offset) {
+  public function offsetExists($offset) : bool {
     return isset($this->container[$offset]);
   }
 
@@ -309,7 +331,7 @@ class Event implements ArrayAccess {
    * @param integer $offset Offset
    * @return mixed
    */
-  public function offsetGet($offset) {
+  public function offsetGet($offset) : mixed {
     return isset($this->container[$offset]) ? $this->container[$offset] : null;
   }
 
@@ -319,7 +341,7 @@ class Event implements ArrayAccess {
    * @param mixed $value Value to be set
    * @return void
    */
-  public function offsetSet($offset, $value) {
+  public function offsetSet($offset, $value) : void {
     if (is_null($offset)) {
       $this->container[] = $value;
     } else {
@@ -332,7 +354,7 @@ class Event implements ArrayAccess {
    * @param integer $offset Offset
    * @return void
    */
-  public function offsetUnset($offset) {
+  public function offsetUnset($offset) : void {
     unset($this->container[$offset]);
   }
 
@@ -355,7 +377,15 @@ class Event implements ArrayAccess {
     $normalized_payload['data_processing_options'] = $this->getDataProcessingOptions();
     $normalized_payload['data_processing_options_country'] = $this->getDataProcessingOptionsCountry();
     $normalized_payload['data_processing_options_state'] = $this->getDataProcessingOptionsState();
-    $normalized_payload = array_filter($normalized_payload, function($val) { if(is_array($val)) { return true; } else { return strlen($val); }});
+    $normalized_payload['action_source'] = Normalizer::normalize(
+      'action_source',
+      $this->container['action_source']
+    );
+    $normalized_payload = array_filter($normalized_payload, function($val) { if(is_array($val)) { return true; } else { return strlen((string) $val); }});
+    // Add the opt_out value back in if it was filtered out
+    if ($this->getOptOut() === false) {
+      $normalized_payload['opt_out'] = $this->getOptOut();
+    }
 
     return $normalized_payload;
   }

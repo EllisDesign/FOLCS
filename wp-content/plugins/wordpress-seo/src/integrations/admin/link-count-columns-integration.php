@@ -60,7 +60,7 @@ class Link_Count_Columns_Integration implements Integration_Interface {
 	protected $admin_columns_cache;
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public static function get_conditionals() {
 		return [
@@ -91,13 +91,13 @@ class Link_Count_Columns_Integration implements Integration_Interface {
 	}
 
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 */
 	public function register_hooks() {
 		\add_filter( 'posts_clauses', [ $this, 'order_by_links' ], 1, 2 );
 		\add_filter( 'posts_clauses', [ $this, 'order_by_linked' ], 1, 2 );
 
-		\add_filter( 'admin_init', [ $this, 'register_init_hooks' ] );
+		\add_action( 'admin_init', [ $this, 'register_init_hooks' ] );
 
 		// Adds a filter to exclude the attachments from the link count.
 		\add_filter( 'wpseo_link_count_post_types', [ 'WPSEO_Post_Type', 'filter_attachment_post_type' ] );
@@ -158,7 +158,7 @@ class Link_Count_Columns_Integration implements Integration_Interface {
 	 * @return array
 	 */
 	public function order_by_linked( $pieces, $query ) {
-		if ( 'wpseo-' . self::COLUMN_LINKED !== $query->get( 'orderby' ) ) {
+		if ( $query->get( 'orderby' ) !== 'wpseo-' . self::COLUMN_LINKED ) {
 			return $pieces;
 		}
 
@@ -174,7 +174,7 @@ class Link_Count_Columns_Integration implements Integration_Interface {
 	 * @return array
 	 */
 	public function order_by_links( $pieces, $query ) {
-		if ( 'wpseo-' . self::COLUMN_LINKS !== $query->get( 'orderby' ) ) {
+		if ( $query->get( 'orderby' ) !== 'wpseo-' . self::COLUMN_LINKS ) {
 			return $pieces;
 		}
 

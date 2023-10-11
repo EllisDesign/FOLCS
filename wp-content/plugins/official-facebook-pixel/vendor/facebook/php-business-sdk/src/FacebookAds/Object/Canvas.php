@@ -54,30 +54,7 @@ class Canvas extends AbstractCrudObject {
   }
 
 
-  public function createDuplicateCanva(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-    );
-    $enums = array(
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_POST,
-      '/duplicate_canvas',
-      new Canvas(),
-      'EDGE',
-      Canvas::getFieldsEnum()->getValues(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
-  public function createPreviewNotification(array $fields = array(), array $params = array(), $pending = false) {
+  public function getPreviews(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
     $param_types = array(
@@ -89,34 +66,11 @@ class Canvas extends AbstractCrudObject {
     $request = new ApiRequest(
       $this->api,
       $this->data['id'],
-      RequestInterface::METHOD_POST,
-      '/preview_notifications',
-      new Canvas(),
+      RequestInterface::METHOD_GET,
+      '/previews',
+      new TextWithEntities(),
       'EDGE',
-      Canvas::getFieldsEnum()->getValues(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
-  public function deleteSelf(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-    );
-    $enums = array(
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_DELETE,
-      '/',
-      new AbstractCrudObject(),
-      'NODE',
-      array(),
+      TextWithEntities::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -157,6 +111,7 @@ class Canvas extends AbstractCrudObject {
       'is_hidden' => 'bool',
       'is_published' => 'bool',
       'name' => 'string',
+      'source_template_id' => 'string',
     );
     $enums = array(
     );

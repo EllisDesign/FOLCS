@@ -45,6 +45,7 @@ class FlightFields extends AbstractEnum {
   const DESTINATION_CITY = 'destination_city';
   const FLIGHT_ID = 'flight_id';
   const ID = 'id';
+  const IMAGE_FETCH_STATUS = 'image_fetch_status';
   const IMAGES = 'images';
   const ONEWAY_CURRENCY = 'oneway_currency';
   const ONEWAY_PRICE = 'oneway_price';
@@ -52,7 +53,9 @@ class FlightFields extends AbstractEnum {
   const ORIGIN_CITY = 'origin_city';
   const PRICE = 'price';
   const SANITIZED_IMAGES = 'sanitized_images';
+  const UNIT_PRICE = 'unit_price';
   const URL = 'url';
+  const VISIBILITY = 'visibility';
 
   public function getFieldTypes() {
     return array(
@@ -64,6 +67,7 @@ class FlightFields extends AbstractEnum {
       'destination_city' => 'string',
       'flight_id' => 'string',
       'id' => 'string',
+      'image_fetch_status' => 'ImageFetchStatus',
       'images' => 'list<string>',
       'oneway_currency' => 'string',
       'oneway_price' => 'string',
@@ -71,7 +75,9 @@ class FlightFields extends AbstractEnum {
       'origin_city' => 'string',
       'price' => 'string',
       'sanitized_images' => 'list<string>',
+      'unit_price' => 'Object',
       'url' => 'string',
+      'visibility' => 'Visibility',
     );
   }
 }

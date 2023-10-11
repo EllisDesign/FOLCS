@@ -37,7 +37,9 @@ use FacebookAds\Enum\AbstractEnum;
  */
 class AdAccountTasksValues extends AbstractEnum {
 
+  const AA_ANALYZE = 'AA_ANALYZE';
   const ADVERTISE = 'ADVERTISE';
   const ANALYZE = 'ANALYZE';
+  const DRAFT = 'DRAFT';
   const MANAGE = 'MANAGE';
 }

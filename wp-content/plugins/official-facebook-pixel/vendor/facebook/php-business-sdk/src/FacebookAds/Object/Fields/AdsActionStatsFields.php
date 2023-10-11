@@ -43,10 +43,12 @@ class AdsActionStatsFields extends AbstractEnum {
   const FIELD_28D_VIEW = '28d_view';
   const FIELD_7D_CLICK = '7d_click';
   const FIELD_7D_VIEW = '7d_view';
+  const ACTION_BRAND = 'action_brand';
   const ACTION_CANVAS_COMPONENT_ID = 'action_canvas_component_id';
   const ACTION_CANVAS_COMPONENT_NAME = 'action_canvas_component_name';
   const ACTION_CAROUSEL_CARD_ID = 'action_carousel_card_id';
   const ACTION_CAROUSEL_CARD_NAME = 'action_carousel_card_name';
+  const ACTION_CATEGORY = 'action_category';
   const ACTION_CONVERTED_PRODUCT_ID = 'action_converted_product_id';
   const ACTION_DESTINATION = 'action_destination';
   const ACTION_DEVICE = 'action_device';
@@ -63,6 +65,8 @@ class AdsActionStatsFields extends AbstractEnum {
   const INLINE = 'inline';
   const INTERACTIVE_COMPONENT_STICKER_ID = 'interactive_component_sticker_id';
   const INTERACTIVE_COMPONENT_STICKER_RESPONSE = 'interactive_component_sticker_response';
+  const SKAN_CLICK = 'skan_click';
+  const SKAN_VIEW = 'skan_view';
   const VALUE = 'value';
 
   public function getFieldTypes() {
@@ -73,10 +77,12 @@ class AdsActionStatsFields extends AbstractEnum {
       '28d_view' => 'string',
       '7d_click' => 'string',
       '7d_view' => 'string',
+      'action_brand' => 'string',
       'action_canvas_component_id' => 'string',
       'action_canvas_component_name' => 'string',
       'action_carousel_card_id' => 'string',
       'action_carousel_card_name' => 'string',
+      'action_category' => 'string',
       'action_converted_product_id' => 'string',
       'action_destination' => 'string',
       'action_device' => 'string',
@@ -93,6 +99,8 @@ class AdsActionStatsFields extends AbstractEnum {
       'inline' => 'string',
       'interactive_component_sticker_id' => 'string',
       'interactive_component_sticker_response' => 'string',
+      'skan_click' => 'string',
+      'skan_view' => 'string',
       'value' => 'string',
     );
   }

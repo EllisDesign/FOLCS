@@ -34,6 +34,7 @@ use FacebookAds\Object\Values\CommentLiveFilterValues;
 use FacebookAds\Object\Values\CommentOrderValues;
 use FacebookAds\Object\Values\LiveVideoBroadcastStatusValues;
 use FacebookAds\Object\Values\LiveVideoLiveCommentModerationSettingValues;
+use FacebookAds\Object\Values\LiveVideoPersistentStreamKeyStatusValues;
 use FacebookAds\Object\Values\LiveVideoProjectionValues;
 use FacebookAds\Object\Values\LiveVideoSourceValues;
 use FacebookAds\Object\Values\LiveVideoSpatialAudioFormatValues;
@@ -62,14 +63,15 @@ class LiveVideo extends AbstractCrudObject {
 
   protected static function getReferencedEnums() {
     $ref_enums = array();
-    $ref_enums['BroadcastStatus'] = LiveVideoBroadcastStatusValues::getInstance()->getValues();
     $ref_enums['Projection'] = LiveVideoProjectionValues::getInstance()->getValues();
     $ref_enums['SpatialAudioFormat'] = LiveVideoSpatialAudioFormatValues::getInstance()->getValues();
     $ref_enums['Status'] = LiveVideoStatusValues::getInstance()->getValues();
     $ref_enums['StereoscopicMode'] = LiveVideoStereoscopicModeValues::getInstance()->getValues();
     $ref_enums['StreamType'] = LiveVideoStreamTypeValues::getInstance()->getValues();
+    $ref_enums['BroadcastStatus'] = LiveVideoBroadcastStatusValues::getInstance()->getValues();
     $ref_enums['Source'] = LiveVideoSourceValues::getInstance()->getValues();
     $ref_enums['LiveCommentModerationSetting'] = LiveVideoLiveCommentModerationSettingValues::getInstance()->getValues();
+    $ref_enums['PersistentStreamKeyStatus'] = LiveVideoPersistentStreamKeyStatusValues::getInstance()->getValues();
     return $ref_enums;
   }
 
@@ -349,31 +351,25 @@ class LiveVideo extends AbstractCrudObject {
     $this->assureId();
 
     $param_types = array(
-      'ad_break_drop_live_stream' => 'bool',
-      'ad_break_duration' => 'unsigned int',
-      'ad_break_encoder_drops_live_stream' => 'bool',
-      'ad_break_intent' => 'bool',
-      'ad_break_start_now' => 'bool',
-      'ad_break_time_offset' => 'float',
       'allow_bm_crossposting' => 'bool',
-      'attribution_app_id' => 'string',
-      'commercial_break_durations' => 'list<unsigned int>',
       'content_tags' => 'list<string>',
+      'cross_share_to_group_ids' => 'list<string>',
       'crossposting_actions' => 'list<map>',
       'custom_labels' => 'list<string>',
       'description' => 'string',
       'direct_share_status' => 'unsigned int',
       'embeddable' => 'bool',
       'end_live_video' => 'bool',
+      'event_params' => 'Object',
       'is_audio_only' => 'bool',
       'is_manual_mode' => 'bool',
       'live_comment_moderation_setting' => 'list<live_comment_moderation_setting_enum>',
-      'live_encoders' => 'list<string>',
       'master_ingest_stream_id' => 'string',
       'og_icon_id' => 'string',
       'og_phrase' => 'string',
+      'persistent_stream_key_status' => 'persistent_stream_key_status_enum',
       'place' => 'Object',
-      'planned_start_time' => 'int',
+      'planned_start_time' => 'datetime',
       'privacy' => 'string',
       'published' => 'bool',
       'schedule_custom_profile_image' => 'file',
@@ -388,6 +384,7 @@ class LiveVideo extends AbstractCrudObject {
     );
     $enums = array(
       'live_comment_moderation_setting_enum' => LiveVideoLiveCommentModerationSettingValues::getInstance()->getValues(),
+      'persistent_stream_key_status_enum' => LiveVideoPersistentStreamKeyStatusValues::getInstance()->getValues(),
       'status_enum' => LiveVideoStatusValues::getInstance()->getValues(),
       'stream_type_enum' => LiveVideoStreamTypeValues::getInstance()->getValues(),
     );

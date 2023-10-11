@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (C) 2017-present, Facebook, Inc.
+ * Copyright (C) 2017-present, Meta, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ use FacebookAds\Api;
 use FacebookAds\Object\ServerSide\Event;
 use FacebookAds\Object\ServerSide\EventRequest;
 use FacebookAds\Object\ServerSide\UserData;
+use FacebookAds\Exception\Exception;
 
 defined('ABSPATH') or die('Direct access not allowed');
 
@@ -43,16 +44,14 @@ class FacebookServerSideEvent {
 
   public function track($event, $sendNow = true) {
     $this->trackedEvents[] = $event;
-    if( FacebookWordpressOptions::getUseS2S() ){
-      if( $sendNow ){
-        do_action( 'send_server_events',
-          array($event),
-          1
-        );
-      }
-      else{
-        $this->pendingEvents[] = $event;
-      }
+    if( $sendNow ){
+      do_action( 'send_server_events',
+        array($event),
+        1
+      );
+    }
+    else{
+      $this->pendingEvents[] = $event;
     }
   }
 
@@ -89,12 +88,41 @@ class FacebookServerSideEvent {
     $access_token = FacebookWordpressOptions::getAccessToken();
     $agent = FacebookWordpressOptions::getAgentString();
 
-    $api = Api::init(null, null, $access_token);
+    if(self::isOpenBridgeEvent($events)){
+      $agent .= '_capi';
+    }
 
-    $request = (new EventRequest($pixel_id))
+    if(empty($pixel_id) || empty($access_token)){
+      return;
+    }
+    try{
+      $api = Api::init(null, null, $access_token);
+
+      $request = (new EventRequest($pixel_id))
                   ->setEvents($events)
                   ->setPartnerAgent($agent);
 
-    $response = $request->execute();
+      $response = $request->execute();
+    } catch (Exception $e) {
+      error_log(json_encode($e));
+    }
+  }
+
+  private static function isOpenBridgeEvent($events) {
+    if(count($events) !== 1){
+        return false;
+    }
+
+    $customData = $events[0]->getCustomData();
+    if (!$customData) {
+        return false;
+    }
+
+    $customProperties = $customData->getCustomProperties();
+    if (!$customProperties || !isset($customProperties['fb_integration_tracking'])) {
+        return false;
+    }
+
+    return $customProperties['fb_integration_tracking'] === 'wp-cloudbridge-plugin';
   }
 }

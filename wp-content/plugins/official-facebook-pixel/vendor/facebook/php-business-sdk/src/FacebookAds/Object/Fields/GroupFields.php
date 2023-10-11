@@ -44,11 +44,11 @@ class GroupFields extends AbstractEnum {
   const EMAIL = 'email';
   const ICON = 'icon';
   const ID = 'id';
+  const INSTALL = 'install';
   const LINK = 'link';
   const MEMBER_COUNT = 'member_count';
   const MEMBER_REQUEST_COUNT = 'member_request_count';
   const NAME = 'name';
-  const OWNER = 'owner';
   const PARENT = 'parent';
   const PERMISSIONS = 'permissions';
   const PRIVACY = 'privacy';
@@ -66,11 +66,11 @@ class GroupFields extends AbstractEnum {
       'email' => 'string',
       'icon' => 'string',
       'id' => 'string',
+      'install' => 'Object',
       'link' => 'string',
       'member_count' => 'unsigned int',
       'member_request_count' => 'unsigned int',
       'name' => 'string',
-      'owner' => 'Object',
       'parent' => 'Object',
       'permissions' => 'list<string>',
       'privacy' => 'string',

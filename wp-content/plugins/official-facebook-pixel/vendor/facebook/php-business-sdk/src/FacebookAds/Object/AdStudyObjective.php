@@ -56,29 +56,6 @@ class AdStudyObjective extends AbstractCrudObject {
   }
 
 
-  public function getAdPlacePageSets(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-    );
-    $enums = array(
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_GET,
-      '/ad_place_page_sets',
-      new AdPlacePageSet(),
-      'EDGE',
-      AdPlacePageSet::getFieldsEnum()->getValues(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
   public function getAdsPixels(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
@@ -171,29 +148,6 @@ class AdStudyObjective extends AbstractCrudObject {
     return $pending ? $request : $request->execute();
   }
 
-  public function getOffsitePixels(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-    );
-    $enums = array(
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_GET,
-      '/offsitepixels',
-      new OffsitePixel(),
-      'EDGE',
-      OffsitePixel::getFieldsEnum()->getValues(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
   public function getPartnerStudies(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
@@ -210,29 +164,6 @@ class AdStudyObjective extends AbstractCrudObject {
       new PartnerStudy(),
       'EDGE',
       PartnerStudy::getFieldsEnum()->getValues(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
-  public function deleteSelf(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-    );
-    $enums = array(
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_DELETE,
-      '/',
-      new AbstractCrudObject(),
-      'NODE',
-      array(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -281,7 +212,7 @@ class AdStudyObjective extends AbstractCrudObject {
       'is_primary' => 'bool',
       'name' => 'string',
       'offline_conversion_data_sets' => 'list<Object>',
-      'offsitepixels' => 'list<Object>',
+      'offsite_datasets' => 'list<Object>',
       'product_catalogs' => 'list<Object>',
       'product_sets' => 'list<Object>',
       'type' => 'type_enum',

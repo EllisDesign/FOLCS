@@ -5,6 +5,51 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## v11.0.0
+
+
+### Changed
+- Graph API call upgrade to [v11.0]https://developers.facebook.com/docs/graph-api/changelog/version11.0
+
+## v10.0.1
+
+### Added
+- Support for sending multiple values for certain UserData parameters to Conversions API.
+
+
+## v10.0.0
+
+
+### Changed
+- Graph API call upgrade to [v10.0](https://developers.facebook.com/docs/graph-api/changelog/version10.0)
+
+## v9.0.2
+
+
+### Added
+- `action_source` field to Event for Conversions API.
+
+### Fixed
+- `opt_out` field was being removed when set to false for Conversions API.
+
+## v9.0.0
+### Changed
+- Graph API call upgrade to [v9.0](https://developers.facebook.com/docs/graph-api/changelog/version9.0)
+
+### Added
+- `delivery_category` field to Content for Conversions API.
+
+### Changed
+- Add empty to the list of reserved keywords.
+- Change empty value enum name in AdsPixelFirstPartyCookieStatusValues and AdsPixelDataUseSettingValues
+
+## v8.0.3
+
+### Changed
+- Fixed a normalization issue for zero values in CustomData in Conversions API
+- Start passing in the appsecret_proof to Conversions API custom http_clients when an appsecret is set
+- A Conversions API EventRequest custom http_client must now be an object instead of a class name
+
 ## v8.0.2
 
 ### Added

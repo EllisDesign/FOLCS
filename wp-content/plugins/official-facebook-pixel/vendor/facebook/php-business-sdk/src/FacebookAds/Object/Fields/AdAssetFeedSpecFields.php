@@ -47,11 +47,11 @@ class AdAssetFeedSpecFields extends AbstractEnum {
   const CAPTIONS = 'captions';
   const CAROUSELS = 'carousels';
   const DESCRIPTIONS = 'descriptions';
+  const EVENTS = 'events';
   const GROUPS = 'groups';
   const IMAGES = 'images';
   const LINK_URLS = 'link_urls';
   const OPTIMIZATION_TYPE = 'optimization_type';
-  const POSTS = 'posts';
   const TITLES = 'titles';
   const VIDEOS = 'videos';
 
@@ -67,11 +67,11 @@ class AdAssetFeedSpecFields extends AbstractEnum {
       'captions' => 'list<AdAssetFeedSpecCaption>',
       'carousels' => 'list<Object>',
       'descriptions' => 'list<AdAssetFeedSpecDescription>',
+      'events' => 'list<Object>',
       'groups' => 'list<AdAssetFeedSpecGroupRule>',
       'images' => 'list<AdAssetFeedSpecImage>',
       'link_urls' => 'list<AdAssetFeedSpecLinkURL>',
       'optimization_type' => 'string',
-      'posts' => 'list<Object>',
       'titles' => 'list<AdAssetFeedSpecTitle>',
       'videos' => 'list<AdAssetFeedSpecVideo>',
     );

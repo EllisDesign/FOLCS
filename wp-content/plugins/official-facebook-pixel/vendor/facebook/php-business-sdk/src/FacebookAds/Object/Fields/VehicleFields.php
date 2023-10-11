@@ -59,6 +59,7 @@ class VehicleFields extends AbstractEnum {
   const FEATURES = 'features';
   const FUEL_TYPE = 'fuel_type';
   const ID = 'id';
+  const IMAGE_FETCH_STATUS = 'image_fetch_status';
   const IMAGES = 'images';
   const INTERIOR_COLOR = 'interior_color';
   const LEGAL_DISCLOSURE_IMPRESSUM_URL = 'legal_disclosure_impressum_url';
@@ -75,12 +76,14 @@ class VehicleFields extends AbstractEnum {
   const TITLE = 'title';
   const TRANSMISSION = 'transmission';
   const TRIM = 'trim';
+  const UNIT_PRICE = 'unit_price';
   const URL = 'url';
   const VEHICLE_ID = 'vehicle_id';
   const VEHICLE_REGISTRATION_PLATE = 'vehicle_registration_plate';
   const VEHICLE_SPECIFICATIONS = 'vehicle_specifications';
   const VEHICLE_TYPE = 'vehicle_type';
   const VIN = 'vin';
+  const VISIBILITY = 'visibility';
   const YEAR = 'year';
 
   public function getFieldTypes() {
@@ -107,6 +110,7 @@ class VehicleFields extends AbstractEnum {
       'features' => 'list<Object>',
       'fuel_type' => 'string',
       'id' => 'string',
+      'image_fetch_status' => 'ImageFetchStatus',
       'images' => 'list<string>',
       'interior_color' => 'string',
       'legal_disclosure_impressum_url' => 'string',
@@ -123,12 +127,14 @@ class VehicleFields extends AbstractEnum {
       'title' => 'string',
       'transmission' => 'string',
       'trim' => 'string',
+      'unit_price' => 'Object',
       'url' => 'string',
       'vehicle_id' => 'string',
       'vehicle_registration_plate' => 'string',
       'vehicle_specifications' => 'list<Object>',
       'vehicle_type' => 'string',
       'vin' => 'string',
+      'visibility' => 'Visibility',
       'year' => 'unsigned int',
     );
   }

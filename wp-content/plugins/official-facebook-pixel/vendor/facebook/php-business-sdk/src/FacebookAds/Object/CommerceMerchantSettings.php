@@ -29,8 +29,8 @@ use FacebookAds\Cursor;
 use FacebookAds\Http\RequestInterface;
 use FacebookAds\TypeChecker;
 use FacebookAds\Object\Fields\CommerceMerchantSettingsFields;
-use FacebookAds\Object\Values\CommerceMerchantSettingsCtaValues;
-use FacebookAds\Object\Values\CommerceMerchantSettingsMerchantStatusValues;
+use FacebookAds\Object\Values\CommerceOrderFiltersValues;
+use FacebookAds\Object\Values\CommerceOrderStateValues;
 
 /**
  * This class is auto-generated.
@@ -52,17 +52,16 @@ class CommerceMerchantSettings extends AbstractCrudObject {
 
   protected static function getReferencedEnums() {
     $ref_enums = array();
-    $ref_enums['Cta'] = CommerceMerchantSettingsCtaValues::getInstance()->getValues();
-    $ref_enums['MerchantStatus'] = CommerceMerchantSettingsMerchantStatusValues::getInstance()->getValues();
     return $ref_enums;
   }
 
 
-  public function createFacebookChannel(array $fields = array(), array $params = array(), $pending = false) {
+  public function createAcknowledgeOrder(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
     $param_types = array(
-      'pages' => 'list<string>',
+      'idempotency_key' => 'string',
+      'orders' => 'list<map>',
     );
     $enums = array(
     );
@@ -71,7 +70,7 @@ class CommerceMerchantSettings extends AbstractCrudObject {
       $this->api,
       $this->data['id'],
       RequestInterface::METHOD_POST,
-      '/facebook_channel',
+      '/acknowledge_orders',
       new CommerceMerchantSettings(),
       'EDGE',
       CommerceMerchantSettings::getFieldsEnum()->getValues(),
@@ -82,10 +81,41 @@ class CommerceMerchantSettings extends AbstractCrudObject {
     return $pending ? $request : $request->execute();
   }
 
-  public function deleteInstagramChannel(array $fields = array(), array $params = array(), $pending = false) {
+  public function getCommerceOrders(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
     $param_types = array(
+      'filters' => 'list<filters_enum>',
+      'state' => 'list<state_enum>',
+      'updated_after' => 'datetime',
+      'updated_before' => 'datetime',
+    );
+    $enums = array(
+      'filters_enum' => CommerceOrderFiltersValues::getInstance()->getValues(),
+      'state_enum' => CommerceOrderStateValues::getInstance()->getValues(),
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/commerce_orders',
+      new CommerceOrder(),
+      'EDGE',
+      CommerceOrder::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getCommercePayouts(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'end_time' => 'datetime',
+      'start_time' => 'datetime',
     );
     $enums = array(
     );
@@ -93,36 +123,62 @@ class CommerceMerchantSettings extends AbstractCrudObject {
     $request = new ApiRequest(
       $this->api,
       $this->data['id'],
-      RequestInterface::METHOD_DELETE,
-      '/instagram_channel',
+      RequestInterface::METHOD_GET,
+      '/commerce_payouts',
+      new CommercePayout(),
+      'EDGE',
+      CommercePayout::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getCommerceTransactions(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'end_time' => 'datetime',
+      'payout_reference_id' => 'string',
+      'start_time' => 'datetime',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/commerce_transactions',
+      new CommerceOrderTransactionDetail(),
+      'EDGE',
+      CommerceOrderTransactionDetail::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getOnsiteConversionEvents(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'created_after' => 'datetime',
+      'created_before' => 'datetime',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/onsite_conversion_events',
       new AbstractCrudObject(),
       'EDGE',
       array(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
-  public function createInstagramChannel(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-      'instagram_business_accounts' => 'list<string>',
-      'instagram_users' => 'list<string>',
-    );
-    $enums = array(
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_POST,
-      '/instagram_channel',
-      new CommerceMerchantSettings(),
-      'EDGE',
-      CommerceMerchantSettings::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -233,6 +289,29 @@ class CommerceMerchantSettings extends AbstractCrudObject {
     return $pending ? $request : $request->execute();
   }
 
+  public function getSellerIssues(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/seller_issues',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
   public function getSetupStatus(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
@@ -285,6 +364,7 @@ class CommerceMerchantSettings extends AbstractCrudObject {
 
     $param_types = array(
       'handling_time' => 'map',
+      'is_default' => 'bool',
       'is_default_shipping_profile' => 'bool',
       'name' => 'string',
       'reference_id' => 'string',
@@ -301,6 +381,29 @@ class CommerceMerchantSettings extends AbstractCrudObject {
       new AbstractCrudObject(),
       'EDGE',
       array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getShops(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/shops',
+      new Shop(),
+      'EDGE',
+      Shop::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -372,37 +475,6 @@ class CommerceMerchantSettings extends AbstractCrudObject {
       $this->api,
       $this->data['id'],
       RequestInterface::METHOD_GET,
-      '/',
-      new CommerceMerchantSettings(),
-      'NODE',
-      CommerceMerchantSettings::getFieldsEnum()->getValues(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
-  public function updateSelf(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-      'contact_email' => 'string',
-      'cta' => 'cta_enum',
-      'merchant_alert_email' => 'string',
-      'merchant_status' => 'merchant_status_enum',
-      'onsite_commerce_merchant' => 'Object',
-      'terms' => 'string',
-    );
-    $enums = array(
-      'cta_enum' => CommerceMerchantSettingsCtaValues::getInstance()->getValues(),
-      'merchant_status_enum' => CommerceMerchantSettingsMerchantStatusValues::getInstance()->getValues(),
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_POST,
       '/',
       new CommerceMerchantSettings(),
       'NODE',

@@ -1,4 +1,7 @@
 <?php
+    $hasnav = false;
+    $eventseries = false;
+
     if( get_post_type() === 'upcoming' ):
         $hasnav = true;
         $navtype = 'Upcoming Events';

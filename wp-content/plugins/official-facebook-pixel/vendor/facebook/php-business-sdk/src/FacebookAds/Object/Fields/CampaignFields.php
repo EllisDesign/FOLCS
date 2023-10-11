@@ -38,6 +38,8 @@ use FacebookAds\Enum\AbstractEnum;
 class CampaignFields extends AbstractEnum {
 
   const ACCOUNT_ID = 'account_id';
+  const AD_STRATEGY_GROUP_ID = 'ad_strategy_group_id';
+  const AD_STRATEGY_ID = 'ad_strategy_id';
   const ADLABELS = 'adlabels';
   const BID_STRATEGY = 'bid_strategy';
   const BOOSTED_OBJECT_ID = 'boosted_object_id';
@@ -51,15 +53,19 @@ class CampaignFields extends AbstractEnum {
   const CREATED_TIME = 'created_time';
   const DAILY_BUDGET = 'daily_budget';
   const EFFECTIVE_STATUS = 'effective_status';
+  const HAS_SECONDARY_SKADNETWORK_REPORTING = 'has_secondary_skadnetwork_reporting';
   const ID = 'id';
+  const IS_SKADNETWORK_ATTRIBUTION = 'is_skadnetwork_attribution';
   const ISSUES_INFO = 'issues_info';
   const LAST_BUDGET_TOGGLING_TIME = 'last_budget_toggling_time';
   const LIFETIME_BUDGET = 'lifetime_budget';
   const NAME = 'name';
   const OBJECTIVE = 'objective';
   const PACING_TYPE = 'pacing_type';
+  const PRIMARY_ATTRIBUTION = 'primary_attribution';
   const PROMOTED_OBJECT = 'promoted_object';
   const RECOMMENDATIONS = 'recommendations';
+  const SMART_PROMOTION_TYPE = 'smart_promotion_type';
   const SOURCE_CAMPAIGN = 'source_campaign';
   const SOURCE_CAMPAIGN_ID = 'source_campaign_id';
   const SPECIAL_AD_CATEGORIES = 'special_ad_categories';
@@ -79,6 +85,8 @@ class CampaignFields extends AbstractEnum {
   public function getFieldTypes() {
     return array(
       'account_id' => 'string',
+      'ad_strategy_group_id' => 'string',
+      'ad_strategy_id' => 'string',
       'adlabels' => 'list<AdLabel>',
       'bid_strategy' => 'BidStrategy',
       'boosted_object_id' => 'string',
@@ -92,15 +100,19 @@ class CampaignFields extends AbstractEnum {
       'created_time' => 'datetime',
       'daily_budget' => 'string',
       'effective_status' => 'EffectiveStatus',
+      'has_secondary_skadnetwork_reporting' => 'bool',
       'id' => 'string',
+      'is_skadnetwork_attribution' => 'bool',
       'issues_info' => 'list<AdCampaignIssuesInfo>',
       'last_budget_toggling_time' => 'datetime',
       'lifetime_budget' => 'string',
       'name' => 'string',
       'objective' => 'string',
       'pacing_type' => 'list<string>',
+      'primary_attribution' => 'string',
       'promoted_object' => 'AdPromotedObject',
       'recommendations' => 'list<AdRecommendation>',
+      'smart_promotion_type' => 'string',
       'source_campaign' => 'Campaign',
       'source_campaign_id' => 'string',
       'special_ad_categories' => 'list<string>',

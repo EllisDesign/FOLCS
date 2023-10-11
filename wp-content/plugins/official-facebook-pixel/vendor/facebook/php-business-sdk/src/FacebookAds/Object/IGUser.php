@@ -29,8 +29,11 @@ use FacebookAds\Cursor;
 use FacebookAds\Http\RequestInterface;
 use FacebookAds\TypeChecker;
 use FacebookAds\Object\Fields\IGUserFields;
+use FacebookAds\Object\Values\InstagramInsightsResultBreakdownValues;
+use FacebookAds\Object\Values\InstagramInsightsResultMetricTypeValues;
 use FacebookAds\Object\Values\InstagramInsightsResultMetricValues;
 use FacebookAds\Object\Values\InstagramInsightsResultPeriodValues;
+use FacebookAds\Object\Values\InstagramInsightsResultTimeframeValues;
 
 /**
  * This class is auto-generated.
@@ -56,18 +59,96 @@ class IGUser extends AbstractCrudObject {
   }
 
 
+  public function getAvailableCatalogs(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/available_catalogs',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getCatalogProductSearch(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'catalog_id' => 'string',
+      'q' => 'string',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/catalog_product_search',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getContentPublishingLimit(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'since' => 'datetime',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/content_publishing_limit',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
   public function getInsights(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
     $param_types = array(
+      'breakdown' => 'list<breakdown_enum>',
       'metric' => 'list<metric_enum>',
+      'metric_type' => 'metric_type_enum',
       'period' => 'list<period_enum>',
       'since' => 'datetime',
+      'timeframe' => 'timeframe_enum',
       'until' => 'datetime',
     );
     $enums = array(
+      'breakdown_enum' => InstagramInsightsResultBreakdownValues::getInstance()->getValues(),
       'metric_enum' => InstagramInsightsResultMetricValues::getInstance()->getValues(),
+      'metric_type_enum' => InstagramInsightsResultMetricTypeValues::getInstance()->getValues(),
       'period_enum' => InstagramInsightsResultPeriodValues::getInstance()->getValues(),
+      'timeframe_enum' => InstagramInsightsResultTimeframeValues::getInstance()->getValues(),
     );
 
     $request = new ApiRequest(
@@ -85,10 +166,37 @@ class IGUser extends AbstractCrudObject {
     return $pending ? $request : $request->execute();
   }
 
+  public function getLiveMedia(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'since' => 'datetime',
+      'until' => 'datetime',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/live_media',
+      new IGMedia(),
+      'EDGE',
+      IGMedia::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
   public function getMedia(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
     $param_types = array(
+      'since' => 'datetime',
+      'until' => 'datetime',
     );
     $enums = array(
     );
@@ -113,9 +221,14 @@ class IGUser extends AbstractCrudObject {
 
     $param_types = array(
       'caption' => 'string',
+      'children' => 'list<string>',
+      'cover_url' => 'string',
       'image_url' => 'string',
+      'is_carousel_item' => 'bool',
       'location_id' => 'string',
       'media_type' => 'string',
+      'product_tags' => 'list<map>',
+      'share_to_feed' => 'bool',
       'thumb_offset' => 'string',
       'user_tags' => 'list<map>',
       'video_url' => 'string',
@@ -178,6 +291,78 @@ class IGUser extends AbstractCrudObject {
       $this->data['id'],
       RequestInterface::METHOD_POST,
       '/mentions',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getNotificationMessageTokens(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/notification_message_tokens',
+      new UserPageOneTimeOptInTokenSettings(),
+      'EDGE',
+      UserPageOneTimeOptInTokenSettings::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getProductAppeal(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'product_id' => 'string',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/product_appeal',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function createProductAppeal(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'appeal_reason' => 'string',
+      'product_id' => 'string',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/product_appeal',
       new AbstractCrudObject(),
       'EDGE',
       array(),
@@ -261,6 +446,7 @@ class IGUser extends AbstractCrudObject {
     $this->assureId();
 
     $param_types = array(
+      'adgroup_id' => 'string',
     );
     $enums = array(
     );
