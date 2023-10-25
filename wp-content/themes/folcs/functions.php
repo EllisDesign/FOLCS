@@ -807,67 +807,69 @@ function folcs_scripts() {
 	global $post;
     $template_file = basename( get_page_template() );
 
-	wp_enqueue_style( 'reset-normalize', get_template_directory_uri() . '/reset-normalize.css', array(), null, 'all');
+	wp_enqueue_style( 'reset-normalize', get_template_directory_uri() . '/dist/css/reset-normalize.css', array(), null, 'all');
     
-    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/style.1.0.css', array(), '1.1.5', 'all');
+    wp_enqueue_style( 'folcs-style', get_template_directory_uri() . '/dist/style.css', array(), filemtime( get_template_directory() . '/dist/style.css' ) );
 
     wp_enqueue_style( 'googlefonts-style', 'https://fonts.googleapis.com/css?family=Barlow:300,300i,400,500,600,700', array(), null, 'all');
 
     wp_enqueue_style( 'adobetypekit-style', 'https://use.typekit.net/zko3dtt.css', array(), null, 'all');
 
-    wp_enqueue_script( 'jquery-3.3.1', get_template_directory_uri() . '/js/vendor/jquery-3.3.1.min.js', array(), null, true);
+    wp_enqueue_script( 'jquery-3.3.1', get_template_directory_uri() . '/dist/js/vendor/jquery-3.3.1.min.js', array(), null, true);
 
 	wp_add_inline_script( 'jquery-3.3.1', 'var jQuery3_3_1 = $.noConflict(true);', 'after');
 
-	wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/js/vendor/modernizr-custom.js', array(), null, true);
+	wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/dist/js/vendor/modernizr-custom.js', array(), null, true);
 
-	wp_enqueue_script( 'TweenMax', get_template_directory_uri() . '/js/vendor/TweenMax.min.js', array(), null, true);
+	wp_enqueue_script( 'TweenMax', get_template_directory_uri() . '/dist/js/vendor/TweenMax.min.js', array(), null, true);
 
-	wp_enqueue_script( 'ScrollMagic', get_template_directory_uri() . '/js/vendor/ScrollMagic.min.js', array(), null, true);
+	wp_enqueue_script( 'ScrollMagic', get_template_directory_uri() . '/dist/js/vendor/ScrollMagic.min.js', array(), null, true);
 
-	wp_enqueue_script( 'animation-gsap', get_template_directory_uri() . '/js/vendor/animation.gsap.min.js', array(), null, true);
+	wp_enqueue_script( 'animation-gsap', get_template_directory_uri() . '/dist/js/vendor/animation.gsap.min.js', array(), null, true);
 
-	wp_enqueue_script( 'jump', get_template_directory_uri() . '/js/vendor/jump.js', array(), null, true);
+	wp_enqueue_script( 'jump', get_template_directory_uri() . '/dist/js/vendor/jump.js', array(), null, true);
 
-	wp_enqueue_script( 'slick', get_template_directory_uri() . '/js/vendor/slick.noconflict.min.js', array('jquery-3.3.1'), null, true);
+	wp_enqueue_script( 'slick', get_template_directory_uri() . '/dist/js/vendor/slick.noconflict.min.js', array('jquery-3.3.1'), null, true);
 
-	wp_enqueue_script( 'folcs-js', get_template_directory_uri() . '/js/folcs.1.0.js', array('jquery-3.3.1'), '1.0.0', true);
+	wp_enqueue_script( 'folcs-js', get_template_directory_uri() . '/src/js/folcs.1.0.js', array('jquery-3.3.1'), '1.0.0', true);
 
 
 if($template_file == 'page-home.php'){
 	
-	wp_enqueue_script( 'folcs-home', get_template_directory_uri() . '/js/folcs.home.1.0.js', array('jquery-3.3.1'), null, true);
+	wp_enqueue_script( 'folcs-home', get_template_directory_uri() . '/src/js/folcs.home.1.0.js', array('jquery-3.3.1'), null, true);
 }
 if($template_file == 'page-event-series.php'){
 	
-	wp_enqueue_script( 'folcs-series', get_template_directory_uri() . '/js/folcs.series.1.0.js', array('jquery-3.3.1'), null, true);
+	wp_enqueue_script( 'folcs-series', get_template_directory_uri() . '/src/js/folcs.series.1.0.js', array('jquery-3.3.1'), null, true);
 }
 if($post->post_type == 'series' || $post->post_type == 'upcoming' || $post->post_type == 'past' || $post->post_type == 'blog' || $template_file == 'page-deluxe.php'){
 	
-	wp_enqueue_script( 'folcs-gallery', get_template_directory_uri() . '/js/folcs.gallery.1.0.js', array('jquery-3.3.1'), null, true);
+	wp_enqueue_script( 'folcs-gallery', get_template_directory_uri() . '/src/js/folcs.gallery.1.0.js', array('jquery-3.3.1'), null, true);
 }
 if($template_file == 'page-past-events.php'){
 	
-	wp_enqueue_script( 'folcs-past', get_template_directory_uri() . '/js/folcs.past.1.1.js', array('jquery-3.3.1'), null, true);
+	wp_enqueue_script( 'folcs-past', get_template_directory_uri() . '/src/js/folcs.past.1.1.js', array('jquery-3.3.1'), null, true);
 }
 if($template_file == 'page-leadership.php'){
 	
-	wp_enqueue_script( 'folcs-leadership', get_template_directory_uri() . '/js/folcs.leadership.1.0.js', array('jquery-3.3.1'), null, true);
+	wp_enqueue_script( 'folcs-leadership', get_template_directory_uri() . '/src/js/folcs.leadership.1.0.js', array('jquery-3.3.1'), null, true);
 }
 
 if($template_file == 'page-press.php'){
 
-	wp_enqueue_script( 'my_loadmore', get_stylesheet_directory_uri() . '/js/myloadmore.js', array('jquery-3.3.1'), null, true);
+	wp_enqueue_script( 'my_loadmore', get_stylesheet_directory_uri() . '/src/js/myloadmore.js', array('jquery-3.3.1'), null, true);
 
 	wp_localize_script( 'my_loadmore', 'ajax_object', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
 
 if($post->post_type == 'upcoming'){
 
-	wp_enqueue_script( 'addtocalendar', get_stylesheet_directory_uri() . '/js/folcs.addtocalendar.js', array('jquery-3.3.1'), null, true);
+	wp_enqueue_script( 'addtocalendar', get_stylesheet_directory_uri() . '/src/js/folcs.addtocalendar.js', array('jquery-3.3.1'), null, true);
 
 	wp_localize_script( 'addtocalendar', 'ajax_object', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
+
+	wp_enqueue_script( 'app', get_template_directory_uri() . '/dist/app.js', array(), filemtime( get_template_directory() . '/dist/app.js' ), true);
 
 }
 add_action( 'wp_enqueue_scripts', 'folcs_scripts' );

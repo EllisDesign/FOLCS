@@ -1,0 +1,130 @@
+input[type=text],
+input[type=password],
+input[type=submit],
+button,
+select,
+textarea {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border-radius:0;
+	outline: none;
+}
+
+textarea {
+	resize: none;
+}
+
+.login-password {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.login-submit {
+	margin-bottom: 20px;
+}
+
+.login-register {
+	
+	a {
+		text-decoration: underline;
+	}
+}
+
+.error {
+	margin-top: 10px;
+	
+	span {
+		display: inline-block;
+		margin-right: 2px;
+		margin-left: 2px;
+		vertical-align: middle;
+	}
+
+	.error-icon {
+		position: relative;
+		top:1px;
+		height:24px;
+	}
+}
+
+input[type=password] {
+	padding:14px 10px;
+	border:1px solid $color-dark;
+	text-align:center;
+
+	color:$color-dark;
+
+	font: {
+		weight:$font-light;
+		size:16px;
+		family:$font-secondary;
+	}
+	
+	line-height:normal;
+}
+
+input[type=submit] {
+	display:inline-block;
+	padding:14px 30px;
+	border:2px solid $color-dark;
+	background-color: $color-dark;
+	text-align:center;
+
+	color:$color-light;
+
+	font: {
+		weight:$font-semi;
+		size:$font-small;
+		family:$font-secondary;
+	}
+	
+	line-height:$leading-same;
+	letter-spacing:$tracking-50;
+	text-transform:uppercase;
+
+	text-decoration:none;
+	
+}
+
+#folcsregname {
+	position: absolute;
+	top:-999px;
+}
+
+::-webkit-input-placeholder { /* Safari, Chrome and Opera */
+  color:$color-dark;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color:$color-dark;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color:$color-dark;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+  color:$color-dark;
+}
+
+::-ms-input-placeholder { /* Edge */
+  color:$color-dark;
+}
+
+:placeholder-shown { /* Standard one last! */
+  color:$color-dark;
+}
+
+.no-touchevents {
+
+	input[type=submit] {
+		@include transition(background-color .3s ease-out, color .3s ease-out);
+
+		&:hover {
+			background-color: $color-light;
+			color:$color-dark;
+		}
+	}
+}

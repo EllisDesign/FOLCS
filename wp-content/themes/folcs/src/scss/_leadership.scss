@@ -56,8 +56,9 @@
 
 .leadership-bio-portrait-item {
 	padding-bottom:150%;
-
-	@include background('',$vert:top);
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	background-size: cover;
 }
 
 .leadership-bio-close {

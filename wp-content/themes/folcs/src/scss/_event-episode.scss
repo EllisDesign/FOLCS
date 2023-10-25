@@ -79,7 +79,9 @@
 .event-episode-feature-item,
 .event-episode-past-item {
 	position: relative;
-	@include background('');
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: cover;
 
 	&:after {
 		content:'';
@@ -175,7 +177,9 @@
 
 .events-winners-item {
 	padding-bottom:142.647058823529%;
-	@include background('');
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: cover;
 }
 
 .events-winners-text-col {
