@@ -110,7 +110,8 @@
 
 	    <section class="event-episode-item event-episode-video sequence-margin-first sequence-margin-last">
 		<div class="column-limit">
-			<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.restream.io/?token=22b888b7755841febbffd9d2be661aa7" allow="autoplay" allowfullscreen frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>
+			<!-- <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.restream.io/?token=22b888b7755841febbffd9d2be661aa7" allow="autoplay" allowfullscreen frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div> -->
+			<?php the_field('embed'); ?>
 			</div>
 		</section>
 
