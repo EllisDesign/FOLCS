@@ -57,12 +57,29 @@
 
 					<div class="h1-margin-30 h2-margin-7 p-margin-26 ul-margin-26 type-content type-center">
 						<?php the_field('live_text'); ?>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="sequence-margin-last">
+
+			<div class="column-limit">
+				<div class="column-1">
+
+					<div class="h1-margin-30 h2-margin-7 p-margin-26 ul-margin-26 type-content type-center">
 						<h2>
 							<?php the_field('episode_title_detail'); ?>
 						</h2>
-						<p>
-							<?php the_field('episode_title_date'); ?>
-						</p>
+						<?php if(get_field('episode_title_date') || get_field('episode_title_start_time')): ?>
+						<div class="type-details">
+							<?php if(get_field('episode_title_date')): ?>
+								<span><?php the_field('episode_title_date'); ?></span>
+							<?php endif; ?>
+							<?php if(get_field('episode_title_start_time')): ?>
+								<span><?php the_field('episode_title_start_time'); ?></span>
+							<?php endif; ?>
+						</div>
+						<?php endif; ?>
 					</div>
 
 				</div>
@@ -89,7 +106,8 @@
 		    <div class="login-submit"><input type="submit" name="Submit" value="Submit"></div>
 		  </form>
 		  <p class="login-register">
-		  	Don’t have a password? Register <a href="<?php the_field('register_url'); ?>" target="_blank">here</a>.
+		  	Each event has a unique password.<br>
+		  	Register <a href="<?php the_field('register_url'); ?>" target="_blank">here</a> to get yours.
 		  </p>
 		</div>
 		</div>
@@ -104,16 +122,50 @@
 
 		<?php
 
-		function showLive(){
+		function showLive($pass){
 
 		?>
 
 	    <section class="event-episode-item event-episode-video sequence-margin-first sequence-margin-last">
-		<div class="column-limit">
-			<!-- <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.restream.io/?token=22b888b7755841febbffd9d2be661aa7" allow="autoplay" allowfullscreen frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div> -->
-			<?php the_field('embed'); ?>
+			<div class="column-limit">
+				<?php the_field('embed'); ?>
+			</div>
+			<div class="column-limit leave-stream">
+				<span class="type-link block-link js-leave-stream">Leave Stream</span>
 			</div>
 		</section>
+
+		<?php
+
+			echo "<script>";
+			echo "var date = new Date(Date.now() + 86400e3);date = date.toUTCString();";
+			echo "document.cookie = 'verify=".md5($pass)."; expires='+date+'; path=/; domain='+location.host;";
+			echo "var leave = document.querySelector('.js-leave-stream');";
+			echo "leave.addEventListener('click', function() {document.cookie = 'verify=".md5($pass)."; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain='+location.host;console.log('leave');window.history.replaceState(null, null, window.location.href);location.reload(true);});";
+			echo "</script>";
+		?>
+
+		<script>
+			// var leave = document.querySelector('.js-leave-stream');
+			// var hascooke = false;
+
+			// leave.addEventListener('click', function() {//Tue, 07 Nov 2023 21:09:21 GMT
+
+			// 	if(hascooke){
+			// 		document.cookie = "verify0=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain="+location.host;
+			// 		console.log("leave remove");
+			// 	}else {
+			// 		document.cookie = "verify0=leave; expires=Tue, 07 Nov 2023 21:09:21 GMT; path=/; domain="+location.host;
+			// 		hascooke = true;
+			// 		console.log("leave add");
+			// 	}
+				
+				
+			// }, false);
+
+			// document.cookie = 'COOKIE_NAME=; Max-Age=0; path=/; domain=' + location.host;
+
+		</script>
 
 		<?php
 
@@ -125,7 +177,7 @@
 			<div class="type-limit">
 				<div class="type-center">
 					<a href="/donate/" target="_blank" class="type-link block-link">
-						Donate
+						Donate Now
 					</a><a href="mailto:Enter%20an%20email?subject=FOLCS%20Studio%20Streaming%20Now&body=<?php echo $encoded; ?>" class="type-link block-link">
 						Email a Friend
 					</a>
@@ -153,16 +205,11 @@
 		  }else {
 		    // setcookie("verify", md5($pass), $timeout, '/');
 
-		    echo "<script>";
-		    echo "let date = new Date(Date.now() + 86400e3);date = date.toUTCString();";
-		    echo "document.cookie = 'verify=".md5($pass)."; expires='+date+'; path=/;'";// domain=.example.com
-		    echo "</script>";
-		    
-		    showLive();
+		  	showLive($pass);
+		  	echo "post";
 
-		    unset($_POST['access_password']);
-		    unset($_POST['Submit']);
-
+		  	unset($_POST['access_password']);
+		  	unset($_POST['Submit']);
 		  }
 
 		}else {
@@ -180,7 +227,8 @@
 
 		  	  if ($_COOKIE['verify'] == md5($lp)) {
 		  	    $found = true;
-		  	    showLive();
+		  	    showLive($val);
+		  	    echo "pass";
 		  	    break;
 		  	  }
 		  	}

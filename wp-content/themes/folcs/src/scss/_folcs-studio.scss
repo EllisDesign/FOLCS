@@ -1,6 +1,32 @@
 .page-folcs-studio {
 
+.leave-stream {
+	margin-top: 20px;
+	text-align: right;
 
+	span {
+		display:inline-block;
+		padding:14px 20px;
+		border:2px solid $color-dark;
+		background-color: $color-light;
+		text-align:center;
+		cursor: pointer;
+
+		color:$color-dark;
+
+		font: {
+			weight:$font-semi;
+			size:$font-small;
+			family:$font-secondary;
+		}
+		
+		line-height:$leading-same;
+		letter-spacing:$tracking-50;
+		text-transform:uppercase;
+
+		text-decoration:none;
+	}
+}
 
 .folcs-studio-links {
 
@@ -11,4 +37,17 @@
 
 
 
+}
+
+
+.no-touchevents {
+
+	.leave-stream span {
+		@include transition(background-color .3s ease-out, color .3s ease-out);
+
+		&:hover {
+			background-color: $color-dark;
+			color:$color-light;
+		}
+	}
 }
