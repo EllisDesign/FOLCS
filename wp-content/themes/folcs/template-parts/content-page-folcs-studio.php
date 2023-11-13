@@ -206,7 +206,7 @@
 		    // setcookie("verify", md5($pass), $timeout, '/');
 
 		  	showLive($pass);
-		  	echo "post";
+		  	// echo "post";
 
 		  	unset($_POST['access_password']);
 		  	unset($_POST['Submit']);
@@ -228,7 +228,7 @@
 		  	  if ($_COOKIE['verify'] == md5($lp)) {
 		  	    $found = true;
 		  	    showLive($val);
-		  	    echo "pass";
+		  	    // echo "pass";
 		  	    break;
 		  	  }
 		  	}
