@@ -109,6 +109,10 @@ input[type=submit] {
   text-decoration: none;
 }
 
+.leave-stream input[type=submit] {
+  padding: 14px 20px;
+}
+
 #folcsregname {
   position: absolute;
   top: -999px;
@@ -1765,6 +1769,17 @@ footer {
   -ms-transform: rotate(45deg);
 }
 
+.page-register-2 .type-limit {
+  margin-bottom: 50px;
+}
+.page-register-2 .register {
+  text-align: center;
+}
+.page-register-2 .register iframe {
+  width: 100%;
+  max-width: 450px;
+}
+
 .no-mobile {
   position: absolute;
   top: 0;
@@ -3071,6 +3086,38 @@ section.intro.has-nav {
 }
 .page-folcs-studio .folcs-studio-links a:first-child {
   margin-right: 20px;
+}
+
+.live-banner {
+  position: fixed;
+  z-index: 9;
+  right: 0;
+  bottom: 20px;
+  max-width: 250px;
+  background-color: #ffffff;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 40px;
+  padding-bottom: 20px;
+  -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.4);
+          box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.4);
+}
+.live-banner:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 100%;
+  background-color: #f7effd;
+}
+.live-banner .type-placeholder {
+  margin-bottom: 5px;
+}
+.live-banner a {
+  font-weight: 600;
+  font-size: 13px;
 }
 
 .no-touchevents .leave-stream span {

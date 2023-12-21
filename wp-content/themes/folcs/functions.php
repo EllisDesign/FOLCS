@@ -237,6 +237,20 @@ function add_slug_body_class( $classes ) {
 add_filter( 'body_class', 'add_slug_body_class' );
 
 
+function myprefix_redirect_attachment_page() {
+	if ( is_attachment() ) {
+		global $post;
+		if ( $post && $post->post_parent ) {
+			wp_redirect( esc_url( get_permalink( $post->post_parent ) ), 301 );
+			exit;
+		} else {
+			wp_redirect( esc_url( home_url( '/' ) ), 301 );
+			exit;
+		}
+	}
+}
+add_action( 'template_redirect', 'myprefix_redirect_attachment_page' );
+
 
 function series_post_type() {
 
@@ -800,6 +814,84 @@ add_filter( 'searchwp_include', 'my_searchwp_include_only_category', 10, 3 );
 // add_action( 'template_redirect', 'wpb_change_search_url' );
 
 
+
+
+function folcs_studio() {
+	global $post;
+	global $ispost;
+	global $isarray;
+	global $iscookie;
+	global $isfound;
+
+	$ispost = false;
+	$isarray = true;
+	$iscookie = true;
+	$isfound = false;
+
+    $template_file = basename( get_page_template() );
+
+
+    if($template_file == 'page-folcs-studio.php'){
+
+
+    	$LOGIN_INFORMATION = array(
+    	  get_field('password')
+    	);
+
+    	define('TIMEOUT_MINUTES', 1);
+    	$timeout = (TIMEOUT_MINUTES == 0 ? 0 : time() + TIMEOUT_MINUTES * 60);
+
+
+    	if(isset($_POST['logout'])) {
+
+    		$ispost = false;
+
+			setcookie("verify", '', $timeout, '/');
+			// header('Location: ' . LOGOUT_URL);
+			// exit();
+
+    	}else if (isset($_POST['access_password'])) {
+
+			$ispost = true;
+
+			$pass = $_POST['access_password'];
+
+			if (!in_array($pass, $LOGIN_INFORMATION)) {
+
+				$isarray = false;
+			
+			}else {
+
+				setcookie("verify", md5($pass), $timeout, '/');
+
+			}
+
+		}else {
+
+			if (!isset($_COOKIE['verify'])) {
+			  
+			  $iscookie = false;
+
+			}else {
+
+				foreach($LOGIN_INFORMATION as $key=>$val) {
+
+				  $lp = $val;
+
+				  if ($_COOKIE['verify'] == md5($lp)) {
+				    $found = true;
+				    break;
+				  }
+				}
+			}
+		}
+
+    }
+ 
+}
+add_action( 'template_redirect', 'folcs_studio' );
+
+
 /**
  * Enqueue scripts and styles.
  */
@@ -867,6 +959,13 @@ if($post->post_type == 'upcoming'){
 	wp_enqueue_script( 'addtocalendar', get_stylesheet_directory_uri() . '/src/js/folcs.addtocalendar.js', array('jquery-3.3.1'), null, true);
 
 	wp_localize_script( 'addtocalendar', 'ajax_object', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+}
+
+if($template_file == 'page-folcs-studio.php'){
+
+	wp_enqueue_script( 'live_refresh', get_stylesheet_directory_uri() . '/src/js/liverefresh.js', array('jquery-3.3.1'), null, true);
+
+	wp_localize_script( 'live_refresh', 'ajax_object', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
 
 	wp_enqueue_script( 'app', get_template_directory_uri() . '/dist/app.js', array(), filemtime( get_template_directory() . '/dist/app.js' ), true);
@@ -949,6 +1048,24 @@ add_action('wp_ajax_nopriv_loadmore', 'misha_loadmore_ajax_handler'); // wp_ajax
 
 
 require get_template_directory() . '/inc/event-ics.php';
+
+
+function live_refresh_ajax_handler(){
+ 
+	$islive = get_field('live', 7606);
+
+	if($islive == 'live'){
+		$return = true;
+	}else {
+		$return = false;
+	}
+
+	echo $return;
+	wp_die();
+	
+}
+add_action('wp_ajax_liverefresh', 'live_refresh_ajax_handler'); // wp_ajax_{action}
+add_action('wp_ajax_nopriv_liverefresh', 'live_refresh_ajax_handler'); // wp_ajax_nopriv_{action}
 
 
 /**

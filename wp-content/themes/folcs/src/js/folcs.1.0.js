@@ -65,15 +65,15 @@ $(document).ready(function(){
 	    a.fn.menu = function(b) {
 	        
 	        function d(a) {
-	            window.console.log(f + ": " + a)
+	            // window.console.log(f + ": " + a)
 	        }
 
 	        function e() {
 	            k.on("click", function(a) {
 	                a.preventDefault(),
 	                n ? v() : u()
-	            }),
-	            d("toggle button click registration")
+	            })//,
+	            // d("toggle button click registration")
 	        }
 
 	        var f = "jquery.menu"
@@ -165,8 +165,9 @@ $(document).ready(function(){
 	                // scale: 1.2,
 	                delay: g.menuDuration / 2,
 	                ease: g.easing.easeInOut
-	            }, g.stagger),
-	            d("menu opening"))
+	            }, g.stagger)//,
+	            // d("menu opening")
+	            )
 	        }
 	          , v = function() {
 	            var a = l.find("li");
@@ -189,8 +190,9 @@ $(document).ready(function(){
 	                onComplete: function() {
 	                    q()
 	                }
-	            }),
-	            d("menu closing"))
+	            })//,
+	            // d("menu closing")
+	            )
 	        }
 	          , w = function() {
 	            o = !0,

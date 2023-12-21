@@ -123,3 +123,16 @@
 	</div>
 	<div class="footer-subscribe-close js-subscribe-close"></div>
 </section>
+
+<?php
+	
+	$islive = get_field('live', 7606);
+
+	if($islive == 'live'): 
+?>
+	
+	<!-- <div class="live-banner"></div> -->
+
+<?php
+	endif;
+?>

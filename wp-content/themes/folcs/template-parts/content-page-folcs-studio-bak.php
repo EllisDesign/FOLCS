@@ -9,21 +9,45 @@
 
 ?>
 
+<?php
+
+	$LOGIN_INFORMATION = array(
+	  get_field('password')
+	);
+
+	define('LOGOUT_URL', '/folcs-studio');
+
+	define('TIMEOUT_MINUTES', 1);
+
+	$timeout = (TIMEOUT_MINUTES == 0 ? 0 : time() + TIMEOUT_MINUTES * 60);
+
+	// if(isset($_POST['logout'])) {
+	//   setcookie("verify", '', $timeout, '/');
+	//   header('Location: ' . LOGOUT_URL);
+	//   exit();
+	// }
+
+?>
+
 <body <?php body_class('page-folcs-studio invert'); ?>>
 <?php include(get_template_directory() . '/inc/nav.php'); ?>
 
 <div class="app">
 
-	<script>
-		var isliverefresh = false;
-	</script>
+	<!-- <pre>
+	<?php 
+
+	print_r($_COOKIE);
+
+	?>
+	</pre> -->
 
 		<?php
 			$live = get_field('live');
 		?>
 
 		<?php
-			if($live == 'live'):
+			if($live):
 		?>
 
 		<section class="sequence-margin-first sequence-margin-last">
@@ -98,42 +122,48 @@
 
 		<?php
 
-		function showLive(){
+		function showLive($pass){
 
 		?>
 
 	    <section class="event-episode-item event-episode-video sequence-margin-first sequence-margin-last">
 			<div class="column-limit">
-				<!-- <?php the_field('embed'); ?> -->
+				<?php the_field('embed'); ?>
 			</div>
 			<div class="column-limit leave-stream">
-				<!-- <span class="type-link block-link js-leave-stream">Leave Stream</span> -->
-				<form method="post">
-					<input type="hidden" name="logout" value="1">
-					<input type="submit" name="Submit" value="Leave Stream">
-				</form>
+				<span class="type-link block-link js-leave-stream">Leave Stream</span>
 			</div>
 		</section>
 
+		<?php
+
+			echo "<script>";
+			echo "var date = new Date(Date.now() + 86400e3);date = date.toUTCString();";
+			echo "document.cookie = 'verify=".md5($pass)."; expires='+date+'; path=/; domain='+location.host;";
+			echo "var leave = document.querySelector('.js-leave-stream');";
+			echo "leave.addEventListener('click', function() {document.cookie = 'verify=".md5($pass)."; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain='+location.host;console.log('leave');window.history.replaceState(null, null, window.location.href);location.reload(true);});";
+			echo "</script>";
+		?>
+
 		<script>
+			// var leave = document.querySelector('.js-leave-stream');
+			// var hascooke = false;
 
-			// var isliverefresh = false;
+			// leave.addEventListener('click', function() {//Tue, 07 Nov 2023 21:09:21 GMT
 
-			// var time = '<?php the_field('episode_title_start_time'); ?>';
-			// var timeHours = time.split(":",1);
-			// timeHours = parseInt(timeHours[0]) + 12;
-			// var timeMinutes = time.slice(-4, -2);
+			// 	if(hascooke){
+			// 		document.cookie = "verify0=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain="+location.host;
+			// 		console.log("leave remove");
+			// 	}else {
+			// 		document.cookie = "verify0=leave; expires=Tue, 07 Nov 2023 21:09:21 GMT; path=/; domain="+location.host;
+			// 		hascooke = true;
+			// 		console.log("leave add");
+			// 	}
+				
+				
+			// }, false);
 
-			// var date = new Date();
-			// var dateHours = date.getHours();
-			// var dateMinutes = date.getMinutes();
-
-			// console.log(timeHours);
-			// console.log(dateMinutes);
-
-			// const min = 10;
-			// date.setMinutes(date.getMinutes() - min); 
-			// console.log(date);
+			// document.cookie = 'COOKIE_NAME=; Max-Age=0; path=/; domain=' + location.host;
 
 		</script>
 
@@ -164,31 +194,47 @@
 
 		<?php
 
-		if ($GLOBALS['ispost']) {
+		if (isset($_POST['access_password'])) {
 
-		  if (!$GLOBALS['isarray']) {
+		  $pass = $_POST['access_password'];
+
+		  if (!in_array($pass, $LOGIN_INFORMATION)) {
 
 		    showLogin('<p class="error"><span class="error-icon"><svg xmlns="https://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.4799995,10-10S17.5200005,2,12,2z M13,17h-2v-2h2V17z M13,13h-2V7h2V13z"/></svg></span><span>Wrong password, try again.</span></p>');
 
 		  }else {
+		    // setcookie("verify", md5($pass), $timeout, '/');
 
-		  	showLive();
+		  	showLive($pass);
+		  	// echo "post";
 
-		  	// unset($_POST['access_password']);
-		  	// unset($_POST['Submit']);
+		  	unset($_POST['access_password']);
+		  	unset($_POST['Submit']);
 		  }
 
 		}else {
 
-		  if (!$GLOBALS['iscookie']) {
+		  if (!isset($_COOKIE['verify'])) {
 		    showLogin("");
 
 		  }else {
 
-		  	if ($GLOBALS['isfound']) {
-		  		showLive();
-		  	}else {
-		  		showLogin("");
+		  	$found = false;
+
+		  	foreach($LOGIN_INFORMATION as $key=>$val) {
+
+		  	  $lp = $val;
+
+		  	  if ($_COOKIE['verify'] == md5($lp)) {
+		  	    $found = true;
+		  	    showLive($val);
+		  	    // echo "pass";
+		  	    break;
+		  	  }
+		  	}
+
+		  	if (!$found) {
+		  	  showLogin("");
 		  	}
 		  }
 
@@ -196,141 +242,6 @@
 		
 		?>
 
-		<?php
-			elseif($live == 'waiting'):
-		?>
-
-			<script>
-				isliverefresh = true;
-			</script>
-
-			<section class="sequence-margin-first sequence-margin-last">
-
-				<div class="column-limit">
-					<div class="column-1">
-
-						<div class="h1-margin-30 h2-margin-7 p-margin-26 ul-margin-26 type-content type-center">
-							<?php the_field('waiting_text'); ?>
-						</div>
-					</div>
-				</div>
-			</section>
-			<section class="sequence-margin-last">
-
-				<div class="column-limit">
-					<div class="column-1">
-
-						<div class="h1-margin-30 h2-margin-7 p-margin-26 ul-margin-26 type-content type-center">
-							<h2>
-								<?php the_field('episode_title_detail'); ?>
-							</h2>
-							<?php if(get_field('episode_title_date') || get_field('episode_title_start_time')): ?>
-							<div class="type-details">
-								<?php if(get_field('episode_title_date')): ?>
-									<span><?php the_field('episode_title_date'); ?></span>
-								<?php endif; ?>
-								<?php if(get_field('episode_title_start_time')): ?>
-									<span><?php the_field('episode_title_start_time'); ?></span>
-								<?php endif; ?>
-							</div>
-							<?php endif; ?>
-						</div>
-
-					</div>
-				</div>
-			</section>
-			<section class="sequence-margin-last">
-
-				<div class="column-limit">
-					<div class="column-1">
-
-						<div class="h1-margin-30 h2-margin-7 p-margin-26 ul-margin-26 type-content type-center">
-							<p>
-								Get familiar with our Studio by checking out some of our past events:
-							</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<?php
-
-				$past_query = new WP_Query(
-
-					array(
-						'post_type'     => array( 'past' ),
-						'post_status'   => array( 'publish' ),
-						'posts_per_page'=> 3,
-						// 'nopaging'      => true
-					)
-				);
-
-			?>
-
-			<section class="past-events section-margin-last">
-				<div class="column-limit">
-
-				<?php if ( $past_query->have_posts() ) : ?>
-
-					<div class="row event-cards category-margin-5 h2-margin-2">
-
-					<?php
-
-					foreach ( $past_query->posts as $post ) :
-
-						setup_postdata( $post ); ?>
-
-
-							<?php
-							
-			    	        if( have_rows('event_episode_items') ):
-
-			    	            while ( have_rows('event_episode_items') ) : the_row(); ?>
-			    					
-			    					<?php
-			    				        if( get_row_layout() == 'event_episode_title' ):
-
-			    				        	$date = get_sub_field('episode_title_date');
-			    							$title = get_sub_field('episode_title_detail');
-			    			        ?>
-
-						        <?php
-
-						        		endif;
-
-						        endwhile;
-
-						    else :
-
-						    endif;
-
-						    ?>
-
-							<div class="col-lg-4 col-md-6 col-sm-12 event-card">
-								<div class="event-items">
-									<a href="<?php the_permalink(); ?>" class="h2-has-hover"></a>
-									<div class="event-item" style="background-image: url('<?php esc_url(the_post_thumbnail_url('thumbnail_cropped')); ?>')"></div>
-									<div class="event-details">
-										<div class="type-category"><?php $term_list = wp_get_post_terms($post->ID, 'past-taxonomy', array( 'fields' => 'names' ));if ($term_list) { echo $term_list[0];} ?></div>
-										<h2><span><?php echo $title; ?></span></h2>
-										<div class="type-qualifier"><?php echo $date; ?></div>
-									</div>
-								</div>
-							</div>
-
-
-					<?php endforeach; ?>
-
-					</div>
-
-						<?php wp_reset_postdata(); ?>
-
-					
-
-				<?php endif; ?>
-
-				</div>
-			</section>
 
 		<?php
 			else:
@@ -433,26 +344,3 @@
 		?>
 
 </div>
-
-<?php
-	
-	$islive = get_field('live', 7606);
-
-	if($islive == 'live'): 
-?>
-	
-	<div class="live-banner">
-		<div class="type-placeholder">
-			Live Event
-		</div>
-		<p class="intro">
-			<?php the_field('episode_title_detail', 7606); ?>
-		</p>
-		<p>
-			<a href="/folcs-studio/">Click here to watch!</a>
-		</p>
-	</div>
-
-<?php
-	endif;
-?>
