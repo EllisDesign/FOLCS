@@ -436,7 +436,7 @@
 
 <?php
 	
-	$islive = get_field('live', 7606);
+	$islive = get_field('live', 7635);
 
 	if($islive == 'live'): 
 ?>
@@ -446,7 +446,7 @@
 			Live Event
 		</div>
 		<p class="intro">
-			<?php the_field('episode_title_detail', 7606); ?>
+			<?php the_field('episode_title_detail', 7635); ?>
 		</p>
 		<p>
 			<a href="/folcs-studio/">Click here to watch!</a>

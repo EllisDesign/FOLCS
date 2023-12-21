@@ -126,7 +126,7 @@
 
 <?php
 	
-	$islive = get_field('live', 7606);
+	$islive = get_field('live', 7635);
 
 	if($islive == 'live'): 
 ?>

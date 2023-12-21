@@ -1052,7 +1052,7 @@ require get_template_directory() . '/inc/event-ics.php';
 
 function live_refresh_ajax_handler(){
  
-	$islive = get_field('live', 7606);
+	$islive = get_field('live', 7635);
 
 	if($islive == 'live'){
 		$return = true;
