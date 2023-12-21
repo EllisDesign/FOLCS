@@ -1769,13 +1769,13 @@ footer {
   -ms-transform: rotate(45deg);
 }
 
-.page-register-2 .type-limit {
+.page-register .type-limit {
   margin-bottom: 50px;
 }
-.page-register-2 .register {
+.page-register .register {
   text-align: center;
 }
-.page-register-2 .register iframe {
+.page-register .register iframe {
   width: 100%;
   max-width: 450px;
 }
