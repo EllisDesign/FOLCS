@@ -139,8 +139,9 @@
 
 		<?php
 
-			$email = "I thought you’d be interested in FOLCS’ event, ".get_field('episode_title_detail').", streaming live now.%0D%0AClick here to register and join the virtual conversation: ".get_field('register_url').".";
-			$encoded = rawurlencode($email);
+			$email = "I thought you’d be interested in FOLCS’ event, ".get_field('episode_title_detail').", streaming live now.";
+			$register = "Click here to register and join the virtual conversation: ".get_field('register_url').".";
+			$encoded = rawurlencode($email)."%0D%0A".rawurlencode($register);
 		?>
 
 		<section class="event-episode-item sequence-margin-first sequence-margin-last folcs-studio-links">
