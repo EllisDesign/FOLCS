@@ -104,7 +104,7 @@
 
 	    <section class="event-episode-item event-episode-video sequence-margin-first sequence-margin-last">
 			<div class="column-limit">
-				<!-- <?php the_field('embed'); ?> -->
+				<?php the_field('embed'); ?>
 			</div>
 			<div class="column-limit leave-stream">
 				<!-- <span class="type-link block-link js-leave-stream">Leave Stream</span> -->
