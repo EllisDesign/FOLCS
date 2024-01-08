@@ -139,7 +139,7 @@
 
 		<?php
 
-			$email = "I thought you’d be interested in FOLCS’ event, ".get_field('episode_title_detail').", streaming live now.";
+			$email = "I thought you’d be interested in this FOLCS event, ".get_field('episode_title_detail').", streaming live now.";
 			$register = "Click here to register and join the virtual conversation: ".get_field('register_url').".";
 			$encoded = rawurlencode($email)."%0D%0A".rawurlencode($register);
 		?>
@@ -149,7 +149,7 @@
 				<div class="type-center">
 					<a href="/donate/" target="_blank" class="type-link block-link">
 						Donate Now
-					</a><a href="mailto:Enter%20an%20email?subject=FOLCS%20Studio%20Streaming%20Now&body=<?php echo $encoded; ?>" class="type-link block-link">
+					</a><a href="mailto:Enter%20an%20email?subject=You%E2%80%99re%20invited%20to%20watch%20FOLCS%E2%80%99%20live%20online%20event%21&body=<?php echo $encoded; ?>" class="type-link block-link">
 						Email a Friend
 					</a>
 				</div>
