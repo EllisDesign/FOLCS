@@ -98,7 +98,7 @@ if( have_rows('event_episode_items') ):
 					<div class="column-limit">
 						<div class="type-limit">
 
-							<div class="category-margin-20 h1-margin-5 type-center sequence-margin-last">
+							<div class="category-margin-20 h1-margin-5 type-center"><!-- sequence-margin-last -->
 								<div class="type-category"><?php echo $term; ?></div>
 								<h1>
 									<?php the_sub_field('episode_title_detail'); ?>

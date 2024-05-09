@@ -41,6 +41,9 @@ if( ! empty($query_series) && in_array($query_series, array_column($terms, 'slug
 		)
 	);
 
+	$series = '';
+	$series_url = '';
+
 	if($query_series == 'conversations'){
 		$series = 'Conversations';
 		$series_url = 'conversations';
@@ -66,6 +69,9 @@ if( ! empty($query_series) && in_array($query_series, array_column($terms, 'slug
 
 }else {
 
+	$series = '';
+	$series_url = '';
+	
 	$past_query = new WP_Query(
 
 		array(

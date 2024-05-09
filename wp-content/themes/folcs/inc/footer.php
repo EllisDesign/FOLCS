@@ -16,14 +16,14 @@
 	<div class="column-limit">
 		<div class="footer-items type-center">
 			<div class="footer-item footer-nav">
-				<a href="/become-a-member">Become a Member</a><br>
+				<a href="/become-a-member/">Become a Member</a><br>
 				<a href="<?php the_field('network_for_good_link', 'option') ?>" target="_blank">Renew Membership</a><br>
-				<a href="/donate">Donate</a>
+				<a href="/donate/">Donate</a>
 			</div>
 			<div class="footer-item footer-nav footer-reorder">
-				<a href="/sponsor">Sponsor</a><br>
-				<a href="/volunteer">Volunteer</a><br>
-				<a href="/contact">Contact Us</a>
+				<a href="/sponsor/">Sponsor</a><br>
+				<a href="/volunteer/">Volunteer</a><br>
+				<a href="/contact/">Contact Us</a>
 			</div>
 			<div class="footer-item">
 				<div class="footer-cta">
@@ -105,7 +105,7 @@
 			</div>
 		</div>
 		<div class="footer-disclaimer type-center">
-			Thank you to our <a href="/sponsors">Sponsors</a>
+			Thank you to our <a href="/sponsors/">Sponsors</a>
 		</div>
 	</div>
 </footer>
@@ -125,13 +125,23 @@
 </section>
 
 <?php
-	
+	$post_id = $post->ID;
 	$islive = get_field('live', 7635);
 
-	if($islive == 'live'): 
+	if($islive == 'live' && $post_id !== 7635): 
 ?>
 	
-	<!-- <div class="live-banner"></div> -->
+	<div class="live-banner">
+		<div class="type-placeholder">
+			Live Event
+		</div>
+		<p class="intro">
+			<?php the_field('episode_title_detail', 7635); ?>
+		</p>
+		<p>
+			<a href="/folcs-studio/">Click here to watch!</a>
+		</p>
+	</div>
 
 <?php
 	endif;

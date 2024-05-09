@@ -434,26 +434,3 @@
 		?>
 
 </div>
-
-<?php
-	
-	$islive = get_field('live', 7635);
-
-	if($islive == 'live'): 
-?>
-	
-	<div class="live-banner">
-		<div class="type-placeholder">
-			Live Event
-		</div>
-		<p class="intro">
-			<?php the_field('episode_title_detail', 7635); ?>
-		</p>
-		<p>
-			<a href="/folcs-studio/">Click here to watch!</a>
-		</p>
-	</div>
-
-<?php
-	endif;
-?>

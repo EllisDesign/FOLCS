@@ -66,15 +66,15 @@
                 <div class="container">
                     <ul>
                         <li><a href="/#upcoming-events" class="nav-item-upcoming-events js-nav-upcoming-events">Upcoming Events<?php echo ($events > 0) ? '<sup>&nbsp;'.$events.'</sup>' : '' ?></a></li>
-                        <li><a href="/event-series" class="nav-item-event-series">Event Series</a></li>
-                        <li><a href="/past-events" class="nav-item-past-events">Past Events</a></li>
-                        <li><a href="/blog" class="nav-item-blog">Blog</a></li>
-                        <li><a href="/become-a-member" class="nav-item-become-a-member">Become a Member</a></li>
-                        <li><a href="/donate" class="nav-item-donate">Donate</a></li>
-                        <li><a href="/covid-19" class="nav-item-covid-19">COVID-19 Response</a></li>
+                        <li><a href="/event-series/" class="nav-item-event-series">Event Series</a></li>
+                        <li><a href="/past-events/" class="nav-item-past-events">Past Events</a></li>
+                        <li><a href="/folcs-studio/" class="nav-item-folcs-studio">Studio</a></li>
+                        <li><a href="/become-a-member/" class="nav-item-become-a-member">Become a Member</a></li>
+                        <li><a href="/donate/" class="nav-item-donate">Donate</a></li>
+                        <li><a href="/covid-19/" class="nav-item-covid-19">COVID-19 Response</a></li>
                         <li>
                             <div class="type-link">
-                                <a href="/leadership" class="nav-item-leadership">Leadership</a> <a href="/in-the-press" class="nav-item-in-the-press">In the Press</a> <a href="/about" class="nav-item-about">About</a> <a href="/contact" class="nav-item-contact">Contact</a>
+                                <a href="/leadership/" class="nav-item-leadership">Leadership</a> <a href="/in-the-press/" class="nav-item-in-the-press">In the Press</a> <a href="/about/" class="nav-item-about">About</a> <a href="/contact/" class="nav-item-contact">Contact</a>
                             </div>
                         </li>
                     </ul>
