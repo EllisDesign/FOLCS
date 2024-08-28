@@ -17,7 +17,9 @@
 <section class="h1-margin-30 sequence-margin-first-abbreviated sequence-margin-last section-bottom-border">
 	<div class="column-limit">
 		<div class="type-limit">
-			<?php the_content(); ?>
+			<div class="type-center sequence-margin-last">
+				<?php the_content(); ?>
+			</div>
 		</div>
 
 		<div class="row event-cards p-margin-5 leadership-portraits">
