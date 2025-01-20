@@ -39,10 +39,10 @@
 
 				<div class="faq-item">
 					<p>
-						<?php the_sub_field('faqs_question'); ?>
+						<?php echo get_sub_field('faqs_question'); ?>
 					</p>
 					<p>
-						<?php the_sub_field('faqs_answer'); ?>
+						<?php echo get_sub_field('faqs_answer'); ?>
 					</p>
 				</div>
 

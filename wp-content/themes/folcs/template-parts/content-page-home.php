@@ -16,9 +16,9 @@
 
 <section class="hero-video">
 	<div class="intro-video" style="background-image:url('')">
-		<video muted autoPlay loop playsinline poster="<?php the_field('video_poster'); ?>">
-			<source src="<?php the_field('video_mp4'); ?>" type="video/mp4">
-			<source src="<?php the_field('video_webm'); ?>" type="video/webm">
+		<video muted autoPlay loop playsinline poster="<?php echo get_field('video_poster'); ?>">
+			<source src="<?php echo get_field('video_mp4'); ?>" type="video/mp4">
+			<source src="<?php echo get_field('video_webm'); ?>" type="video/webm">
 		</video>
 	</div>
 	<div class="type-feature js-opacity">
@@ -46,13 +46,13 @@
 
 				<div class="intro sequence-margin-last h1-margin-30 type-center">
 					
-					<?php the_field('upcoming_details'); ?>
+					<?php echo get_field('upcoming_details'); ?>
 
 				<?php else: ?>
 				
 				<div class="intro section-margin-last h1-margin-30 type-center">
 
-					<?php the_field('no_upcoming_details'); ?>
+					<?php echo get_field('no_upcoming_details'); ?>
 
 				<?php endif; 
 
@@ -210,7 +210,7 @@
 		<div class="type-limit">
 
 			<div class="intro sequence-margin-last h1-margin-30 type-center">
-				<?php the_field('past_details'); ?>
+				<?php echo get_field('past_details'); ?>
 			</div>
 
 		</div>

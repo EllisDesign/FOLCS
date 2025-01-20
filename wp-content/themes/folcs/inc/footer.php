@@ -2,7 +2,7 @@
 	<div class="column-limit">
 		<div class="type-limit">
 			<div>
-				<?php the_field('footer_details', 'option'); ?>
+				<?php echo get_field('footer_details', 'option'); ?>
 				<div class="type-center">
 					<a href="<?php the_permalink(10); ?>" class="type-link block-link">
 						Become a Member
@@ -17,7 +17,7 @@
 		<div class="footer-items type-center">
 			<div class="footer-item footer-nav">
 				<a href="/become-a-member/">Become a Member</a><br>
-				<a href="<?php the_field('network_for_good_link', 'option') ?>" target="_blank">Renew Membership</a><br>
+				<a href="<?php echo get_field('network_for_good_link', 'option') ?>" target="_blank">Renew Membership</a><br>
 				<a href="/donate/">Donate</a>
 			</div>
 			<div class="footer-item footer-nav footer-reorder">
@@ -35,7 +35,7 @@
 					</a>
 				</div>
 				<div class="footer-social">
-					<a href="<?php the_field('social_twitter_link', 'option'); ?>" class="footer-social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="21px" height="20px" viewBox="0 0 21 20">
+					<a href="<?php echo get_field('social_twitter_link', 'option'); ?>" class="footer-social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="21px" height="20px" viewBox="0 0 21 20">
 						<g>
 							<path fill="#FFFFFF" d="M6.6043568,18.0669193c7.9248457,0,12.2585983-6.5654917,12.2585983-12.2585907
 								c0-0.1865726-0.003788-0.3722796-0.0123138-0.557004C19.6918163,4.6432061,20.4231129,3.8844173,21,3.0205276
@@ -50,14 +50,14 @@
 								c-0.3476508,0-0.690556-0.0198917-1.027782-0.0596657C1.906842,17.353632,4.1708264,18.0669193,6.6043568,18.0669193"/>
 						</g>
 						</svg>
-					</a><a href="<?php the_field('social_facebook_link', 'option'); ?>" class="footer-social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20">
+					</a><a href="<?php echo get_field('social_facebook_link', 'option'); ?>" class="footer-social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20">
 						<path fill="#FFFFFF" d="M18.8961868,0H1.1038506C0.4942107,0,0,0.4942107,0,1.1038506v17.792305
 							C0,19.5057449,0.4940841,20,1.1039487,20h9.5796452v-7.734375H8.0859375V9.2382812h2.5976562V7.01229
 							c0-2.5832524,1.5776043-3.9898827,3.8819551-3.9898827c1.103754,0,2.0524511,0.0821829,2.3289824,0.118916v2.6985204
 							l-1.5940571,0.0007272c-1.2498684,0-1.4918804,0.595541-1.4918804,1.4694571v1.9282532h2.9977989l-0.3903542,3.0273438h-2.6074448
 							V20h5.0875931C19.505806,20,20,19.505806,20,18.8961868V1.1038125C20,0.4941937,19.505806,0,18.8961868,0z"/>
 						</svg>
-					</a><a href="<?php the_field('social_instagram_link', 'option'); ?>" class="footer-social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20">
+					</a><a href="<?php echo get_field('social_instagram_link', 'option'); ?>" class="footer-social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20">
 						<g>
 							<path fill="#FFFFFF" d="M10,1.8018018c2.6701202,0,2.9863853,0.0101836,4.0408506,0.0582924
 								c0.9749832,0.0444897,1.5044889,0.2073866,1.8568659,0.3443307c0.4667664,0.1813986,0.7998905,0.3981197,1.149807,0.7480359
@@ -91,7 +91,7 @@
 							<circle fill="#FFFFFF" cx="15.338026" cy="4.6619744" r="1.1999999"/>
 						</g>
 						</svg>
-					</a><a href="<?php the_field('social_youtube_link', 'option'); ?>" class="footer-social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="22px" height="20px" viewBox="0 0 22 20">
+					</a><a href="<?php echo get_field('social_youtube_link', 'option'); ?>" class="footer-social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="22px" height="20px" viewBox="0 0 22 20">
 						<path fill="#FFFFFF" d="M21.5402908,4.6703491c-0.253006-0.9526978-0.9984818-1.7030029-1.9450226-1.9576569
 							C17.8795929,2.25,11.0000076,2.25,11.0000076,2.25s-6.8795929,0-8.5952682,0.4626923
 							c-0.9465408,0.2546539-1.692009,1.0049591-1.9450226,1.9576569C0,6.3971558,0,9.9999924,0,9.9999924
@@ -116,7 +116,7 @@
 			<div class="table-cell">
 				<div class="column-limit">
 					<div class="footer-cta">Join our email list to stay informed about upcoming events.</div>
-					<?php the_field('network_for_good_subscribe', 'option') ?>
+					<?php echo get_field('network_for_good_subscribe', 'option') ?>
 				</div>	
 			</div>
 		</div>
@@ -136,7 +136,7 @@
 			Live Event
 		</div>
 		<p class="intro">
-			<?php the_field('episode_title_detail', 7635); ?>
+			<?php echo get_field('episode_title_detail', 7635); ?>
 		</p>
 		<p>
 			<a href="/folcs-studio/">Click here to watch!</a>

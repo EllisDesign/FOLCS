@@ -50,11 +50,11 @@
 
 				<div class="col-lg-4 col-md-6 col-sm-12 event-card">
 					<div class="event-items">
-						<a href="<?php the_field('press_link'); ?>" target="_blank" class="h2-has-hover"></a>
+						<a href="<?php echo get_field('press_link'); ?>" target="_blank" class="h2-has-hover"></a>
 						<div class="event-item" style="background-image: url('<?php echo $press['sizes'][$size]; ?>')"></div>
 						<div class="event-details">
-							<div class="type-category"><?php the_field('press_name'); ?></div>
-							<h2><span><?php the_field('press_title'); ?></span></h2>
+							<div class="type-category"><?php echo get_field('press_name'); ?></div>
+							<h2><span><?php echo get_field('press_title'); ?></span></h2>
 						</div>
 					</div>
 				</div>
@@ -77,7 +77,7 @@
 <section class="intro h1-margin-30 section-margin-first-border section-margin-last">
 	<div class="column-limit">
 		<div class="type-limit">
-			<?php the_field('secondary_details'); ?>
+			<?php echo get_field('secondary_details'); ?>
 		</div>
 
 		<div class="row event-cards press-event-cards category-margin-5 h2-margin-2 sequence-margin-last">
@@ -115,11 +115,11 @@
 
 				<div class="col-lg-4 col-md-6 col-sm-12 event-card">
 					<div class="event-items">
-						<a href="<?php the_field('press_link'); ?>" target="_blank" class="h2-has-hover"></a>
+						<a href="<?php echo get_field('press_link'); ?>" target="_blank" class="h2-has-hover"></a>
 						<div class="event-item" style="background-image: url('<?php echo $press['sizes'][$size]; ?>')"></div>
 						<div class="event-details">
-							<div class="type-category"><?php the_field('press_name'); ?></div>
-							<h2><span><?php the_field('press_title'); ?></span></h2>
+							<div class="type-category"><?php echo get_field('press_name'); ?></div>
+							<h2><span><?php echo get_field('press_title'); ?></span></h2>
 						</div>
 					</div>
 				</div>

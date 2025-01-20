@@ -114,17 +114,6 @@ class FacebookWordpressSettingsPage {
   </div>
   <div id="fb-adv-conf" class="fb-adv-conf" style="display: none;">
     <div class="fb-adv-conf-title">Meta Advanced Configuration</div>
-    <div>
-      <input type="checkbox" id="capi-cb" name="capi-cb">
-      <label class="fb-capi-title" for="capi-cb">
-        Send website events to Meta using Conversions API
-      </label>
-      <span id="fb-capi-se" class="fb-capi-se"></span>
-      <br/>
-      <div class="fb-capi-desc">
-        Enrich website event data using Openbridge javascript.
-      </div>
-    </div>
     <div id="fb-capi-ef" style="display: none;">
       <input type="checkbox" id="capi-ef" name="capi-ef">
       <label class="fb-capi-title" for="capi-ef">Filter PageView Event</label>
@@ -132,6 +121,17 @@ class FacebookWordpressSettingsPage {
       <br/>
       <div class="fb-capi-desc">
           Enable checkbox to filter PageView events from sending.
+      </div>
+      <div id="fb-capi-ch">
+        <input type="checkbox" id="capi-ch" name="capi-ch">
+        <label class="fb-capi-title" for="capi-ch">
+          Enable Events Enrichment
+        </label>
+        <span id="fb-capi-ef-se" class="fb-capi-se"></span>
+        <br/>
+        <div class="fb-capi-desc">
+          When turned on, PII will be cached for non logged in users.
+        </div>
       </div>
     </div>
   </div>
@@ -211,19 +211,21 @@ class FacebookWordpressSettingsPage {
       // Set advanced configuration top relative to fbe iframe
       setFbAdvConfTop();
       jQuery('#fb-adv-conf').show();
-      var enableCapiCheckbox = document.getElementById("capi-cb");
-      var currentCapiIntegrationStatus =
-      '<?php echo FacebookWordpressOptions::getCapiIntegrationStatus() ?>';
-      updateCapiIntegrationCheckbox(currentCapiIntegrationStatus);
+      jQuery('#fb-capi-ef').show();
 
-      enableCapiCheckbox.addEventListener('change', function() {
+      var enablePiiCachingCheckbox = document.getElementById("capi-ch");
+      var piiCachingStatus =
+      '<?php echo FacebookWordpressOptions::getCapiPiiCachingStatus() ?>';
+      updateCapiPiiCachingCheckbox(piiCachingStatus);
+      enablePiiCachingCheckbox.addEventListener('change', function() {
         if (this.checked) {
-          saveCapiIntegrationStatus('1');
+          console.log("Enabled caching");
+          saveCapiPiiCachingStatus('1');
         } else {
-          saveCapiIntegrationStatus('0');
+          console.log("Disabled caching");
+          saveCapiPiiCachingStatus('0');
         }
       });
-
       function setFbAdvConfTop() {
         var fbeIframeTop = 0;
         // Add try catch to handle any error and avoid breaking js
@@ -237,38 +239,6 @@ class FacebookWordpressSettingsPage {
         jQuery('#fb-adv-conf').css({'top' : fbAdvConfTop + 'px'});
       }
 
-      function updateCapiIntegrationCheckbox(val) {
-        if (val === '1') {
-          enableCapiCheckbox.checked = true;
-          jQuery('#fb-capi-ef').show();
-        } else {
-          enableCapiCheckbox.checked = false;
-          jQuery('#fb-capi-ef').hide();
-        }
-      }
-
-      function saveCapiIntegrationStatus(new_val) {
-        jQuery.ajax({
-          type : "post",
-          dataType : "json",
-          url : '<?php echo $this->getCapiIntegrationStatusSaveUrl() ?>',
-          data : {action:
-            '<?php
-            echo FacebookPluginConfig::SAVE_CAPI_INTEGRATION_STATUS_ACTION_NAME
-            ?>',
-            val : new_val},
-            success: function(response) {
-              // This is needed to refresh Events Filter checkbox
-              updateCapiIntegrationCheckbox(new_val);
-        }}).fail(function (jqXHR, textStatus, error) {
-          jQuery('#fb-capi-se').text('<?php
-          echo FacebookPluginConfig::CAPI_INTEGRATION_STATUS_UPDATE_ERROR
-          ?>');
-          jQuery("#fb-capi-se").show().delay(3000).fadeOut();
-          updateCapiIntegrationCheckbox((new_val === '1') ? '0' : '1');
-        });
-      }
-
       var enablePageViewFilterCheckBox = document.getElementById("capi-ef");
       var capiIntegrationPageViewFiltered =
       ('<?php echo
@@ -278,11 +248,36 @@ class FacebookWordpressSettingsPage {
       enablePageViewFilterCheckBox.addEventListener('change', function() {
         saveCapiIntegrationEventsFilter(this.checked ? '1' : '0');
       });
-
+      function updateCapiPiiCachingCheckbox(val) {
+        if (val === '1') {
+          enablePiiCachingCheckbox.checked = true;
+        } else {
+          enablePiiCachingCheckbox.checked = false;
+        }
+      }
       function updateCapiIntegrationEventsFilter(val) {
         enablePageViewFilterCheckBox.checked = (val === '1') ? true : false;
       }
-
+      function saveCapiPiiCachingStatus(new_val) {
+        jQuery.ajax({
+          type : "post",
+          dataType : "json",
+          url : '<?php echo $this->getCapiPiiCachingStatusSaveUrl() ?>',
+          data : {action:
+            '<?php
+            echo FacebookPluginConfig::SAVE_CAPI_PII_CACHING_STATUS_ACTION_NAME
+            ?>',
+            val : new_val},
+            success: function(response) {
+              updateCapiPiiCachingCheckbox(new_val);
+        }}).fail(function (jqXHR, textStatus, error) {
+          jQuery('#fb-capi-se').text('<?php
+          echo FacebookPluginConfig::CAPI_PII_CACHING_STATUS_UPDATE_ERROR
+          ?>');
+          jQuery("#fb-capi-se").show().delay(3000).fadeOut();
+          updateCapiPiiCachingCheckbox((new_val === '1') ? '0' : '1');
+        });
+      }
       function saveCapiIntegrationEventsFilter(new_val) {
         jQuery.ajax({
           type : "post",
@@ -377,6 +372,19 @@ class FacebookWordpressSettingsPage {
     $args = array(
       'action' =>
         FacebookPluginConfig::SAVE_CAPI_INTEGRATION_EVENTS_FILTER_ACTION_NAME,
+      '_wpnonce' => $nonce_value
+    );
+    return add_query_arg($args, $simple_url);
+  }
+
+  public function getCapiPiiCachingStatusSaveUrl() {
+    $nonce_value = wp_create_nonce(
+      FacebookPluginConfig::SAVE_CAPI_PII_CACHING_STATUS_ACTION_NAME
+    );
+    $simple_url = admin_url('admin-ajax.php');
+    $args = array(
+      'action' =>
+        FacebookPluginConfig::SAVE_CAPI_PII_CACHING_STATUS_ACTION_NAME,
       '_wpnonce' => $nonce_value
     );
     return add_query_arg($args, $simple_url);

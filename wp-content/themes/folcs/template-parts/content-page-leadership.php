@@ -39,12 +39,12 @@
 				<div class="col-lg-3 col-md-6 col-sm-12 event-card">
 					<div class="event-items">
 						<div class="event-item js-bio-portrait" data-portrait="<?php echo $leader['sizes']['medium']; ?>" style="background-image: url('<?php echo $leader['sizes']['thumbnail_cropped']; ?>')"></div>
-						<div class="event-details js-bio-details" data-name="<?php the_field('leadership_name'); ?>" data-title="<?php the_field('leadership_title'); ?>">
-							<p><b><?php the_field('leadership_name'); ?></b></p>
-							<p><?php the_field('leadership_title'); ?></p>
+						<div class="event-details js-bio-details" data-name="<?php echo get_field('leadership_name'); ?>" data-title="<?php echo get_field('leadership_title'); ?>">
+							<p><b><?php echo get_field('leadership_name'); ?></b></p>
+							<p><?php echo get_field('leadership_title'); ?></p>
 						</div>
 						<a href="" class="js-bio"></a>
-						<div class="leadership-bio-data"><?php the_field('leadership_details'); ?></div>
+						<div class="leadership-bio-data"><?php echo get_field('leadership_details'); ?></div>
 					</div>
 				</div>
 
@@ -66,7 +66,7 @@
 	<div class="column-limit">
 		<div class="type-limit">
 			<div class="type-center sequence-margin-last">
-				<?php the_field('secondary_details'); ?>
+				<?php echo get_field('secondary_details'); ?>
 			</div>
 		</div>
 
@@ -87,12 +87,12 @@
 				<div class="col-lg-3 col-md-6 col-sm-12 event-card">
 					<div class="event-items">
 						<div class="event-item js-bio-portrait" data-portrait="<?php echo $leader['sizes']['medium']; ?>" style="background-image: url('<?php echo $leader['sizes']['thumbnail_cropped']; ?>')"></div>
-						<div class="event-details js-bio-details" data-name="<?php the_field('leadership_name'); ?>" data-title="<?php the_field('leadership_title'); ?>">
-							<p><b><?php the_field('leadership_name'); ?></b></p>
-							<p><?php the_field('leadership_title'); ?></p>
+						<div class="event-details js-bio-details" data-name="<?php echo get_field('leadership_name'); ?>" data-title="<?php echo get_field('leadership_title'); ?>">
+							<p><b><?php echo get_field('leadership_name'); ?></b></p>
+							<p><?php echo get_field('leadership_title'); ?></p>
 						</div>
 						<a href="" class="js-bio"></a>
-						<div class="leadership-bio-data"><?php the_field('leadership_details'); ?></div>
+						<div class="leadership-bio-data"><?php echo get_field('leadership_details'); ?></div>
 					</div>
 				</div>
 
@@ -120,7 +120,7 @@
 	<div class="column-limit">
 		<div class="type-limit">
 			<div class="type-center sequence-margin-last">
-				<?php the_field('third_details'); ?>
+				<?php echo get_field('third_details'); ?>
 			</div>
 		</div>
 
@@ -141,12 +141,12 @@
 				<div class="col-lg-3 col-md-6 col-sm-12 event-card">
 					<div class="event-items">
 						<div class="event-item js-bio-portrait" data-portrait="<?php echo $leader['sizes']['medium']; ?>" style="background-image: url('<?php echo $leader['sizes']['thumbnail_cropped']; ?>')"></div>
-						<div class="event-details js-bio-details" data-name="<?php the_field('leadership_name'); ?>" data-title="<?php the_field('leadership_title'); ?>">
-							<p><b><?php the_field('leadership_name'); ?></b></p>
-							<p><?php the_field('leadership_title'); ?></p>
+						<div class="event-details js-bio-details" data-name="<?php echo get_field('leadership_name'); ?>" data-title="<?php echo get_field('leadership_title'); ?>">
+							<p><b><?php echo get_field('leadership_name'); ?></b></p>
+							<p><?php echo get_field('leadership_title'); ?></p>
 						</div>
 						<a href="" class="js-bio"></a>
-						<div class="leadership-bio-data"><?php the_field('leadership_details'); ?></div>
+						<div class="leadership-bio-data"><?php echo get_field('leadership_details'); ?></div>
 					</div>
 				</div>
 

@@ -32,7 +32,7 @@
 				<div class="column-1">
 
 					<div class="h1-margin-30 h2-margin-7 p-margin-26 ul-margin-26 type-content type-center">
-						<?php the_field('live_text'); ?>
+						<?php echo get_field('live_text'); ?>
 					</div>
 				</div>
 			</div>
@@ -44,15 +44,15 @@
 
 					<div class="h1-margin-30 h2-margin-7 p-margin-26 ul-margin-26 type-content type-center">
 						<h2>
-							<?php the_field('episode_title_detail'); ?>
+							<?php echo get_field('episode_title_detail'); ?>
 						</h2>
 						<?php if(get_field('episode_title_date') || get_field('episode_title_start_time')): ?>
 						<div class="type-details">
 							<?php if(get_field('episode_title_date')): ?>
-								<span><?php the_field('episode_title_date'); ?></span>
+								<span><?php echo get_field('episode_title_date'); ?></span>
 							<?php endif; ?>
 							<?php if(get_field('episode_title_start_time')): ?>
-								<span><?php the_field('episode_title_start_time'); ?></span>
+								<span><?php echo get_field('episode_title_start_time'); ?></span>
 							<?php endif; ?>
 						</div>
 						<?php endif; ?>
@@ -83,7 +83,7 @@
 		  </form>
 		  <p class="login-register">
 		  	Each event has a unique password.<br>
-		  	Register <a href="<?php the_field('register_url'); ?>" target="_blank">here</a> to get yours.
+		  	Register <a href="<?php echo get_field('register_url'); ?>" target="_blank">here</a> to get yours.
 		  </p>
 		</div>
 		</div>
@@ -104,7 +104,7 @@
 
 	    <section class="event-episode-item event-episode-video sequence-margin-first sequence-margin-last">
 			<div class="column-limit">
-				<?php the_field('embed'); ?>
+				<?php echo get_field('embed'); ?>
 			</div>
 			<div class="column-limit leave-stream">
 				<!-- <span class="type-link block-link js-leave-stream">Leave Stream</span> -->
@@ -119,7 +119,7 @@
 
 			// var isliverefresh = false;
 
-			// var time = '<?php the_field('episode_title_start_time'); ?>';
+			// var time = '<?php echo get_field('episode_title_start_time'); ?>';
 			// var timeHours = time.split(":",1);
 			// timeHours = parseInt(timeHours[0]) + 12;
 			// var timeMinutes = time.slice(-4, -2);
@@ -211,7 +211,7 @@
 					<div class="column-1">
 
 						<div class="h1-margin-30 h2-margin-7 p-margin-26 ul-margin-26 type-content type-center">
-							<?php the_field('waiting_text'); ?>
+							<?php echo get_field('waiting_text'); ?>
 						</div>
 					</div>
 				</div>
@@ -223,15 +223,15 @@
 
 						<div class="h1-margin-30 h2-margin-7 p-margin-26 ul-margin-26 type-content type-center">
 							<h2>
-								<?php the_field('episode_title_detail'); ?>
+								<?php echo get_field('episode_title_detail'); ?>
 							</h2>
 							<?php if(get_field('episode_title_date') || get_field('episode_title_start_time')): ?>
 							<div class="type-details">
 								<?php if(get_field('episode_title_date')): ?>
-									<span><?php the_field('episode_title_date'); ?></span>
+									<span><?php echo get_field('episode_title_date'); ?></span>
 								<?php endif; ?>
 								<?php if(get_field('episode_title_start_time')): ?>
-									<span><?php the_field('episode_title_start_time'); ?></span>
+									<span><?php echo get_field('episode_title_start_time'); ?></span>
 								<?php endif; ?>
 							</div>
 							<?php endif; ?>
@@ -343,7 +343,7 @@
 					<div class="column-1">
 
 						<div class="h1-margin-30 h2-margin-7 p-margin-26 ul-margin-26 type-content type-center">
-							<?php the_field('text'); ?>
+							<?php echo get_field('text'); ?>
 						</div>
 
 					</div>

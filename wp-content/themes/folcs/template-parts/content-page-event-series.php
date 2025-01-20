@@ -47,8 +47,8 @@
 
 					<div class="type-limit">
 						<div class="event-series-details h1-margin-15 p-margin-30 type-center">
-							<?php the_sub_field('event_series_details'); ?>
-							<a href="<?php the_sub_field('event_series_link'); ?>" class="type-link block-link">Read More</a>
+							<?php echo get_sub_field('event_series_details'); ?>
+							<a href="<?php echo get_sub_field('event_series_link'); ?>" class="type-link block-link">Read More</a>
 						</div>
 					</div>
 				</div>

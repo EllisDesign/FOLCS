@@ -51,7 +51,7 @@
 	<div class="column-limit">
 		<div class="type-limit">
 			<div class="h1-margin-30 h2-margin-15 p-margin-15 type-content">
-				<?php the_field('secondary_details'); ?>
+				<?php echo get_field('secondary_details'); ?>
 			</div>
 		</div>
 	</div>

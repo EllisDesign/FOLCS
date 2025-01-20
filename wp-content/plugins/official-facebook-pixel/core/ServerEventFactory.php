@@ -65,7 +65,7 @@ class ServerEventFactory {
     );
 
     foreach ($HEADERS_TO_SCAN as $header) {
-      if (array_key_exists($header, $_SERVER)) {
+      if (isset($_SERVER[$header])) {
         $ip_list = explode(',', $_SERVER[$header]);
         foreach($ip_list as $ip) {
           $trimmed_ip = trim($ip);
@@ -125,6 +125,21 @@ class ServerEventFactory {
 
     if (!empty($_COOKIE['_fbc'])) {
       $fbc = $_COOKIE['_fbc'];
+      $_SESSION['_fbc'] = $fbc;
+    }
+
+    if (!$fbc && isset($_GET['fbclid'])) {
+      $fbclid = $_GET['fbclid'];
+      $cur_time = (int)(microtime(true)*1000);
+      $fbc = "fb.1.".$cur_time.".".rawurldecode($fbclid);
+    }
+
+    if (!$fbc && isset($_SESSION['_fbc'])) {
+      $fbc = $_SESSION['_fbc'];
+    }
+
+    if ($fbc) {
+      $_SESSION['_fbc'] = $fbc;
     }
 
     return $fbc;
@@ -162,7 +177,7 @@ class ServerEventFactory {
       'external_id' => AAMSettingsFields::EXTERNAL_ID,
     );
     foreach( $data as $key => $value ){
-      if( array_key_exists( $key, $key_to_aam_field ) ){
+      if( isset( $key_to_aam_field[$key] ) ){
         $user_data[$key_to_aam_field[$key]] = $value;
       }
       else{
@@ -193,79 +208,87 @@ class ServerEventFactory {
         AAMFieldsExtractor::getNormalizedUserData($user_data_array);
 
       $user_data = $event->getUserData();
-
       if(
-        array_key_exists(AAMSettingsFields::EMAIL, $user_data_array)
+        isset($user_data_array[AAMSettingsFields::EMAIL])
       ){
         $user_data->setEmail(
           $user_data_array[AAMSettingsFields::EMAIL]
         );
       }
       if(
-        array_key_exists(AAMSettingsFields::FIRST_NAME, $user_data_array)
+        isset($user_data_array[AAMSettingsFields::FIRST_NAME])
       ){
         $user_data->setFirstName(
           $user_data_array[AAMSettingsFields::FIRST_NAME]
         );
       }
       if(
-        array_key_exists(AAMSettingsFields::LAST_NAME, $user_data_array)
+        isset($user_data_array[AAMSettingsFields::LAST_NAME])
       ){
         $user_data->setLastName(
           $user_data_array[AAMSettingsFields::LAST_NAME]
         );
       }
       if(
-        array_key_exists(AAMSettingsFields::GENDER, $user_data_array)
+        isset($user_data_array[AAMSettingsFields::GENDER])
       ){
         $user_data->setGender(
           $user_data_array[AAMSettingsFields::GENDER]
         );
       }
       if(
-        array_key_exists(AAMSettingsFields::DATE_OF_BIRTH, $user_data_array)
+        isset($user_data_array[AAMSettingsFields::DATE_OF_BIRTH])
       ){
         $user_data->setDateOfBirth(
           $user_data_array[AAMSettingsFields::DATE_OF_BIRTH]);
       }
       if(
-        array_key_exists(AAMSettingsFields::EXTERNAL_ID, $user_data_array) &&
+        isset($user_data_array[AAMSettingsFields::EXTERNAL_ID]) &&
         !is_null($user_data_array[AAMSettingsFields::EXTERNAL_ID])
       ){
-        $user_data->setExternalId(
-          hash("sha256", $user_data_array[AAMSettingsFields::EXTERNAL_ID])
-        );
+        if (is_array($user_data_array[AAMSettingsFields::EXTERNAL_ID])) {
+          $external_ids = $user_data_array[AAMSettingsFields::EXTERNAL_ID];
+          $hashed_eids = array();
+          foreach($external_ids as $k => $v) {
+            $hashed_eids[$k] = hash("sha256", $v);
+          }
+          $user_data->setExternalIds($hashed_eids);
+        } else {
+          $user_data->setExternalId(
+            hash("sha256", $user_data_array[AAMSettingsFields::EXTERNAL_ID])
+          );
+        }
       }
       if(
-        array_key_exists(AAMSettingsFields::PHONE, $user_data_array)
+        isset($user_data_array[AAMSettingsFields::PHONE])
       ){
         $user_data->setPhone(
           $user_data_array[AAMSettingsFields::PHONE]
         );
       }
       if(
-        array_key_exists(AAMSettingsFields::CITY, $user_data_array)
+        isset($user_data_array[AAMSettingsFields::CITY])
       ){
         $user_data->setCity(
           $user_data_array[AAMSettingsFields::CITY]
         );
       }
       if(
-        array_key_exists(AAMSettingsFields::STATE, $user_data_array)
+        isset($user_data_array[AAMSettingsFields::STATE])
       ){
         $user_data->setState(
           $user_data_array[AAMSettingsFields::STATE]
         );
       }
       if(
-        array_key_exists(AAMSettingsFields::ZIP_CODE, $user_data_array)
+        isset($user_data_array[AAMSettingsFields::ZIP_CODE])
       ){
         $user_data->setZipCode(
           $user_data_array[AAMSettingsFields::ZIP_CODE]
         );
       }
       if(
-        array_key_exists(AAMSettingsFields::COUNTRY, $user_data_array)
+        isset($user_data_array[AAMSettingsFields::COUNTRY])
       ){
         $user_data->setCountryCode(
           $user_data_array[AAMSettingsFields::COUNTRY]
@@ -304,10 +327,12 @@ class ServerEventFactory {
       }
 
       if (!empty($data['content_category'])){
-        $custom_data->setContentCategory($custom_data_array['content_category']);
+        $custom_data->setContentCategory(
+          $custom_data_array['content_category']
+        );
       }
     } catch (\Exception $e) {
-      // Need to log
+      error_log(json_encode($e));
     }
 
     return $event;

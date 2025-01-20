@@ -50,10 +50,10 @@ if( have_rows('event_episode_items') ):
         					<div class="category-margin-20 h1-margin-5 type-center">
         						<div class="type-category"><?php echo $term; ?></div>
         						<h1>
-        							<?php the_sub_field('episode_title_detail'); ?>
+        							<?php echo get_sub_field('episode_title_detail'); ?>
         						</h1>
         						<div class="type-details">
-        							<?php the_sub_field('episode_title_date'); ?>
+        							<?php echo get_sub_field('episode_title_date'); ?>
         						</div>
         					</div>
 
@@ -75,10 +75,10 @@ if( have_rows('event_episode_items') ):
         					<div class="category-margin-20 h1-margin-5 type-center">
         						<div class="type-category"><?php echo $term; ?></div>
         						<h1>
-        							<?php the_sub_field('episode_title_detail'); ?>
+        							<?php echo get_sub_field('episode_title_detail'); ?>
         						</h1>
         						<div class="type-details">
-        							<?php the_sub_field('episode_title_date'); ?>
+        							<?php echo get_sub_field('episode_title_date'); ?>
         						</div>
         					</div>
 
@@ -101,18 +101,18 @@ if( have_rows('event_episode_items') ):
 							<div class="category-margin-20 h1-margin-5 type-center"><!-- sequence-margin-last -->
 								<div class="type-category"><?php echo $term; ?></div>
 								<h1>
-									<?php the_sub_field('episode_title_detail'); ?>
+									<?php echo get_sub_field('episode_title_detail'); ?>
 								</h1>
 								<?php if(get_sub_field('episode_title_date') || get_sub_field('episode_title_start_time') || get_sub_field('episode_title_location')): ?>
 								<div class="type-details">
 									<?php if(get_sub_field('episode_title_date')): ?>
-										<span><?php the_sub_field('episode_title_date'); ?></span>
+										<span><?php echo get_sub_field('episode_title_date'); ?></span>
 									<?php endif; ?>
 									<?php if(get_sub_field('episode_title_start_time')): ?>
-										<span><?php the_sub_field('episode_title_start_time'); ?></span>
+										<span><?php echo get_sub_field('episode_title_start_time'); ?></span>
 									<?php endif; ?>
 									<?php if(get_sub_field('episode_title_location')): ?>
-										<span><?php the_sub_field('episode_title_location'); ?></span>
+										<span><?php echo get_sub_field('episode_title_location'); ?></span>
 									<?php endif; ?>
 								</div>
 								<?php endif; ?>
@@ -125,7 +125,7 @@ if( have_rows('event_episode_items') ):
 							<?php if(get_sub_field('episode_title_link')): ?>
 
 							<div class="event-tickets type-center">
-								<a href="<?php the_sub_field('episode_title_link'); ?>" class="type-link block-link">GET TICKETS</a>
+								<a href="<?php echo get_sub_field('episode_title_link'); ?>" class="type-link block-link">GET TICKETS</a>
 								<div class="event-social">
 									<span><a href="" class="type-link js-share">Share</a>
 										<span class="event-social-share js-social-share">
@@ -187,7 +187,7 @@ if( have_rows('event_episode_items') ):
         	<section class="event-episode-item event-episode-feature sequence-margin-first sequence-margin-last">
         		<div class="event-episode-feature-item" style="background-image:url('<?php echo $image['sizes'][$size]; ?>')">
         			<div class="event-episode-feature-details type-center color-light">
-        				<?php the_sub_field('episode_feature_details'); ?>
+        				<?php echo get_sub_field('episode_feature_details'); ?>
         			</div>
         		</div>
         		<a href=""></a>
@@ -200,7 +200,7 @@ if( have_rows('event_episode_items') ):
 			<section class="event-episode-item event-episode-text h1-margin-30 p-margin-15 sequence-margin-first sequence-margin-last">
 				<div class="column-limit">
 					<div class="type-limit">
-						<?php the_sub_field('episode_text_details'); ?>
+						<?php echo get_sub_field('episode_text_details'); ?>
 					</div>
 				</div>
 			</section>
@@ -214,9 +214,9 @@ if( have_rows('event_episode_items') ):
 					<div class="column-limit">
 						<div class="type-limit">
 							<h1>
-								<?php the_sub_field('episode_quote_detail'); ?>
+								<?php echo get_sub_field('episode_quote_detail'); ?>
 							</h1>
-							<div class="type-category"><?php the_sub_field('episode_quote_author'); ?></div>
+							<div class="type-category"><?php echo get_sub_field('episode_quote_author'); ?></div>
 						</div>
 					</div>
 				</div>
@@ -291,12 +291,12 @@ if( have_rows('event_episode_items') ):
 								</div>
 
 								<div class="events-bio-text-col category-margin-20 p-margin-10">
-									<div class="type-category"><?php the_sub_field('episode_bio_type'); ?></div>
+									<div class="type-category"><?php echo get_sub_field('episode_bio_type'); ?></div>
 									<p class="type-bio">
-										<b><?php the_sub_field('episode_bio_name'); ?></b><br>
-										<?php the_sub_field('episode_bio_title'); ?>
+										<b><?php echo get_sub_field('episode_bio_name'); ?></b><br>
+										<?php echo get_sub_field('episode_bio_title'); ?>
 									</p>
-									<?php the_sub_field('episode_bio_details'); ?>
+									<?php echo get_sub_field('episode_bio_details'); ?>
 								</div>
 
 							</div>
@@ -370,7 +370,7 @@ if( have_rows('event_episode_items') ):
 								</div>
 
 								<div class="events-winners-text-col p-margin-10">
-									<?php the_sub_field('episode_winners_details'); ?>
+									<?php echo get_sub_field('episode_winners_details'); ?>
 								</div>
 
 							</div>
@@ -404,8 +404,8 @@ if( have_rows('event_episode_items') ):
         			<div class="event-episode-past-details type-center color-light">
         				<div class="column-limit">
         					<div class="type-limit">
-        						<div class="type-feature"><?php the_sub_field('episode_past_details'); ?></div>
-        						<a href="/past-events/?q=&qseries=<?php the_sub_field('episode_past_link'); ?>" class="type-link block-link">View More</a>
+        						<div class="type-feature"><?php echo get_sub_field('episode_past_details'); ?></div>
+        						<a href="/past-events/?q=&qseries=<?php echo get_sub_field('episode_past_link'); ?>" class="type-link block-link">View More</a>
         					</div>
         				</div>
         			</div>

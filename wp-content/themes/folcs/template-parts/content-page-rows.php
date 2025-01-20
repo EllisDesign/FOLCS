@@ -51,11 +51,11 @@
 							<div class="donate-item">
 								<div class="row">
 									<div class="col-lg-8 col-sm-12 donate-details">
-										<?php the_sub_field('row_details'); ?>
+										<?php echo get_sub_field('row_details'); ?>
 									</div>
 									<?php if( get_sub_field('row_link_url') ): ?>
 									<div class="col-lg-4 col-sm-12 donate-link">
-										<a href="<?php the_sub_field('row_link_url'); ?>" class="type-link block-link multi-line" target="_blank"><?php the_sub_field('row_link_text'); ?></a>
+										<a href="<?php echo get_sub_field('row_link_url'); ?>" class="type-link block-link multi-line" target="_blank"><?php echo get_sub_field('row_link_text'); ?></a>
 									</div>
 								<?php endif; ?>
 								</div>
