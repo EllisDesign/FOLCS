@@ -26,14 +26,14 @@
 				<a href="/contact/">Contact Us</a>
 			</div>
 			<div class="footer-item">
-				<div class="footer-cta">
+				<!-- <div class="footer-cta">
 					Join our email list to stay informed about upcoming events.
 				</div>
 				<div class="footer-subscribe">
 					<a href="#signup" class="type-link block-link js-signup">
 						Sign Up
 					</a>
-				</div>
+				</div> -->
 				<div class="footer-social">
 					<a href="<?php echo get_field('social_twitter_link', 'option'); ?>" class="footer-social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="21px" height="20px" viewBox="0 0 21 20">
 						<g>
