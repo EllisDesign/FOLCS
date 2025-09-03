@@ -66,7 +66,7 @@
 	<div class="column-limit">
 		<div class="type-limit">
 			<div class="type-center sequence-margin-last">
-				<?php echo get_field('secondary_details'); ?>
+				<?php echo get_field('board_details'); ?>
 			</div>
 		</div>
 
