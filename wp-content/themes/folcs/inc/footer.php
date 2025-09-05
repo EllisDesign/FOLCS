@@ -1,23 +1,30 @@
+<?php
+	$post_id = $post->ID;
+	if($post_id != 9229):
+?>
 <section class="footer-member h1-margin-25 p-margin-35">
 	<div class="column-limit">
 		<div class="type-limit">
 			<div>
 				<?php echo get_field('footer_details', 'option'); ?>
 				<div class="type-center">
-					<a href="<?php the_permalink(10); ?>" class="type-link block-link">
-						Become a Member
+					<a href="<?php the_permalink(9229); ?>" class="type-link block-link">
+						Join Mailing List
 					</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+<?php
+	endif;
+?>
 <footer>
 	<div class="column-limit">
 		<div class="footer-items type-center">
 			<div class="footer-item footer-nav">
-				<a href="/become-a-member/">Become a Member</a><br>
-				<a href="<?php echo get_field('network_for_good_link', 'option') ?>" target="_blank">Renew Membership</a><br>
+				<a href="/join-mailing-list/">Join Our Mailing List</a><br>
+				<a href="/sponsors/">Sponsors</a><br>
 				<a href="/donate/">Donate</a>
 			</div>
 			<div class="footer-item footer-nav footer-reorder">
@@ -105,7 +112,7 @@
 			</div>
 		</div>
 		<div class="footer-disclaimer type-center">
-			Thank you to our <a href="/sponsors/">Sponsors</a>
+			<a href="/privacy-policy/">Privacy Policy</a>
 		</div>
 	</div>
 </footer>

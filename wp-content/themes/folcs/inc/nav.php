@@ -69,7 +69,7 @@
                         <li><a href="/event-series/" class="nav-item-event-series">Event Series</a></li>
                         <li><a href="/past-events/" class="nav-item-past-events">Past Events</a></li>
                         <li><a href="/folcs-studio/" class="nav-item-folcs-studio">Studio</a></li>
-                        <li><a href="/become-a-member/" class="nav-item-become-a-member">Become a Member</a></li>
+                        <li><a href="/join-mailing-list/" class="nav-item-join-mailing-list">Join Our Mailing List</a></li>
                         <li><a href="/donate/" class="nav-item-donate">Donate</a></li>
                         <li><a href="/covid-19/" class="nav-item-covid-19">COVID-19 Response</a></li>
                         <li>
