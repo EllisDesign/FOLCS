@@ -128,7 +128,7 @@
 	if( $board ):
 ?>
 
-<section class="h1-margin-30 section-margin-first-border section-margin-last">
+<section class="h1-margin-30 section-margin-first-border section-margin-last section-bottom-border">
 	<div class="column-limit">
 		<div class="type-limit">
 			<div class="type-center sequence-margin-last">
@@ -246,7 +246,7 @@
 	if( $memoriam ):
 ?>
 
-<section class="h1-margin-30 section-margin-first-border section-margin-last section-top-border">
+<section class="h1-margin-30 section-margin-first-border section-margin-last">
 	<div class="column-limit">
 		<div class="type-limit">
 			<div class="type-center sequence-margin-last">
