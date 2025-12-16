@@ -123,16 +123,16 @@
 
 <?php
 	
-	$advisory = get_field('advisory_items');
+	$board = get_field('board_items');
 
-	if( $advisory ):
+	if( $board ):
 ?>
 
-<section class="h1-margin-30 section-margin-first-border section-margin-last section-bottom-border">
+<section class="h1-margin-30 section-margin-first-border section-margin-last">
 	<div class="column-limit">
 		<div class="type-limit">
 			<div class="type-center sequence-margin-last">
-				<?php echo get_field('advisory_details'); ?>
+				<?php echo get_field('board_details'); ?>
 			</div>
 		</div>
 
@@ -140,7 +140,7 @@
 
 			<?php
 				
-				$posts = $advisory;
+				$posts = $board;
 
 				if( $posts ):
 
@@ -182,16 +182,16 @@
 
 <?php
 	
-	$board = get_field('board_items');
+	$advisory = get_field('advisory_items');
 
-	if( $board ):
+	if( $advisory ):
 ?>
 
-<section class="h1-margin-30 section-margin-first-border section-margin-last">
+<section class="h1-margin-30 section-margin-first-border section-margin-last section-bottom-border">
 	<div class="column-limit">
 		<div class="type-limit">
 			<div class="type-center sequence-margin-last">
-				<?php echo get_field('board_details'); ?>
+				<?php echo get_field('advisory_details'); ?>
 			</div>
 		</div>
 
@@ -199,7 +199,7 @@
 
 			<?php
 				
-				$posts = $board;
+				$posts = $advisory;
 
 				if( $posts ):
 
