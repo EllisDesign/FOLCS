@@ -62,6 +62,13 @@
 </section>
 
 
+<?php
+	
+	$media = get_field('media_items');
+
+	if( $media ):
+?>
+
 <section class="h1-margin-30 section-margin-first-border section-margin-last section-bottom-border">
 	<div class="column-limit">
 		<div class="type-limit">
@@ -74,55 +81,7 @@
 
 			<?php
 				
-				$posts = get_field('media_items');
-
-				if( $posts ):
-
-					foreach( $posts as $post):
-					setup_postdata($post);
-
-					$leader = get_field('leadership_item');
-				?>
-
-				<div class="col-lg-3 col-md-6 col-sm-12 event-card">
-					<div class="event-items">
-						<div class="event-item js-bio-portrait" data-portrait="<?php echo $leader['sizes']['medium']; ?>" style="background-image: url('<?php echo $leader['sizes']['thumbnail_cropped']; ?>')"></div>
-						<div class="event-details js-bio-details" data-name="<?php echo get_field('leadership_name'); ?>" data-title="<?php echo get_field('leadership_title'); ?>">
-							<p><b><?php echo get_field('leadership_name'); ?></b></p>
-							<p><?php echo get_field('leadership_title'); ?></p>
-						</div>
-						<a href="" class="js-bio"></a>
-						<div class="leadership-bio-data"><?php echo get_field('leadership_details'); ?></div>
-					</div>
-				</div>
-
-			<?php
-					endforeach;
-					wp_reset_postdata(); 
-
-				endif; 
-
-			?>
-
-		</div>
-
-	</div>
-</section>
-
-
-<section class="h1-margin-30 section-margin-first-border section-margin-last">
-	<div class="column-limit">
-		<div class="type-limit">
-			<div class="type-center sequence-margin-last">
-				<?php echo get_field('board_details'); ?>
-			</div>
-		</div>
-
-		<div class="row event-cards p-margin-5 leadership-portraits">
-
-			<?php
-				
-				$posts = get_field('board_items');
+				$posts = $media;
 
 				if( $posts ):
 
@@ -158,6 +117,129 @@
 </section>
 
 <?php
+	endif;
+?>
+
+
+<?php
+	
+	$advisory = get_field('advisory_items');
+
+	if( $advisory ):
+?>
+
+<section class="h1-margin-30 section-margin-first-border section-margin-last section-bottom-border">
+	<div class="column-limit">
+		<div class="type-limit">
+			<div class="type-center sequence-margin-last">
+				<?php echo get_field('advisory_details'); ?>
+			</div>
+		</div>
+
+		<div class="row event-cards p-margin-5 leadership-portraits">
+
+			<?php
+				
+				$posts = $advisory;
+
+				if( $posts ):
+
+					foreach( $posts as $post):
+					setup_postdata($post);
+
+					$leader = get_field('leadership_item');
+				?>
+
+				<div class="col-lg-3 col-md-6 col-sm-12 event-card">
+					<div class="event-items">
+						<div class="event-item js-bio-portrait" data-portrait="<?php echo $leader['sizes']['medium']; ?>" style="background-image: url('<?php echo $leader['sizes']['thumbnail_cropped']; ?>')"></div>
+						<div class="event-details js-bio-details" data-name="<?php echo get_field('leadership_name'); ?>" data-title="<?php echo get_field('leadership_title'); ?>">
+							<p><b><?php echo get_field('leadership_name'); ?></b></p>
+							<p><?php echo get_field('leadership_title'); ?></p>
+						</div>
+						<a href="" class="js-bio"></a>
+						<div class="leadership-bio-data"><?php echo get_field('leadership_details'); ?></div>
+					</div>
+				</div>
+
+			<?php
+					endforeach;
+					wp_reset_postdata(); 
+
+				endif; 
+
+			?>
+
+		</div>
+
+	</div>
+</section>
+
+<?php
+	endif;
+?>
+
+
+<?php
+	
+	$board = get_field('board_items');
+
+	if( $board ):
+?>
+
+<section class="h1-margin-30 section-margin-first-border section-margin-last">
+	<div class="column-limit">
+		<div class="type-limit">
+			<div class="type-center sequence-margin-last">
+				<?php echo get_field('board_details'); ?>
+			</div>
+		</div>
+
+		<div class="row event-cards p-margin-5 leadership-portraits">
+
+			<?php
+				
+				$posts = $board;
+
+				if( $posts ):
+
+					foreach( $posts as $post):
+					setup_postdata($post);
+
+					$leader = get_field('leadership_item');
+				?>
+
+				<div class="col-lg-3 col-md-6 col-sm-12 event-card">
+					<div class="event-items">
+						<div class="event-item js-bio-portrait" data-portrait="<?php echo $leader['sizes']['medium']; ?>" style="background-image: url('<?php echo $leader['sizes']['thumbnail_cropped']; ?>')"></div>
+						<div class="event-details js-bio-details" data-name="<?php echo get_field('leadership_name'); ?>" data-title="<?php echo get_field('leadership_title'); ?>">
+							<p><b><?php echo get_field('leadership_name'); ?></b></p>
+							<p><?php echo get_field('leadership_title'); ?></p>
+						</div>
+						<a href="" class="js-bio"></a>
+						<div class="leadership-bio-data"><?php echo get_field('leadership_details'); ?></div>
+					</div>
+				</div>
+
+			<?php
+					endforeach;
+					wp_reset_postdata(); 
+
+				endif; 
+
+			?>
+
+		</div>
+
+	</div>
+</section>
+
+<?php
+	endif;
+?>
+
+
+<?php
 	
 	$memoriam = get_field('memoriam_items');
 
@@ -176,7 +258,7 @@
 
 			<?php
 
-				$posts = get_field('memoriam_items');
+				$posts = $memoriam;
 
 				if( $posts ):
 
