@@ -71,7 +71,6 @@
                         <li><a href="/folcs-studio/" class="nav-item-folcs-studio">Studio</a></li>
                         <li><a href="/join-mailing-list/" class="nav-item-join-mailing-list">Join Our Mailing List</a></li>
                         <li><a href="/donate/" class="nav-item-donate">Donate</a></li>
-                        <li><a href="/covid-19/" class="nav-item-covid-19">COVID-19 Response</a></li>
                         <li>
                             <div class="type-link">
                                 <a href="/leadership/" class="nav-item-leadership">Leadership</a> <a href="/in-the-press/" class="nav-item-in-the-press">In the Press</a> <a href="/about/" class="nav-item-about">About</a> <a href="/contact/" class="nav-item-contact">Contact</a>
