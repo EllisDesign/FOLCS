@@ -3,9 +3,9 @@ Contributors: ShortPixel
 Donate link: https://www.paypal.me/resizeImage
 Tags: replace, replace image, remove background, replace jpg, change media
 Requires at least: 4.9.7
-Tested up to: 6.7
+Tested up to: 6.9
 Requires PHP: 5.6
-Stable tag: 4.1.5
+Stable tag: 4.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,7 +65,6 @@ If you want more control over the format in which the time is shown, you can use
 * [Resize Image After Upload](https://wordpress.org/plugins/resize-image-after-upload/) - Automatically resize each uploaded image
 * [reGenerate Thumbnails Advanced](https://wordpress.org/plugins/regenerate-thumbnails-advanced/) - Easily regenerate thumbnails
 * [WP SVG Images](https://wordpress.org/plugins/wp-svg-images/) - Secure upload of SVG files to Media Library
-* [ShortPixel Critical CSS](https://wordpress.org/plugins/shortpixel-critical-css/) - Automatically generate above-the-fold CSS for faster loading times and better SEO scores
 
 **Get in touch!**
 
@@ -80,6 +79,28 @@ If you want more control over the format in which the time is shown, you can use
 Please report security bugs found in the source code of the Enable Media Replace plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/enable-media-replace). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 == Changelog ==
+
+= 4.1.8 =
+
+Release date: March 3, 2026
+* Fix: Unauthorized modification and deletion of media files vulnerability responsibly disclosed by the WordFence team;
+* Fix: The plugin works for RTL languages now;
+* Fix: Textdomain modules are loaded properly in all cases;
+* Tweak: Added a permission check for the ShortPixel recommendation displayed after the replacement;
+* Tweak: Added the raw file path to the filemodel filter;
+* Tweak: Added a filter to disable the database replacements (thanks @seed-glauco);
+* Tweak: Updated the banners from the plugin pages.
+
+= 4.1.7 =
+
+Release date: October 2, 2025
+* Fix: A potential "Cross-Site Scripting" vulnerability has been patched, responsibly disclosed by the WordFence team;
+* Fix: Corrected a few text typos.
+
+= 4.1.6 =
+
+Release date: March 25, 2025
+* Fix: A potential "Reflected Cross-Site Scripting" vulnerability has been patched, responsibly disclosed by the PatchStack team.
 
 = 4.1.5 =
 
