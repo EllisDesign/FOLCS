@@ -68,6 +68,7 @@
                         <li><a href="/#upcoming-events" class="nav-item-upcoming-events js-nav-upcoming-events">Upcoming Events<?php echo ($events > 0) ? '<sup>&nbsp;'.$events.'</sup>' : '' ?></a></li>
                         <li><a href="/event-series/" class="nav-item-event-series">Event Series</a></li>
                         <li><a href="/past-events/" class="nav-item-past-events">Past Events</a></li>
+                        <li><a href="/podcast/" class="nav-item-podcast">Podcast</a></li>
                         <li><a href="/folcs-studio/" class="nav-item-folcs-studio">Studio</a></li>
                         <li><a href="/join-mailing-list/" class="nav-item-join-mailing-list">Join Our Mailing List</a></li>
                         <li><a href="/donate/" class="nav-item-donate">Donate</a></li>
