@@ -6,7 +6,7 @@
  * Description: <strong><em>***ATTENTION: After upgrade the plugin may be deactivated due to a known issue, to workaround please refresh this page and activate plugin.***</em></strong> The Facebook pixel is an analytics tool that helps you measure the effectiveness of your advertising. You can use the Facebook pixel to understand the actions people are taking on your website and reach audiences you care about.
  * Author: Facebook
  * Author URI: https://www.facebook.com/
- * Version: 5.0.1
+ * Version: 5.2.1
  * Text Domain: official-facebook-pixel
  *
  * @package FacebookPixelPlugin
@@ -28,16 +28,29 @@ namespace FacebookPixelPlugin;
 
 defined( 'ABSPATH' ) || die( 'Direct access not allowed' );
 
+// Load local dev overrides (gitignored) for staging/development environments
+$local_config = plugin_dir_path( __FILE__ ) . 'local-config.php';
+if ( file_exists( $local_config ) ) {
+    require_once $local_config;
+}
+
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+require_once plugin_dir_path( __FILE__ ) . 'core/class-signals.php';
+require_once plugin_dir_path( __FILE__ ) . 'core/class-facebooksignalstate.php';
+require_once plugin_dir_path( __FILE__ ) . 'core/class-releasesignalsajax.php';
 
 use FacebookPixelPlugin\Core\FacebookPixel;
+use FacebookPixelPlugin\Core\Signals;
 use FacebookPixelPlugin\Core\FacebookPluginConfig;
 use FacebookPixelPlugin\Core\FacebookPluginUtils;
+use FacebookPixelPlugin\Core\FacebookSignalState;
 use FacebookPixelPlugin\Core\FacebookWordpressOpenBridge;
 use FacebookPixelPlugin\Core\FacebookWordpressOptions;
 use FacebookPixelPlugin\Core\FacebookWordpressPixelInjection;
 use FacebookPixelPlugin\Core\FacebookWordpressSettingsPage;
 use FacebookPixelPlugin\Core\FacebookWordpressSettingsRecorder;
+use FacebookPixelPlugin\Core\ReleaseSignalsAjax;
+use FacebookPixelPlugin\Core\FacebookParamBuilder;
 use FacebookPixelPlugin\Core\ServerEventAsyncTask;
 
 /**
@@ -59,16 +72,48 @@ class FacebookForWordpress {
     );
 
     $options = FacebookWordpressOptions::get_options();
-    FacebookPixel::initialize( FacebookWordpressOptions::get_pixel_id() );
+    FacebookPixel::initialize( FacebookWordpressOptions::get_active_pixel_id() );
+    new Signals();
+    new ReleaseSignalsAjax();
+
+    if ( Signals::should_hold_signals() ) {
+        FacebookSignalState::hold();
+    }
+
+    // Initialize ParamBuilder server-side before pixel injection.
+    FacebookParamBuilder::server_setup();
 
     add_action( 'init', array( $this, 'register_pixel_injection' ), 0 );
     add_action( 'parse_request', array( $this, 'handle_events_request' ), 0 );
 
     $this->register_settings_page();
+    add_action( 'admin_init', array( $this, 'maybe_reset_upgrade_notice' ) );
 
     new ServerEventAsyncTask();
 
     self::update_db_for_wpcom();
+    }
+
+    /**
+     * Resets the FBL4B upgrade notice dismiss flag when the plugin is updated,
+     * so MBE users see the upgrade prompt again after each plugin update.
+     */
+    public function maybe_reset_upgrade_notice() {
+        if ( 'mbe' !== FacebookWordpressOptions::get_connection_type() ) {
+            return;
+        }
+        $stored_version = get_option( 'fb_pixel_plugin_version', '0' );
+        $current_version = FacebookPluginConfig::PLUGIN_VERSION;
+        if ( version_compare( $stored_version, $current_version, '<' ) ) {
+            delete_metadata(
+                'user',
+                0,
+                FacebookPluginConfig::ADMIN_IGNORE_FBL4B_UPGRADE_NOTICE,
+                '',
+                true
+            );
+            update_option( 'fb_pixel_plugin_version', $current_version );
+        }
     }
 
     private static function update_db_for_wpcom() {
@@ -147,6 +192,27 @@ class FacebookForWordpress {
         }
     }
     }
+
+    /**
+     * Declare WooCommerce HPOS (custom order tables) compatibility.
+     *
+     * @return void
+     */
+    public static function declare_hpos_compatibility() {
+    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+        'custom_order_tables',
+        plugin_basename( __FILE__ ),
+        true
+        );
+    }
+    }
 }
+
+// HPOS compatibility declaration.
+add_action(
+    'before_woocommerce_init',
+    array( '\\FacebookPixelPlugin\\FacebookForWordpress', 'declare_hpos_compatibility' )
+);
 
 new FacebookForWordpress();

@@ -76,21 +76,21 @@ class FacebookWordpressSettingsPage {
             'fbe_allinone_script',
             plugins_url( '../js/fbe_allinone.js', __FILE__ ),
             array(),
-            '1.0.0',
+            FacebookPluginConfig::PLUGIN_VERSION,
             false
         );
         wp_register_script(
             'meta_settings_page_script',
             plugins_url( '../js/settings_page.js', __FILE__ ),
             array(),
-            '1.0.0',
+            FacebookPluginConfig::PLUGIN_VERSION,
             false
         );
         wp_register_style(
             'official-facebook-pixel',
             plugins_url( '../css/admin.css', __FILE__ ),
             array(),
-            '1.0.0'
+            FacebookPluginConfig::PLUGIN_VERSION
         );
         wp_enqueue_style( 'official-facebook-pixel' );
     }
@@ -226,12 +226,32 @@ class FacebookWordpressSettingsPage {
             When turned on, PII will be cached for non logged in users.
         </div>
         </div>
+        <div id="fb-capig">
+        <input type="checkbox" id="capig" name="capig">
+        <label class="fb-capi-title" for="capig">
+            Opt in to a Meta-enabled Conversions API integration
+        </label>
+        <span id="fb-capig-se" class="fb-capi-se"></span>
+        <br/>
+        <div class="fb-capi-desc">
+            You hereby authorize and instruct Meta to set
+            up a Meta-enabled Conversions API integration on your behalf,
+            and you agree that your use of the integration will be subject
+            to Meta's
+            <a href="https://www.facebook.com/legal/terms"
+                target="_blank" rel="noopener noreferrer">Platform Terms</a>
+            and
+            <a href="https://www.facebook.com/legal/technology_terms"
+                target="_blank" rel="noopener noreferrer">Business Tools
+                Terms</a>.
+        </div>
+        </div>
     </div>
     </div>
 
     <div class="events-manager-wrapper
     <?php
-    echo empty( FacebookWordpressOptions::get_access_token() ) ?
+    echo empty( FacebookWordpressOptions::get_active_access_token() ) ?
     'hidden' : '';
     ?>
     ">
@@ -253,7 +273,7 @@ class FacebookWordpressSettingsPage {
                 href="https://business.facebook.com/events_manager2/list/pixel/
                 <?php
                 echo esc_html(
-                    FacebookWordpressOptions::get_pixel_id()
+                    FacebookWordpressOptions::get_active_pixel_id()
                 );
                 ?>
                 "
@@ -269,7 +289,7 @@ class FacebookWordpressSettingsPage {
             placeholder="
             <?php
             echo esc_html(
-                FacebookWordpressOptions::get_pixel_id()
+                FacebookWordpressOptions::get_active_pixel_id()
             );
             ?>
             "
@@ -302,7 +322,7 @@ class FacebookWordpressSettingsPage {
                                 ?>
                                 <?php
                                 echo esc_html(
-                                    FacebookWordpressOptions::get_pixel_id()
+                                    FacebookWordpressOptions::get_active_pixel_id()
                                 );
                                 ?>
                                 /test_events">
@@ -418,7 +438,9 @@ class FacebookWordpressSettingsPage {
     <div id="meta-ads-plugin">
     <div id="ad-creation-plugin" class="
     <?php
-    echo empty( FacebookWordpressOptions::get_access_token() ) ?
+    // Ads Creation only available for MBE connections (requires MBE scopes).
+    echo ( 'mbe' !== FacebookWordpressOptions::get_connection_type()
+        || empty( FacebookWordpressOptions::get_access_token() ) ) ?
     'hidden' : '';
     ?>
     ">
@@ -437,7 +459,9 @@ class FacebookWordpressSettingsPage {
     </div>
     <div id="ad-insights-plugin" class="
     <?php
-    echo empty( FacebookWordpressOptions::get_access_token() ) ?
+    // Ads Insights only available for MBE connections (requires MBE scopes).
+    echo ( 'mbe' !== FacebookWordpressOptions::get_connection_type()
+        || empty( FacebookWordpressOptions::get_access_token() ) ) ?
     'hidden' : '';
     ?>
     ">
@@ -458,7 +482,7 @@ class FacebookWordpressSettingsPage {
 
         <?php
         $initial_script   = ob_get_clean();
-        $access_token     = FacebookWordpressOptions::get_access_token();
+        $access_token     = FacebookWordpressOptions::get_active_access_token();
         $has_access_token = ! empty( $access_token );
 
         wp_enqueue_script( 'meta_settings_page_script' );
@@ -466,46 +490,7 @@ class FacebookWordpressSettingsPage {
         wp_add_inline_script(
             'meta_settings_page_script',
             'const meta_wc_params = ' . wp_json_encode(
-                array(
-                    'ajax_url'                           =>
-                    admin_url( 'admin-ajax.php' ),
-                    'send_capi_event_nonce'              =>
-                    wp_create_nonce( 'send_capi_event_nonce' ),
-                    'pixelId'                            =>
-                    FacebookWordpressOptions::get_pixel_id(),
-                    'setSaveSettingsRoute'               =>
-                    $this->get_fbe_save_settings_ajax_route(),
-                    'externalBusinessId'                 =>
-                    esc_html( FacebookWordpressOptions::get_external_business_id() ),
-                    'deleteConfigKeys'                   =>
-                    $this->get_delete_fbe_settings_ajax_route(),
-                    'installed'                          =>
-                    FacebookWordpressOptions::get_is_fbe_installed(),
-                    'systemUserName'                     =>
-                    esc_html( FacebookWordpressOptions::get_external_business_id() ),
-                    'pixelString'                        =>
-                    esc_html( FacebookWordpressOptions::get_pixel_id() ),
-                    'piiCachingStatus'                   =>
-                    FacebookWordpressOptions::get_capi_pii_caching_status(),
-                    'fbAdvConfTop'                       =>
-                    FacebookPluginConfig::CAPI_INTEGRATION_DIV_TOP,
-                    'capiIntegrationPageViewFiltered'    =>
-                    wp_json_encode(
-                        FacebookWordpressOptions::get_capi_integration_page_view_filtered()
-                    ),
-                    'capiPiiCachingStatusSaveUrl'        =>
-                    $this->get_capi_pii_caching_status_save_url(),
-                    'capiPiiCachingStatusActionName'     =>
-                    FacebookPluginConfig::SAVE_CAPI_PII_CACHING_STATUS_ACTION_NAME,
-                    'capiPiiCachingStatusUpdateError'    =>
-                    FacebookPluginConfig::CAPI_PII_CACHING_STATUS_UPDATE_ERROR,
-                    'capiIntegrationEventsFilterSaveUrl' =>
-                    $this->get_capi_integration_events_filter_save_url(),
-                    'capiIntegrationEventsFilterActionName' =>
-                    FacebookPluginConfig::SAVE_CAPI_INTEGRATION_EVENTS_FILTER_ACTION_NAME,
-                    'capiIntegrationEventsFilterUpdateError' =>
-                    FacebookPluginConfig::CAPI_INTEGRATION_EVENTS_FILTER_UPDATE_ERROR,
-                )
+                $this->get_meta_wc_params()
             ) . ';
             var hasAccessToken = ' . wp_json_encode( $has_access_token ) . ';
             if (!hasAccessToken) {
@@ -604,6 +589,25 @@ class FacebookWordpressSettingsPage {
     }
 
     /**
+     * Builds the admin-ajax URL for persisting the Conversions API Gateway
+     * (CAPIG) toggle.
+     *
+     * @return string
+     */
+    public function get_capig_save_url() {
+        $nonce_value = wp_create_nonce(
+            FacebookPluginConfig::SAVE_CAPIG_ACTION_NAME
+        );
+        $simple_url  = admin_url( 'admin-ajax.php' );
+        $args        = array(
+            'action'   =>
+            FacebookPluginConfig::SAVE_CAPIG_ACTION_NAME,
+            '_wpnonce' => $nonce_value,
+        );
+        return add_query_arg( $args, $simple_url );
+    }
+
+    /**
      * Generates the AJAX route URL for deleting FBE settings.
      *
      * This function creates a nonce for the AJAX action to ensure
@@ -622,6 +626,220 @@ class FacebookWordpressSettingsPage {
             '_wpnonce' => $nonce_value,
         );
         return add_query_arg( $args, $simple_url );
+    }
+
+    /**
+     * Builds the complete meta_wc_params array for the settings page JS.
+     *
+     * @return array The configuration parameters.
+     */
+    private function get_meta_wc_params() {
+        $params = array(
+            'ajax_url'                               =>
+                admin_url( 'admin-ajax.php' ),
+            'send_capi_event_nonce'                  =>
+                wp_create_nonce( 'send_capi_event_nonce' ),
+            'pixelId'                                =>
+                FacebookWordpressOptions::get_pixel_id(),
+            'setSaveSettingsRoute'                   =>
+                $this->get_fbe_save_settings_ajax_route(),
+            'externalBusinessId'                     =>
+                esc_html( FacebookWordpressOptions::get_external_business_id() ),
+            'deleteConfigKeys'                       =>
+                $this->get_delete_fbe_settings_ajax_route(),
+            'installed'                              =>
+                FacebookWordpressOptions::get_is_fbe_installed(),
+            'connectionType'                         =>
+                FacebookWordpressOptions::get_connection_type(),
+            'systemUserName'                         =>
+                esc_html( FacebookWordpressOptions::get_external_business_id() ),
+            'pixelString'                            =>
+                esc_html( FacebookWordpressOptions::get_pixel_id() ),
+            'piiCachingStatus'                       =>
+                FacebookWordpressOptions::get_capi_pii_caching_status(),
+            'fbAdvConfTop'                           =>
+                FacebookPluginConfig::CAPI_INTEGRATION_DIV_TOP,
+            'capiIntegrationPageViewFiltered'        =>
+                wp_json_encode(
+                    FacebookWordpressOptions::get_capi_integration_page_view_filtered()
+                ),
+            'capiPiiCachingStatusSaveUrl'            =>
+                $this->get_capi_pii_caching_status_save_url(),
+            'capiPiiCachingStatusActionName'         =>
+                FacebookPluginConfig::SAVE_CAPI_PII_CACHING_STATUS_ACTION_NAME,
+            'capiPiiCachingStatusUpdateError'        =>
+                FacebookPluginConfig::CAPI_PII_CACHING_STATUS_UPDATE_ERROR,
+            'capiIntegrationEventsFilterSaveUrl'     =>
+                $this->get_capi_integration_events_filter_save_url(),
+            'capiIntegrationEventsFilterActionName'  =>
+                FacebookPluginConfig::SAVE_CAPI_INTEGRATION_EVENTS_FILTER_ACTION_NAME,
+            'capiIntegrationEventsFilterUpdateError' =>
+                FacebookPluginConfig::CAPI_INTEGRATION_EVENTS_FILTER_UPDATE_ERROR,
+            'capig'                                  =>
+                FacebookWordpressOptions::get_capig(),
+            'capigSaveUrl'                           =>
+                $this->get_capig_save_url(),
+            'capigActionName'                        =>
+                FacebookPluginConfig::SAVE_CAPIG_ACTION_NAME,
+            'capigUpdateError'                       =>
+                FacebookPluginConfig::CAPIG_UPDATE_ERROR,
+        );
+
+        // FBL4B config — only included if app_id is provisioned.
+        $fbl4b_app_id    = defined( 'FB_FBL4B_APP_ID' )
+            ? FB_FBL4B_APP_ID
+            : FacebookPluginConfig::FBL4B_APP_ID;
+        $fbl4b_config_id = defined( 'FB_FBL4B_CONFIG_ID' )
+            ? FB_FBL4B_CONFIG_ID
+            : FacebookPluginConfig::FBL4B_CONFIG_ID;
+
+        if ( ! empty( $fbl4b_app_id ) ) {
+            $params['fbl4bAppId']                = $fbl4b_app_id;
+            $params['fbl4bConfigId']             = $fbl4b_config_id;
+            $params['fbl4bPopupOrigin']          =
+                $this->get_fbl4b_popup_origin();
+            $params['fbl4bIframeUrl']            =
+                $this->get_fbl4b_iframe_url( $fbl4b_app_id, $fbl4b_config_id );
+            $params['fbl4bSaveSettingsRoute']    =
+                $this->get_fbl4b_save_settings_ajax_route();
+            $params['fbl4bDeleteSettingsRoute']  =
+                $this->get_fbl4b_delete_settings_ajax_route();
+            $params['fbl4bFetchBusinessIdRoute'] =
+                $this->get_fbl4b_fetch_business_id_route();
+            $params['fbl4bFetchPixelsRoute']     =
+                $this->get_fbl4b_fetch_pixels_route();
+            $params['fbl4bValidateTokenRoute']   =
+                $this->get_fbl4b_validate_token_route();
+            $params['fbl4bClearPixelRoute']      =
+                $this->get_fbl4b_clear_pixel_route();
+            $params['fbl4bPixelId']              =
+                FacebookWordpressOptions::get_fbl4b_pixel_id();
+            $params['fbl4bPixelName']            =
+                FacebookWordpressOptions::get_fbl4b_pixel_name();
+            $params['fbl4bBusinessId']           =
+                FacebookWordpressOptions::get_fbl4b_business_id();
+        } else {
+            $params['fbl4bAppId'] = '';
+        }
+
+        return $params;
+    }
+
+    /**
+     * Returns the FBL4B popup origin URL.
+     *
+     * @return string The popup origin URL.
+     */
+    private function get_fbl4b_popup_origin() {
+        if ( defined( 'META_PIXEL_BASE_DOMAIN' ) ) {
+            return 'https://business.' . META_PIXEL_BASE_DOMAIN;
+        }
+        return 'https://business.facebook.com';
+    }
+
+    /**
+     * Builds the FBL4B iframe URL with app_id and config_id query params.
+     *
+     * @param string $app_id    The Meta app ID.
+     * @param string $config_id The FBL4B config ID (must be SUAT type).
+     * @return string The full iframe URL.
+     */
+    private function get_fbl4b_iframe_url( $app_id, $config_id ) {
+        $base = defined( 'META_PIXEL_BASE_DOMAIN' )
+            ? 'https://business.' . META_PIXEL_BASE_DOMAIN
+            : 'https://business.facebook.com';
+        return $base . '/fbl4b-iframe-get-started/?app_id='
+            . rawurlencode( $app_id ) . '&config_id=' . rawurlencode( $config_id );
+    }
+
+    /**
+     * Generates AJAX route for saving FBL4B settings.
+     *
+     * @return string The URL with query arguments.
+     */
+    public function get_fbl4b_save_settings_ajax_route() {
+        return add_query_arg(
+            array(
+                'action'   => 'save_fbl4b_settings',
+                '_wpnonce' => wp_create_nonce( 'save_fbl4b_settings' ),
+            ),
+            admin_url( 'admin-ajax.php' )
+        );
+    }
+
+    /**
+     * Generates AJAX route for deleting FBL4B settings.
+     *
+     * @return string The URL with query arguments.
+     */
+    public function get_fbl4b_delete_settings_ajax_route() {
+        return add_query_arg(
+            array(
+                'action'   => 'delete_fbl4b_settings',
+                '_wpnonce' => wp_create_nonce( 'delete_fbl4b_settings' ),
+            ),
+            admin_url( 'admin-ajax.php' )
+        );
+    }
+
+    /**
+     * Generates AJAX route for fetching FBL4B business ID.
+     *
+     * @return string The URL with query arguments.
+     */
+    public function get_fbl4b_fetch_business_id_route() {
+        return add_query_arg(
+            array(
+                'action'   => 'fbl4b_fetch_business_id',
+                '_wpnonce' => wp_create_nonce( 'fbl4b_fetch_business_id' ),
+            ),
+            admin_url( 'admin-ajax.php' )
+        );
+    }
+
+    /**
+     * Generates AJAX route for fetching FBL4B pixels.
+     *
+     * @return string The URL with query arguments.
+     */
+    public function get_fbl4b_fetch_pixels_route() {
+        return add_query_arg(
+            array(
+                'action'   => 'fbl4b_fetch_pixels',
+                '_wpnonce' => wp_create_nonce( 'fbl4b_fetch_pixels' ),
+            ),
+            admin_url( 'admin-ajax.php' )
+        );
+    }
+
+    /**
+     * Generates AJAX route for validating FBL4B token.
+     *
+     * @return string The URL with query arguments.
+     */
+    public function get_fbl4b_validate_token_route() {
+        return add_query_arg(
+            array(
+                'action'   => 'fbl4b_validate_token',
+                '_wpnonce' => wp_create_nonce( 'fbl4b_validate_token' ),
+            ),
+            admin_url( 'admin-ajax.php' )
+        );
+    }
+
+    /**
+     * Generates AJAX route for clearing FBL4B pixel selection.
+     *
+     * @return string The URL with query arguments.
+     */
+    public function get_fbl4b_clear_pixel_route() {
+        return add_query_arg(
+            array(
+                'action'   => 'fbl4b_clear_pixel',
+                '_wpnonce' => wp_create_nonce( 'fbl4b_clear_pixel' ),
+            ),
+            admin_url( 'admin-ajax.php' )
+        );
     }
 
     /**
@@ -703,6 +921,56 @@ class FacebookWordpressSettingsPage {
                 );
             }
         }
+
+        // Show connection invalid notice on dashboard, plugins, AND settings page.
+        $connection_screens = array(
+            'dashboard',
+            'plugins',
+            'settings_page_' . FacebookPluginConfig::ADMIN_MENU_SLUG,
+        );
+        if ( current_user_can( FacebookPluginConfig::ADMIN_CAPABILITY )
+            && in_array( $current_screen_id, $connection_screens, true )
+            && get_transient(
+                FacebookPluginConfig::CONNECTION_INVALID_TRANSIENT
+            )
+            && ! get_user_meta(
+                get_current_user_id(),
+                FacebookPluginConfig::ADMIN_IGNORE_CONNECTION_INVALID_NOTICE,
+                true
+            )
+        ) {
+            add_action(
+                'admin_notices',
+                array( $this, 'connection_invalid_notice' )
+            );
+        }
+
+        // Show FBL4B upgrade banner on dashboard, plugins, AND settings page.
+        $fbl4b_screens = array(
+            'dashboard',
+            'plugins',
+            'settings_page_' . FacebookPluginConfig::ADMIN_MENU_SLUG,
+        );
+        if ( current_user_can( FacebookPluginConfig::ADMIN_CAPABILITY )
+            && in_array( $current_screen_id, $fbl4b_screens, true )
+        ) {
+            $fbl4b_app_id = defined( 'FB_FBL4B_APP_ID' )
+                ? FB_FBL4B_APP_ID
+                : FacebookPluginConfig::FBL4B_APP_ID;
+            if ( 'mbe' === FacebookWordpressOptions::get_connection_type()
+                && ! empty( $fbl4b_app_id )
+                && ! get_user_meta(
+                    get_current_user_id(),
+                    FacebookPluginConfig::ADMIN_IGNORE_FBL4B_UPGRADE_NOTICE,
+                    true
+                )
+            ) {
+                add_action(
+                    'admin_notices',
+                    array( $this, 'fbl4b_upgrade_notice' )
+                );
+            }
+        }
     }
 
     /**
@@ -777,7 +1045,7 @@ class FacebookWordpressSettingsPage {
         return sprintf(
             /* translators: %s: WordPress.org plugin page URL */
             __(
-                'After April 30th, 2026, Meta Pixel for WordPress will no longer receive automatic updates on WordPress.com-hosted websites. <a href="%s">Download the latest version from WordPress.org</a> and install it manually via <strong>Plugins</strong> &rsaquo; <strong>Add New Plugin</strong> &rsaquo; <strong>Upload Plugin</strong> to ensure you receive future updates.',
+                'Meta Pixel for WordPress is expected to be removed from the WordPress.com marketplace soon. When this happens, it will no longer receive automatic updates on WordPress.com-hosted websites. <a href="%s">Download the latest version from WordPress.org</a> and install it manually via <strong>Plugins</strong> &rsaquo; <strong>Add New Plugin</strong> &rsaquo; <strong>Upload Plugin</strong> to ensure you receive future updates.',
                 'official-facebook-pixel'
             ),
             esc_url( $plugin_url )
@@ -873,6 +1141,43 @@ class FacebookWordpressSettingsPage {
     }
 
     /**
+     * Displays a notice when the Meta connection is invalid.
+     */
+    public function connection_invalid_notice() {
+        $dismiss_url   = add_query_arg(
+            FacebookPluginConfig::ADMIN_DISMISS_CONNECTION_INVALID_NOTICE,
+            '1'
+        );
+        $settings_url  = admin_url(
+            'options-general.php?page='
+            . FacebookPluginConfig::ADMIN_MENU_SLUG
+        );
+        $reconnect_url = add_query_arg(
+            'upgrade_to_fbl4b',
+            '1',
+            $settings_url
+        );
+        ?>
+        <div class="notice notice-error">
+            <p><strong>Meta Pixel for WordPress</strong></p>
+            <p>
+                Your connection to Meta is no longer valid and Conversions API
+                events have been paused. This can happen when the system user is
+                removed, the password is changed, or the app is deauthorized.
+                Please reconnect using Facebook Login for Business to restore
+                event delivery.
+            </p>
+            <p>
+                <a href="<?php echo esc_url( $reconnect_url ); ?>"
+                   class="button button-primary"
+                   style="margin-right: 8px;">Reconnect</a>
+                <a href="<?php echo esc_url( $dismiss_url ); ?>">Dismiss</a>
+            </p>
+        </div>
+        <?php
+    }
+
+    /**
      * Displays a notice indicating that the Facebook
      * Business Extension is not installed.
      *
@@ -933,5 +1238,59 @@ class FacebookWordpressSettingsPage {
                 true
             );
         }
+        if ( isset(
+            $_GET[ FacebookPluginConfig::ADMIN_DISMISS_FBL4B_UPGRADE_NOTICE ] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        ) ) {
+            update_user_meta(
+                $user_id,
+                FacebookPluginConfig::ADMIN_IGNORE_FBL4B_UPGRADE_NOTICE,
+                true
+            );
+        }
+        if ( isset(
+            $_GET[ FacebookPluginConfig::ADMIN_DISMISS_CONNECTION_INVALID_NOTICE ] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        ) ) {
+            update_user_meta(
+                $user_id,
+                FacebookPluginConfig::ADMIN_IGNORE_CONNECTION_INVALID_NOTICE,
+                true
+            );
+        }
+    }
+
+    /**
+     * Renders the FBL4B upgrade notice for existing MBE users.
+     *
+     * Shows a banner prompting MBE users to upgrade to FBL4B
+     * with an "Upgrade Now" button and dismiss option.
+     */
+    public function fbl4b_upgrade_notice() {
+        $dismiss_url  = add_query_arg(
+            FacebookPluginConfig::ADMIN_DISMISS_FBL4B_UPGRADE_NOTICE,
+            '1'
+        );
+        $settings_url = admin_url(
+            'options-general.php?page='
+            . FacebookPluginConfig::ADMIN_MENU_SLUG
+        );
+        $upgrade_url  = add_query_arg( 'upgrade_to_fbl4b', '1', $settings_url );
+        ?>
+        <div class="notice notice-info fbl4b-upgrade-notice">
+            <div class="fbl4b-upgrade-notice-content">
+                <p><strong>Important Update: Meta Pixel for WordPress</strong></p>
+                <p>
+                    We are transitioning to a more secure connection method,
+                    and the previous method will soon be deprecated.
+                    Upgrade to Facebook Login for Business now to avoid future interruptions.
+                    Your current setup will not be affected during the upgrade.
+                </p>
+                <p>
+                    <a href="<?php echo esc_url( $upgrade_url ); ?>"
+                       class="button button-primary" style="margin-right: 8px;">Upgrade Now</a>
+                    <a href="<?php echo esc_url( $dismiss_url ); ?>">Dismiss</a>
+                </p>
+            </div>
+        </div>
+        <?php
     }
 }
