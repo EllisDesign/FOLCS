@@ -1,8 +1,8 @@
 <?php return array(
     'root' => array(
         'name' => 'facebook/pixel-for-wordpress',
-        'pretty_version' => '5.2.1',
-        'version' => '5.2.1.0',
+        'pretty_version' => '5.2.2',
+        'version' => '5.2.2.0',
         'reference' => null,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
@@ -20,8 +20,8 @@
             'dev_requirement' => false,
         ),
         'facebook/pixel-for-wordpress' => array(
-            'pretty_version' => '5.2.1',
-            'version' => '5.2.1.0',
+            'pretty_version' => '5.2.2',
+            'version' => '5.2.2.0',
             'reference' => null,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
